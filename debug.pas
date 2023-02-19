@@ -4,6 +4,12 @@ interface
 
 uses gener;
 
+type TLineFlags=record
+       Hits:UInt32;     {how many was this line executed since counter reset}
+       Flags:UInt32;    {bit0 is 1 when breakpoint is set on the line}
+     end;
+     PLineFlags=^TLineFlags;
+
 type TPrgMemSpace=record    //do not change thist to object
        {code info}
        CodeAddr:pointer; {pointer to code}
@@ -23,10 +29,11 @@ type TPrgMemSpace=record    //do not change thist to object
        LocalOfs:longint; {offset to local frame: LocalOfs => LocalFrame-GlobAddr}
 
        {execution controls}
-       UserBreak:longint; {0..continue, 1..stop execution immediately}
+       //UserBreak:longint; {0..continue, 1..stop execution immediately}
        LineBreak:longint; {0..continue, 1..stop execution on next line}
-       LineBreakNr:longint; {stop on this line (-1 if none)}
-       Returns:longint; {-1..continue, x-stop after x returns}
+       Returns:longint;    {counter: increased on function call, decreased on return}
+       LineCount:longint;  {how many lines has source.. in code line numbers must be <LineCount}
+       LineTable:PLineFlags;  {points to array of TLineFlags}
 
        {exception code and more info}
        StopLine:longint; {last executed line}
@@ -35,12 +42,13 @@ type TPrgMemSpace=record    //do not change thist to object
        BoundsErrIndex,BoundsErrArray:longint; {out of array exception info}
        ExitCode:longint; {type of exception (any constant ERR?????)}
 
-       procedure Push(var x;size:longint);
-       procedure Pop(var x;size:longint);
+       procedure Push(var x;size:longint);    {push someting on stack}
+       procedure Pop(var x;size:longint);     {pop someting from top of stack}
        procedure SetCode(Code:TCodeFragment);
+       procedure SetLineTable(lines:longint;linetab: PLineFlags);
        procedure CreateMemSpace(datasize,stacksize:longint);
        procedure DestroyMemSpace;
-
+       procedure Run;
      end;
 
 const ERRQUIT=0;
@@ -66,8 +74,6 @@ const ERRQUIT=0;
         'ready',
         'internal error');
 
-procedure Run(var Prg:TPrgMemSpace);
-
 var Prg:TPrgMemSpace;
 
 implementation
@@ -79,6 +85,12 @@ begin
   CodeAddr:=Code.Code.Memory;
   CodeSize:=Code.Code.Size;
   InstrPtr:=CodeAddr;
+end;
+
+procedure TPrgMemSpace.SetLineTable(lines:longint;linetab: PLineFlags);
+begin
+  LineCount:=lines;
+  LineTable:=linetab;
 end;
 
 procedure TPrgMemSpace.CreateMemSpace(datasize,stacksize:longint);
@@ -95,17 +107,17 @@ begin
   LocalTop:=pointer(longword(LocalAddr)+LocalSize-4*1024);
   LocalOfs:= longint(LocalFrame)-longint(GlobAddr);
 
-  UserBreak:=0;
+  //UserBreak:=0;
   LineBreak:=0;
-  LineBreakNr:=-1;
 
   ExitCode:=ERRQUIT;
 end;
 
 procedure TPrgMemSpace.DestroyMemSpace;
 begin
-{  FreeMem(Prg.GlobAddr);
-  FreeMem(Prg.LocalAddr);}
+  FreeMem(Prg.GlobAddr);
+  FreeMem(Prg.LocalAddr);
+  FreeMem(Prg.LineTable);
   ExitCode:=ERRQUIT;
 end;
 
@@ -126,6 +138,7 @@ begin
     move(LocalStack^,x,size);
   end;
 end;
+
 
 procedure SysCall(p:TProcedure; var Prg:TPrgMemSpace); register;
 var pl:longint;
@@ -819,21 +832,23 @@ dd @notwork
         xor eax,eax                //load next line number
         lodsw
         mov Prg.StopLine,eax       //set current line
-        cmp eax,Prg.LineBreakNr    //test if it should stop at this line
-        je @linebreak
-        mov eax,Prg.LineBreak      //test if it should stop at any line
-        or eax,eax
+
+        mov ebx,Prg.LineTable
+        inc dword ptr [ebx+eax*8]        //increase line hits count
+        mov eax,dword ptr [ebx+eax*8+4]  //breakpoint is set when <>0
+        or eax,Prg.LineBreak      //test if it should stop at this line (or any line)
         jnz @linebreak
 @next:
-        cmp edx, edxsave
-        jnz @internalerr
 
-        mov eax,Prg.UserBreak      //test if should break immediatelly
-        or eax,eax
-        jnz @userbreak
-        lodsb                      //get next instruction code
-        shl eax,2
-        mov ebx,dword ptr [@tab+eax]  //jump to its routine
+        //cmp edx, edxsave
+        //jnz @internalerr
+
+        //mov eax,Prg.UserBreak      //test if should break immediatelly
+        //or eax,eax
+        //jnz @userbreak
+        xor eax,eax                //get next instruction code
+        lodsb
+        mov ebx,dword ptr [@tab+eax*4]  //jump to its routine
         jmp ebx
 
 @notwork:    {instrukcia neimplementovana, nezacala sa vykonavat}
@@ -901,10 +916,9 @@ dd @notwork
         frstor [eax]
 end;
 
-procedure Run(var Prg:TPrgMemSpace);
+procedure TPrgMemSpace.Run;
 begin
-  Run1(nil,Prg);
-
+  Run1(nil,self);
 end;
 
 begin

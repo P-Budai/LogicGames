@@ -143,17 +143,17 @@ end;
 
 procedure TDebugWin.FormDestroy(Sender: TObject);
 begin
-  FreeComp;
+  Compiler.FreeComp;
 end;
 
 procedure TDebugWin.BtnStepClick(Sender: TObject);
 begin
-  Step;
+  Compiler.Step;
 end;
 
 procedure TDebugWin.BtnRunClick(Sender: TObject);
 begin
-  RunPrg;
+  Compiler.RunPrg;
 end;
 
 procedure TDebugWin.BtnNextClick(Sender: TObject);
@@ -187,7 +187,13 @@ var l:longint;
 begin
   l:=FindLine(SrcCode.Text,SrcCode.SelStart);
   s:=SrcCode.Lines[l];
-  if pos('#break#',s)=1 then s:=copy(s,8,255) else s:='#break#'+s;
+  if pos('#break#',s)=1 then begin
+    s:=copy(s,8,255);
+    Compiler.SetBreakpoint(l,false);
+  end else begin
+    s:='#break#'+s;
+    Compiler.SetBreakpoint(l,true);
+  end;
   SrcCode.Lines[l]:=s;
 end;
 

@@ -57,7 +57,7 @@ begin
     CmpType:=l;
   end else begin
     EatIdentifier(typeident,'a type');
-    Globals.Find(typeident,prgitem,'a type');
+    Globals.FindItem(typeident,prgitem,'a type');
     if not (prgitem is TType) then raise SyntaxError.Create('a type expected, but "'+typeident+'" is a '+prgitem.GetItemClass);
     CmpType:=prgitem as TType;
   end;
@@ -93,7 +93,7 @@ begin
 
   //if type Position is defined, we can add system procedure NewMove(Position,Name,Gamma)
   if UpperCase(typename) = 'POSITION' then begin
-    Globals.Find(typename,i,'');
+    Globals.FindItem(typename,i,'');
     DefPosition:=i as TType;
     DefSystemPositionObjects;
   end;
