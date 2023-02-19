@@ -61,10 +61,10 @@ end;
 function FindItem(str:string;var item:TPrgItem;var loc:boolean;dscr:string):boolean;
 begin
   Result:=false;
-  if Locals.Find(str,item,'') then begin
+  if Locals.FindItem(str,item,'') then begin
     loc:=true;
     Result:=true;
-  end else if Globals.Find(str,item,dscr) then begin
+  end else if Globals.FindItem(str,item,dscr) then begin
     loc:=false;
     Result:=true;
   end;

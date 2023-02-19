@@ -105,7 +105,7 @@ begin
         if Code=nil then Code:=TCodeFragment.Create;
         Code.GenInstrPushI(0);
         ResType:=DefBool;
-      end else if Globals.Find(cur_str,i,'') and (i is TFunction) then begin
+      end else if Globals.FindItem(cur_str,i,'') and (i is TFunction) then begin
         ResType:=CmpFuncCall(i as TFunction,Code);
       end else begin
         CmpVarAddr(ResType,Code);
@@ -304,7 +304,7 @@ begin
       end;
       if (t is TRecord) and TestAndEatTokenSymbol('.') then begin
         if not TestIdentifier then raise SyntaxError.Create('a identifier of record item expected, but '+GetTokenDescr+' found')
-        else if not (t as TRecord).Items.Find(cur_str,p,'a identifier of record item') then
+        else if not (t as TRecord).Items.FindItem(cur_str,p,'a identifier of record item') then
         else if not (p is TVariable) then raise InternalError.Create('vyskytla sa metoda...')
         else begin
           GetToken; {identifier}

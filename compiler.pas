@@ -95,7 +95,7 @@ type InternalError = class(Exception);
        LastVar:longint;
        constructor Create;
        function FindProc(line:longint):TProcedure;
-       function Find(ident:string;var prgitem:TPrgItem;dscr:string):boolean;
+       function FindItem(ident:string;var prgitem:TPrgItem;dscr:string):boolean;
        function GetDataSize:longint;
        procedure Display(StrList:TStrings;Addr:pointer);
        procedure AddVar(name:string;v:TVariable);
@@ -107,6 +107,7 @@ procedure Exec(procname:string;var paramsdata;paramssize:longint);
 procedure Step;
 procedure Next;
 procedure RunPrg;
+procedure SetBreakpoint(l:longint;b:boolean);
 procedure RefreshWatches;
 procedure DefSystemPositionObjects;
 function NewString(s:string):longint;
@@ -136,18 +137,15 @@ var prgsave:TPrgMemSpace;
     s:string;
     rtype:TType;
     p:TProcedure;
-    origCodeAddr:pointer;
 begin
   if Watches.Count=0 then exit;
 
-  //origCodeAddr:=Prg.CodeAddr;
-  //move(pointer(Prg)^,prgsave,sizeof(TPrgMemSpace));
   prgsave:=Prg;
   p:=Globals.FindProc(Prg.StopLine);
   if p=nil then Locals:=TPrgItemList.Create else Locals:=p.Params;
   for i:=0 to Watches.Count-1 do begin
     s:=Watches[i]+#0;
-    lex.Src:=@s[1];
+    lex.Src:=PChar(s);
     lex.cur_line:=0;
     Errors.Clear;
     Warnings.Clear;
@@ -155,24 +153,20 @@ begin
     try
       GetToken;
       watchcode:=TCodeFragment.Create;
-      watchcode.GenLine;
-      WatchCallOfs:=longint(origCodeAddr)-longint(watchcode.Code.Memory);
+      watchcode.GenLine;  {need this to populate  watchcode.Code.Memory}
+      WatchCallOfs:=longint(prgsave.CodeAddr)-longint(watchcode.Code.Memory);
       CmpExpression(rtype,watchcode);
       watchcode.GenInstr(QUIT);
 
       watchcode.Code.SaveToFile('watch_'+IntToStr(i)+'.bin');
-      watchcode.DebugDisplay('watch_'+IntToStr(i)+'.txt',@s[1]);
+      watchcode.DebugDisplay('watch_'+IntToStr(i)+'.txt',PChar(s));
 
       if Errors.Count=0 then begin
         Prg.SetCode(watchcode);
         Prg.LineBreak:=0;
-        Run(Prg);
+        Prg.Run();
         s:=Watches[i]+': ';
         if Prg.ExitCode<>ERRQUIT then s:=s+ErrDescr[Prg.ExitCode]
-{        else if EqualTypes(rtype,DefInt) then s:=s+IntToStr(longint(PtrAdd(Prg.LocalStack,-sizeof(longint))^))
-        else if EqualTypes(rtype,DefFloat) then s:=s+FloatToStr(float(PtrAdd(Prg.LocalStack,-sizeof(float))^))
-        else if EqualTypes(rtype,DefString) then s:=s+GetString(longint(PtrAdd(Prg.LocalStack,-sizeof(longint))^))
-}
         else s:=s+rtype.ValToStr(PtrAdd(Prg.LocalStack,-rtype.Size));
         DebugWin.LstWatches.Items[i]:=s;
       end;
@@ -181,8 +175,8 @@ begin
     end;
     watchcode.Free;
   end;
+
   Prg:=prgsave;
-  //move(prgsave,pointer(Prg)^,sizeof(TPrgMemSpace));
   if p=nil then Locals.Free;
 end;
 
@@ -223,7 +217,6 @@ begin
     else DebugWin.Caption:='Debug Window - not compiled'
   end;
 
-  //todo: is this always necessary?
   DebugWin.UpdateControls;
   Navigator.UpdateControls;
 end;
@@ -369,6 +362,7 @@ end;
 
 //Compile creates compiled code and also program objects (types, variables, procedures)
 procedure Compile(Src:PChar);
+var linetab:PLineFlags;
 begin
   FreeComp;
 
@@ -405,7 +399,10 @@ begin
   if not Compiled then FreeComp
   else begin
     Prg.CreateMemSpace(Globals.GetDataSize,1024*128);
+    GetMem(linetab,lex.cur_line*sizeof(TLineFlags));
+    FillMemory(linetab,lex.cur_line*sizeof(TLineFlags),0);
     Prg.SetCode(Code);
+    Prg.SetLineTable(lex.cur_line,linetab);
   end;
   UpdatePrgState;
 end;
@@ -439,7 +436,7 @@ begin
   if not Compiled or not Running then exit;
   Prg.LineBreak:=1;
   Prg.Returns:=0;
-  Run(debug.prg);
+  Prg.Run();
   UpdatePrgState;
 end;
 
@@ -451,38 +448,67 @@ begin
   Prg.LineBreak:=1;
   Prg.Returns:=0;
   repeat
-    Run(debug.prg);
+    Prg.Run();
   until (Prg.ExitCode<>ERRLINEBREAK) or (Prg.Returns<=0);
   UpdatePrgState;
+end;
+
+procedure SetBreakpoint(l:longint;b:boolean);
+var i:integer;
+    p:PLineFlags;
+begin
+  p:=Prg.LineTable;
+  if l>=Prg.LineCount then exit;
+  inc(p,l);
+  if b then p^.Flags:=1 else p^.Flags:=0;
+end;
+
+function IsBreakpoint(l:longint):boolean;
+var i:integer;
+    p:PLineFlags;
+begin
+  result:=false;
+  p:=Prg.LineTable;
+  if l>=Prg.LineCount then exit;
+  inc(p,l);
+  result:=(p^.Flags=1);
+end;
+
+procedure SetBreakpoints;
+var i:integer;
+    p:PLineFlags;
+begin
+  p:=Prg.LineTable;
+  for i := 0 to Prg.LineCount-1 do begin
+    if (pos('#break#',DebugWin.GetPrgText.Strings[i])>0) then
+      p^.Flags:=1
+    else
+      p^.Flags:=0;
+    inc(p);
+  end;
 end;
 
 //Runs program
 //When debug window is not visible, it runs pcode until QUIT or any ERROR occurs
 //When debug window is visible, it checks at every line if it is a breakpoint on that line
 procedure RunPrg;
-var breakLines:TList<integer>;
-    i:integer;
 begin
   if not Compiled or not Running then exit;
 
-  breakLines:=TList<Integer>.Create;
-  for i := 0 to DebugWin.GetPrgText.Count-1 do
-    if (pos('#break#',DebugWin.GetPrgText.Strings[i])>0) then breakLines.Add(i);
-  breakLines.Sort;
-
+{
   if DebugWin.Visible then begin
     Prg.LineBreak:=1;
-    Prg.Returns:=-1;
   end else Prg.LineBreak:=0;
+}
+  SetBreakpoints();
 
   Prg.ExitCode:=ERRREADY;
   repeat
-    Run(Prg);
-  until (Prg.ExitCode<>ERRLINEBREAK) or breakLines.BinarySearch(Prg.StopLine, i);
+    Prg.Run();
+  until (Prg.ExitCode<>ERRLINEBREAK) or IsBreakpoint(Prg.StopLine);
   Application.ProcessMessages;
 
   UpdatePrgState;
-  breakLines.Free;
 end;
 
 //
@@ -495,7 +521,7 @@ begin
   if not Compiled then raise InternalError.Create('program is not compiled');
   if Running then exit; {!!raise InternalError.Create('program is already running');}
 
-  Globals.Find(procname,p,'the procedure or function "'+procname+'"');
+  Globals.FindItem(procname,p,'the procedure or function "'+procname+'"');
   if not (p is TProcedure) then raise RuntimeError.Create('the "'+procname+'" must be procedure or function')
   else begin
     {ulozim si adresu zasobniku a instrukcie}
@@ -527,7 +553,7 @@ begin
   LastVar:=-1;
 end;
 
-function TPrgItemList.Find(ident:string;var prgitem:TPrgItem;dscr:string):boolean;
+function TPrgItemList.FindItem(ident:string;var prgitem:TPrgItem;dscr:string):boolean;
 var ind:longint;
 begin
   ind:=IndexOf(ident);
