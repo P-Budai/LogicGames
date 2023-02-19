@@ -1,0 +1,83 @@
+module = [{'def' var_def,
+           'def' 'type' type_def,
+           procedure_def,
+           function_def,
+          } ';'
+         ]*
+
+var_def = ident 'as' type
+
+type_def = ident 'as' type
+
+type = {'array' '[' int_number '..' int_number ']' 'of' type,
+        'record' [var_def ';']* 'end' ['record'],
+	ident
+       }
+
+procedure_def = 'def' 'proc' ident [params_def] ';' 
+                  ['def' var_def ';']* 
+                  [command ';']* 
+                'end' ['proc']
+
+function_def = 'def' 'func' ident [params_def] 'as' type ';' 
+                 ['def' var_def ';']* 
+                 [command ';']* 
+               'end' ['func']
+
+params_def = '(' var_def [';' var_def]* ')'
+
+command = {var ':=' expr,
+           ident params,
+           'do' 
+             [command ';']* 
+           'end',
+           'if' bool_expr 'then' command ['else' command],
+           'for' var ':=' expr {'to','downto'} expr 'do' 
+             [command ';']* 
+           'end' ['for'],
+           'while' bool_expr 'do' 
+             [command ';']* 
+           'end' ['while'],
+           'switch' 
+             ['case' bool_expr ':' [command ';']*]* 
+             ['otherwise' [':'] [command ';']* ] 
+           'end' ['switch'],
+          }
+
+var = ident [{'[' expr ']','.' ident}]*
+
+expr = simple_expr [{'<','<=','=','<>','>=','>'} simple_expr]
+
+simple_expr = term [{'+','-','or','xor'} term]*
+
+term = primary [{'*','/','mod','and'} primary]*
+
+primary = {constant,
+           string,
+           var,
+           ident [params],
+           '(' expr ')',
+          }
+
+constant = {int_number,float_number}
+
+bool_expr = bool_term ['or' bool_term]*
+
+bool_term = bool_prim ['and' bool_prim]*
+
+bool_prim = {'true',
+             'false',
+             'not' bool_prim
+             '(' bool_expr ')',
+             expr
+            }
+
+params = ['(' param [',' param]* ')']
+
+param = expr
+
+lex:
+ident
+int_number
+float_number
+string

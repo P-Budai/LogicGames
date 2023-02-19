@@ -1,0 +1,12 @@
+exclude.txt
+*.rar
+*.arj
+*.zip
+*.bat
+*.pas
+*.dfm
+diplomka.dsk
+diplomka.dof
+diplomka.dpr
+diplomka.res
+diplomka.doc
