@@ -150,7 +150,9 @@
             <Form>Navigator</Form>
         </DCCReference>
         <DCCReference Include="utils.pas"/>
-        <DCCReference Include="sorting.pas"/>
+        <DCCReference Include="sorting.pas">
+            <Form>$R *.RES</Form>
+        </DCCReference>
         <None Include="INSTR.INC"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>

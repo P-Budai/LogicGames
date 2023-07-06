@@ -254,7 +254,6 @@ begin
 end;
 
 procedure TNavigator.MnuStartGameClick(Sender: TObject);
-var s:string;
 begin
   if AutoSave then SaveGameDefinition('default.def');
   History.Free;
@@ -262,9 +261,8 @@ begin
   self.Repaint;
   ResetLibrary;
   Compiler.FreeComp;
-  s:=DebugWin.SrcCode.Text+#0;
   try
-    Compiler.Compile(@s[1]);
+    Compiler.Compile(PChar(DebugWin.SrcCode.Text));
   except
       on E: Exception do begin
           Dialogs.MessageDlg(E.Message, mtInformation, [mbOk], 0, mbOk);
@@ -272,7 +270,7 @@ begin
   end;
   if not Compiled then exit;
 
-  DlgPlayer.ShowModal; { TODO : when user click "cancel" in player dialog, it should not start game }
+  if not IsPositiveResult(DlgPlayer.ShowModal) then exit;
 
   try
     GameRunning:=true;
@@ -313,7 +311,7 @@ begin
     else if m.Gama<0 then ResultWin.Result.Caption:='Player '+IntToStr(ord(OnMove)+1)+' wins !'
     else ResultWin.Result.Caption:='Player '+IntToStr(2-ord(OnMove))+' wins !';
     ResultWin.ShowModal;
-    GameRunning:=false;
+    //GameRunning:=false;
   end else begin
     if History.Count>1 then begin
       OnMove:=not OnMove;
@@ -329,6 +327,7 @@ var m:TMove;
 begin
   while GameRunning and (Players[OnMove].Human=false) and (History.Count>0) do begin
     m:=TMove(History.Last);
+    if m.NextMoves.Count=0 then exit;    
     Computing:=true;
     UpdateControls;
     m.ComputeAlphaBeta(Players[OnMove].level.depth,Players[OnMove].level.degree,1,-infinity,infinity);
@@ -381,6 +380,7 @@ end;
 
 procedure TNavigator.DisplayMove(Sender:TObject);
 var m:TMove;
+    f:float;
 begin
   if not (Sender is TListBox) then exit;
   m:=TMove(History.Items[LstHistory.ItemIndex]);
@@ -389,8 +389,11 @@ begin
   end else begin
     RefreshVariantsLst;
   end;
-  LblGama.Caption:=FloatToStr(m.Gama);
-  LblAlphaBeta.Caption:=FloatToStr(m.AlphaBeta);
+
+//  if odd(LstHistory.ItemIndex) then f:=-1 else f:=1;
+
+  LblGama.Caption:=FloatToStr(f*m.Gama);
+  LblAlphaBeta.Caption:=FloatToStr(f*m.AlphaBeta);
   Computing:=true;
   UpdateControls;
   Compiler.Exec('DisplayPosition',m.Data^,DefPosition.Size);

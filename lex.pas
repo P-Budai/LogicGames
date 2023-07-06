@@ -4,8 +4,7 @@ interface
 
 uses SysUtils;
 
-type TCharSet = set of char;
-     TTokenType=(TTError,
+type TTokenType=(TTError,
                  TTEndFile,
                  TTAlphaNum,
                  TTInteger,
@@ -38,8 +37,8 @@ var cur_token:TTokenType;
     cur_line:longint;
     src:PChar;
 
-function GetOneChar:char;
-function GetWord(AcceptedChars:TCharSet):string;
+//function GetOneChar:char;
+//function GetWord(AcceptedChars:TCharSet):string;
 function GetToken:TTokenType;
 function EatToken(token:TTokenType):boolean;
 function EatTokenStr(token:TTokenType;str:string):boolean;
@@ -58,18 +57,18 @@ function GetTokenDescr:string;
 
 implementation
 
-function GetOneChar:char;
+function GetOneChar:WideChar;
 begin
   Result:=src^;
   if Result<>#0 then inc(src);
   if Result=#13 then inc(cur_line);
 end;
 
-function GetWord(AcceptedChars:TCharSet):string;
+function GetWord(AcceptedChars:TSysCharSet):string;
 begin
   result:='';
   AcceptedChars:=AcceptedChars-[#0];
-  while src^ in AcceptedChars do begin
+  while CharInSet(src^,AcceptedChars) do begin
     result:=result+src^;
     if src^='#' then begin            {preskocim preprocesor}
       GetOneChar;
@@ -93,11 +92,11 @@ var s:string;
     rescode:integer;
 begin
   s:=GetWord(CSNum);
-  if src^ in ['.','e','E'] then begin
+  if CharInSet(src^,['.','e','E']) then begin
     cur_token:=TTReal;
     s:=s+GetOneChar;
-    if ((src-1)^ in ['e','E']) and (src^ in ['+','-']) then s:=s+GetOneChar;
-    if not (src^ in CSNum) then raise LexError.Create('a digit expected');
+    if CharInSet((src-1)^,['e','E']) and CharInSet(src^,['+','-']) then s:=s+GetOneChar;
+    if not CharInSet(src^,CSNum) then raise LexError.Create('a digit expected');
     s:=s+GetWord(CSNum);
     val(s,cur_real,rescode);
   end else begin
@@ -110,7 +109,7 @@ end;
 procedure read_symbol;
 begin
   cur_token:=TTSymbol;
-  if src^ in CSNonGroupSyms
+  if CharInSet(src^,CSNonGroupSyms)
     then cur_str:=GetOneChar
     else cur_str:=GetWord(CSSymbols - CSNonGroupSyms);
 end;
@@ -143,10 +142,10 @@ function GetToken:TTokenType;
 begin
   GetWord(CSSpaces);                                   {preskocim medzery}
   cur_pos:=src;
-  if src^ in CSAlpha then read_alphanum
-  else if src^ in CSNum then read_number
+  if CharInSet(src^,CSAlpha) then read_alphanum
+  else if CharInSet(src^,CSNum) then read_number
   else if src^ = '"' then read_string
-  else if src^ in CSSymbols then read_symbol
+  else if CharInSet(src^,CSSymbols) then read_symbol
   else if src^ = #0 then cur_token:=TTEndFile
   else cur_token:=TTError;
   GetToken:=cur_token;

@@ -124,7 +124,7 @@ var
 
 implementation
 
-uses windows,forms,utils,sntx,gener,debug,dbgwin,expr,navig,lib,lex, System.Generics.Collections;
+uses windows,forms,utils,sntx,gener,debug,dbgwin,expr,navig,lib,lex, System.Generics.Collections, StrUtils;
 
 var
     Errors:TStringList;
@@ -407,11 +407,27 @@ begin
   UpdatePrgState;
 end;
 
+procedure WriteLineTable();
+var f:text;
+    i:integer;
+    p:PLineFlags;
+begin
+  AssignFile(f,'LineHistogram.csv');
+  Rewrite(f);
+  p:=Prg.LineTable;
+  for i:=1 to Prg.LineCount-1 do begin
+    inc(p);
+    writeln(f,i,';',p.Hits,';"',AnsiReplaceStr(DebugWin.SrcCode.Lines[i],'"','""'),'"');
+  end;
+  close(f);
+end;
+
 procedure FreeComp;
 begin
   Running:=false;
   if Compiled then begin
     Log(INFO,'Runtime','Destroying program memory space, code, globals');
+    WriteLineTable();
     Prg.DestroyMemSpace;
     Code.Free;
     Globals.Free;

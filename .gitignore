@@ -67,3 +67,9 @@ __recovery/
 
 # Boss dependency manager vendor folder https://github.com/HashLoad/boss
 modules/
+
+#various outputs from main program (logs, debug data, etc)
+
+LineHistogram.csv
+output.bin
+output.txt
