@@ -206,7 +206,6 @@ begin
   try
     while Code.Position < Code.Size do begin
       hex:=Format('%4.4x',[Code.Position])+' ';
-      inst:=0;
       Code.Read(i1,1);
       inst:=i1;
       if inst>=ord(INSTR_COUNT) then
