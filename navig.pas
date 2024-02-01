@@ -417,7 +417,7 @@ var m:TMove;
     p:TMemoryStream;
     i,strid:longint;
 begin
-  if GameRunning and (LstHistory.ItemIndex=LstHistory.Items.Count-1) then begin
+  if GameRunning and (LstHistory.ItemIndex>=0) and (LstHistory.ItemIndex=LstHistory.Items.Count-1) then begin
     m:=History.Items[LstHistory.ItemIndex] as TMove;
     strid:=0;
     p:=TMemoryStream.Create;

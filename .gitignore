@@ -79,3 +79,7 @@ log.txt
 *.identcache
 diplomka.exe
 log.txt
+diplomka.identcache
+log.txt
+watch_*.txt
+watch_*.bin

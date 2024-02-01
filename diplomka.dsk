@@ -1,55 +1,76 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\chess.pas',0,1,412,16,433,0,0,,
-File_1=TSourceModule,'c:\program files (x86)\embarcadero\studio\21.0\SOURCE\VCL\Vcl.StdCtrls.pas',0,1,1073,18,1092,0,0,{{1715,4}
-File_2=TSourceModule,'c:\program files (x86)\embarcadero\studio\21.0\SOURCE\RTL\SYS\System.SysUtils.pas',0,1,18927,14,18950,0,0,,
-File_3=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\sorting.pas',0,1,45,1,80,0,0,,
-File_4=TSourceModule,'c:\program files (x86)\embarcadero\studio\21.0\SOURCE\VCL\Vcl.Menus.pas',0,1,260,1,279,0,0,,
-File_5=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\about.pas',0,1,36,1,37,0,0,,
-File_6=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\RulesWin.pas',0,1,1,1,46,0,0,,
-File_7=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\crc.pas',0,1,1,1,40,0,0,,
-File_8=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\plrdlg.pas',0,1,1,1,1,0,0,,
-File_9=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\optdlg.pas',0,1,1,1,1,0,0,,
-File_10=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\Unit1.pas',0,1,397,1,415,0,0,,
-File_11=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\runtime.pas',0,1,1,17,9,0,0,,
+File_0=TSourceModule,'c:\program files (x86)\embarcadero\studio\21.0\SOURCE\RTL\SYS\System.pas',0,1,49,1,12,0,0,,
+File_1=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\chess.pas',0,1,412,16,433,0,0,,
+File_2=TSourceModule,'c:\program files (x86)\embarcadero\studio\21.0\SOURCE\VCL\Vcl.StdCtrls.pas',0,1,1073,18,1092,0,0,{{1715,4}
+File_3=TSourceModule,'c:\program files (x86)\embarcadero\studio\21.0\SOURCE\RTL\SYS\System.SysUtils.pas',0,1,18927,14,18950,0,0,,
+File_4=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\sorting.pas',0,1,45,1,80,0,0,,
+File_5=TSourceModule,'c:\program files (x86)\embarcadero\studio\21.0\SOURCE\VCL\Vcl.Menus.pas',0,1,260,1,279,0,0,,
+File_6=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\about.pas',0,1,36,1,37,0,0,,
+File_7=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\RulesWin.pas',0,1,1,1,46,0,0,,
+File_8=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\crc.pas',0,1,1,1,40,0,0,,
+File_9=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\plrdlg.pas',0,1,1,1,1,0,0,,
+File_10=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\optdlg.pas',0,1,1,1,1,0,0,,
+File_11=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\Unit1.pas',0,1,397,1,415,0,0,,
+File_12=TSourceModule,'C:\Users\tata\Documents\Delphi\diplomka\runtime.pas',0,1,1,17,9,0,0,,
 
 [Modules]
-Module0=C:\Users\tata\Documents\GitHub\LogicGames\lib.pas
+Module0=C:\Users\tata\Documents\GitHub\LogicGames\compiler.pas
 Module1=C:\Users\tata\Documents\GitHub\LogicGames\navig.pas
-Module2=C:\Users\tata\Documents\GitHub\LogicGames\utils.pas
-Module3=c:\program files (x86)\embarcadero\studio\21.0\SOURCE\RTL\SYS\System.pas
-Module4=c:\program files (x86)\embarcadero\studio\21.0\source\rtl\common\System.Classes.pas
-Module5=C:\Users\tata\Documents\GitHub\LogicGames\plrdlg.pas
-Module6=C:\Users\tata\Documents\Delphi\diplomka\navig.pas
-Module7=C:\Users\tata\Documents\Delphi\diplomka\debug.pas
-Module8=C:\Users\tata\Documents\Delphi\diplomka\INSTR.INC
-Module9=C:\Users\tata\Documents\Delphi\diplomka\gener.pas
-Module10=C:\Users\tata\Documents\Delphi\diplomka\compiler.pas
-Module11=C:\Users\tata\Documents\Delphi\diplomka\lex.pas
-Module12=c:\users\tata\documents\delphi\diplomka\lib.pas
-Module13=C:\Users\tata\Documents\Delphi\diplomka\dbgwin.pas
-Module14=C:\Users\tata\Documents\Delphi\diplomka\expr.pas
-Module15=C:\Users\tata\Documents\Delphi\diplomka\utils.pas
-Module16=C:\Users\tata\Documents\Delphi\diplomka\sntx.pas
-Module17=default.htm
-Count=18
+Module2=C:\Users\tata\Documents\GitHub\LogicGames\RulesWin.pas
+Module3=C:\Users\tata\Documents\GitHub\LogicGames\crc.pas
+Module4=C:\Users\tata\Documents\GitHub\LogicGames\plrdlg.pas
+Module5=C:\Users\tata\Documents\GitHub\LogicGames\debug.pas
+Module6=C:\Users\tata\Documents\GitHub\LogicGames\gener.pas
+Module7=C:\Users\tata\Documents\GitHub\LogicGames\lex.pas
+Module8=C:\Users\tata\Documents\GitHub\LogicGames\utils.pas
+Module9=C:\Users\tata\Documents\GitHub\LogicGames\lib.pas
+Module10=c:\program files (x86)\embarcadero\studio\21.0\source\rtl\common\System.Classes.pas
+Module11=C:\Users\tata\Documents\Delphi\diplomka\navig.pas
+Module12=C:\Users\tata\Documents\Delphi\diplomka\debug.pas
+Module13=C:\Users\tata\Documents\Delphi\diplomka\INSTR.INC
+Module14=C:\Users\tata\Documents\Delphi\diplomka\gener.pas
+Module15=C:\Users\tata\Documents\Delphi\diplomka\compiler.pas
+Module16=C:\Users\tata\Documents\Delphi\diplomka\lex.pas
+Module17=c:\users\tata\documents\delphi\diplomka\lib.pas
+Module18=C:\Users\tata\Documents\Delphi\diplomka\dbgwin.pas
+Module19=C:\Users\tata\Documents\Delphi\diplomka\expr.pas
+Module20=C:\Users\tata\Documents\Delphi\diplomka\utils.pas
+Module21=C:\Users\tata\Documents\Delphi\diplomka\sntx.pas
+Module22=default.htm
+Count=23
 EditWindowCount=1
 
-[C:\Users\tata\Documents\GitHub\LogicGames\lib.pas]
+[C:\Users\tata\Documents\GitHub\LogicGames\compiler.pas]
 ModuleType=TSourceModule
 
 [C:\Users\tata\Documents\GitHub\LogicGames\navig.pas]
 ModuleType=TSourceModule
 
-[C:\Users\tata\Documents\GitHub\LogicGames\utils.pas]
+[C:\Users\tata\Documents\GitHub\LogicGames\RulesWin.pas]
 ModuleType=TSourceModule
 
-[c:\program files (x86)\embarcadero\studio\21.0\SOURCE\RTL\SYS\System.pas]
-ModuleType=TSourceModule
-
-[c:\program files (x86)\embarcadero\studio\21.0\source\rtl\common\System.Classes.pas]
+[C:\Users\tata\Documents\GitHub\LogicGames\crc.pas]
 ModuleType=TSourceModule
 
 [C:\Users\tata\Documents\GitHub\LogicGames\plrdlg.pas]
+ModuleType=TSourceModule
+
+[C:\Users\tata\Documents\GitHub\LogicGames\debug.pas]
+ModuleType=TSourceModule
+
+[C:\Users\tata\Documents\GitHub\LogicGames\gener.pas]
+ModuleType=TSourceModule
+
+[C:\Users\tata\Documents\GitHub\LogicGames\lex.pas]
+ModuleType=TSourceModule
+
+[C:\Users\tata\Documents\GitHub\LogicGames\utils.pas]
+ModuleType=TSourceModule
+
+[C:\Users\tata\Documents\GitHub\LogicGames\lib.pas]
+ModuleType=TSourceModule
+
+[c:\program files (x86)\embarcadero\studio\21.0\source\rtl\common\System.Classes.pas]
 ModuleType=TSourceModule
 
 [C:\Users\tata\Documents\Delphi\diplomka\navig.pas]
@@ -89,8 +110,8 @@ ModuleType=TSourceModule
 ModuleType=TURLModule
 
 [EditWindow0]
-ViewCount=18
-CurrentEditView=C:\Users\tata\Documents\GitHub\LogicGames\lib.pas
+ViewCount=24
+CurrentEditView=C:\Users\tata\Documents\GitHub\LogicGames\compiler.pas
 View0=0
 View1=1
 View2=2
@@ -109,6 +130,12 @@ View14=14
 View15=15
 View16=16
 View17=17
+View18=18
+View19=19
+View20=20
+View21=21
+View22=22
+View23=23
 PercentageSizes=1
 Create=1
 Visible=1
@@ -132,7 +159,7 @@ RightPanelSize=1996
 RightPanelClients=DockSite2,DockSite4
 RightPanelData=00000800010100000000130F00000000000001CC0700000000000001000000004912000009000000446F636B53697465320100000000CD1A000009000000446F636B5369746534FFFFFFFF
 BottomPanelSize=1861
-BottomPanelClients=DockSite1,MessageView
+BottomPanelClients=MessageView,DockSite1
 BottomPanelData=00000800010200000000034500000000000002450700000000000001000000008122000009000000446F636B53697465310100000000034500000F0000004D65737361676556696577466F726DFFFFFFFF
 BottomMiddlePanelSize=0
 BottomMiddlePanelClients=DockSite0,GraphDrawingModel
@@ -178,37 +205,50 @@ EditViewName=C:\Users\tata\Documents\Delphi\diplomka\navig.pas
 [View4]
 CustomEditViewType=TEditView
 Module=C:\Users\tata\Documents\GitHub\LogicGames\navig.pas
-CursorX=21
-CursorY=130
-TopLine=110
+CursorX=42
+CursorY=405
+TopLine=386
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=C:\Users\tata\Documents\GitHub\LogicGames\navig.pas
 
 [View5]
+CustomEditViewType=TDisassemblyEditView
+DumpPane=69
+DisassemblyPane=150
+RegisterPane=185
+FlagPane=51
+MixedSource=1
+MixedIL=0
+ShowAddresses=1
+ShowOpcodes=2
+DumpViewType=0
+StackViewType=2
+
+[View6]
+CustomEditViewType=TEditView
+Module=C:\Users\tata\Documents\GitHub\LogicGames\compiler.pas
+CursorX=32
+CursorY=479
+TopLine=460
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Users\tata\Documents\GitHub\LogicGames\compiler.pas
+
+[View7]
 CustomEditViewType=TEditView
 Module=C:\Users\tata\Documents\GitHub\LogicGames\lib.pas
-CursorX=26
-CursorY=144
+CursorX=35
+CursorY=220
 TopLine=192
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=C:\Users\tata\Documents\GitHub\LogicGames\lib.pas
 
-[View6]
-CustomEditViewType=TEditView
-Module=c:\program files (x86)\embarcadero\studio\21.0\SOURCE\RTL\SYS\System.pas
-CursorX=1
-CursorY=17927
-TopLine=17907
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=c:\program files (x86)\embarcadero\studio\21.0\SOURCE\RTL\SYS\System.pas
-
-[View7]
+[View8]
 CustomEditViewType=TEditView
 Module=c:\program files (x86)\embarcadero\studio\21.0\source\rtl\common\System.Classes.pas
 CursorX=1
@@ -219,29 +259,84 @@ Elisions=
 Bookmarks=
 EditViewName=c:\program files (x86)\embarcadero\studio\21.0\source\rtl\common\System.Classes.pas
 
-[View8]
+[View9]
 CustomEditViewType=TEditView
 Module=C:\Users\tata\Documents\GitHub\LogicGames\utils.pas
-CursorX=1
-CursorY=54
-TopLine=34
+CursorX=34
+CursorY=34
+TopLine=22
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=C:\Users\tata\Documents\GitHub\LogicGames\utils.pas
 
-[View9]
+[View10]
+CustomEditViewType=TEditView
+Module=C:\Users\tata\Documents\GitHub\LogicGames\lex.pas
+CursorX=16
+CursorY=149
+TopLine=130
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Users\tata\Documents\GitHub\LogicGames\lex.pas
+
+[View11]
+CustomEditViewType=TEditView
+Module=C:\Users\tata\Documents\GitHub\LogicGames\gener.pas
+CursorX=1
+CursorY=337
+TopLine=313
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Users\tata\Documents\GitHub\LogicGames\gener.pas
+
+[View12]
+CustomEditViewType=TEditView
+Module=C:\Users\tata\Documents\GitHub\LogicGames\debug.pas
+CursorX=1
+CursorY=163
+TopLine=144
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Users\tata\Documents\GitHub\LogicGames\debug.pas
+
+[View13]
 CustomEditViewType=TEditView
 Module=C:\Users\tata\Documents\GitHub\LogicGames\plrdlg.pas
-CursorX=17
-CursorY=90
-TopLine=62
+CursorX=27
+CursorY=83
+TopLine=59
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=C:\Users\tata\Documents\GitHub\LogicGames\plrdlg.pas
 
-[View10]
+[View14]
+CustomEditViewType=TEditView
+Module=C:\Users\tata\Documents\GitHub\LogicGames\crc.pas
+CursorX=18
+CursorY=30
+TopLine=7
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Users\tata\Documents\GitHub\LogicGames\crc.pas
+
+[View15]
+CustomEditViewType=TEditView
+Module=C:\Users\tata\Documents\GitHub\LogicGames\RulesWin.pas
+CursorX=35
+CursorY=43
+TopLine=24
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Users\tata\Documents\GitHub\LogicGames\RulesWin.pas
+
+[View16]
 CustomEditViewType=TEditView
 Module=c:\users\tata\documents\delphi\diplomka\lib.pas
 CursorX=5
@@ -252,7 +347,7 @@ Elisions=
 Bookmarks=
 EditViewName=c:\users\tata\documents\delphi\diplomka\lib.pas
 
-[View11]
+[View17]
 CustomEditViewType=TEditView
 Module=C:\Users\tata\Documents\Delphi\diplomka\utils.pas
 CursorX=1
@@ -263,7 +358,7 @@ Elisions=
 Bookmarks=
 EditViewName=C:\Users\tata\Documents\Delphi\diplomka\utils.pas
 
-[View12]
+[View18]
 CustomEditViewType=TEditView
 Module=C:\Users\tata\Documents\Delphi\diplomka\dbgwin.pas
 CursorX=1
@@ -274,7 +369,7 @@ Elisions=
 Bookmarks=
 EditViewName=C:\Users\tata\Documents\Delphi\diplomka\dbgwin.pas
 
-[View13]
+[View19]
 CustomEditViewType=TEditView
 Module=C:\Users\tata\Documents\Delphi\diplomka\compiler.pas
 CursorX=1
@@ -285,7 +380,7 @@ Elisions=
 Bookmarks=
 EditViewName=C:\Users\tata\Documents\Delphi\diplomka\compiler.pas
 
-[View14]
+[View20]
 CustomEditViewType=TEditView
 Module=C:\Users\tata\Documents\Delphi\diplomka\sntx.pas
 CursorX=27
@@ -296,7 +391,7 @@ Elisions=
 Bookmarks=
 EditViewName=C:\Users\tata\Documents\Delphi\diplomka\sntx.pas
 
-[View15]
+[View21]
 CustomEditViewType=TEditView
 Module=C:\Users\tata\Documents\Delphi\diplomka\expr.pas
 CursorX=3
@@ -307,7 +402,7 @@ Elisions=
 Bookmarks={0,237,9}{1,385,20}
 EditViewName=C:\Users\tata\Documents\Delphi\diplomka\expr.pas
 
-[View16]
+[View22]
 CustomEditViewType=TEditView
 Module=C:\Users\tata\Documents\Delphi\diplomka\gener.pas
 CursorX=71
@@ -318,7 +413,7 @@ Elisions=
 Bookmarks=
 EditViewName=C:\Users\tata\Documents\Delphi\diplomka\gener.pas
 
-[View17]
+[View23]
 CustomEditViewType=TEditView
 Module=C:\Users\tata\Documents\Delphi\diplomka\lex.pas
 CursorX=1
@@ -330,7 +425,7 @@ Bookmarks=
 EditViewName=C:\Users\tata\Documents\Delphi\diplomka\lex.pas
 
 [Watches]
-Count=14
+Count=15
 Watch0='s',256,0,18,1,0,'Watches',0
 Watch1='p',256,0,18,1,0,'Watches',0
 Watch2='longint(p^)',256,0,18,1,0,'Watches',0
@@ -345,6 +440,7 @@ Watch10='Code.Code.Position',256,0,18,1,0,'Watches',1
 Watch11='Prg',256,0,18,1,0,'Watches',1
 Watch12='txt[length(txt)+3]',256,0,18,1,0,'Watches',1
 Watch13='LstHistory.ItemIndex',256,0,18,1,0,'Watches',1
+Watch14='StartPositions',256,0,18,1,0,'Watches',1
 
 [WatchWindow]
 WatchColumnWidth=120
@@ -356,11 +452,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=9938
+Width=4938
 Height=1468
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=9938
+ClientWidth=4938
 ClientHeight=1468
 TBDockHeight=216
 LRDockWidth=13602
@@ -511,7 +607,7 @@ LRDockWidth=273
 Dockable=1
 StayOnTop=0
 Name=8
-Description=8
+Description=11
 filter=1
 
 [DebugLogView]
@@ -522,11 +618,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=9938
+Width=4938
 Height=1468
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=9938
+ClientWidth=4938
 ClientHeight=1468
 TBDockHeight=410
 LRDockWidth=4949
@@ -541,11 +637,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=9938
+Width=4938
 Height=1468
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=9938
+ClientWidth=4938
 ClientHeight=1468
 TBDockHeight=216
 LRDockWidth=7406
@@ -555,7 +651,7 @@ Column0Width=145
 Column1Width=100
 Column2Width=115
 Column3Width=1442
-Column4Width=233
+Column4Width=8
 
 [LocalVarsWindow]
 PercentageSizes=1
@@ -565,11 +661,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=9938
+Width=4938
 Height=1468
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=9938
+ClientWidth=4938
 ClientHeight=1468
 TBDockHeight=1540
 LRDockWidth=3484
@@ -584,11 +680,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=9938
+Width=4938
 Height=1468
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=9938
+ClientWidth=4938
 ClientHeight=1468
 TBDockHeight=2065
 LRDockWidth=3484
@@ -755,25 +851,6 @@ LRDockWidth=3562
 Dockable=1
 StayOnTop=0
 
-[UsagesView]
-PercentageSizes=1
-Create=1
-Visible=0
-Docked=0
-State=0
-Left=0
-Top=0
-Width=2023
-Height=5547
-MaxLeft=-4
-MaxTop=-7
-ClientWidth=1953
-ClientHeight=5209
-TBDockHeight=5547
-LRDockWidth=2023
-Dockable=1
-StayOnTop=0
-
 [BreakpointWindow]
 PercentageSizes=1
 Create=1
@@ -792,13 +869,13 @@ TBDockHeight=1547
 LRDockWidth=8742
 Dockable=1
 StayOnTop=0
-Column0Width=11
-Column1Width=8
-Column2Width=8
-Column3Width=8
-Column4Width=8
-Column5Width=8
-Column6Width=8
+Column0Width=30
+Column1Width=36
+Column2Width=42
+Column3Width=30
+Column4Width=31
+Column5Width=24
+Column6Width=42
 
 [StructureView]
 PercentageSizes=1
@@ -962,7 +1039,7 @@ LRDockWidth=3824
 Dockable=1
 StayOnTop=0
 TabPosition=1
-ActiveTabID=BreakpointWindow
+ActiveTabID=WatchWindow
 TabDockClients=DebugLogView,BreakpointWindow,ThreadStatusWindow,CallStackWindow,WatchWindow,LocalVarsWindow
 
 [DockSite2]

@@ -1,13 +1,5 @@
 0000 00 0000             LINE    0
-              p.pieces[p.onmove*i]
-0003 36 FA48             PUSHG2  -1464
-0006 20                  LOADI   
-0007 33                  PUSHGZ  
-0008 20                  LOADI   
-0009 29                  MULI    
-000A 16 0255EC68         ARRACC  39185512
-000F 36 FC5C             PUSHG2  -932
-0012 25                  ADDI    
-0013 1B 07               PUSH1   7
-0015 22                  LOADM   
-0016 01                  QUIT    
+              p.f
+0003 35 14               PUSHG1  20
+0005 21                  LOADF   
+0006 01                  QUIT    
