@@ -127,6 +127,7 @@ type
     procedure SetProgress(depth,value:longint);
     procedure GameWinClick(Shift:TShiftState;x,y:integer);
     procedure SetGameImgSize(w,h:longint);
+    procedure ExpandGameImgSize(w,h:longint);
   end;
 
   TLevel=record
@@ -140,7 +141,7 @@ type
     items:array[1..maxlevels] of TLevel;
   end;
 
-  TPlayers=array[boolean] of record
+  TPlayers=array[1..2] of record
       Human:boolean;
       name:string[20];
       level:TLevel;
@@ -158,13 +159,13 @@ implementation
 
 {$R *.DFM}
 
-uses dbgwin,plrdlg,lib,sorting,ruleswin,about,shellapi,optdlg,
+uses contnrs, dbgwin,plrdlg,lib,sorting,ruleswin,about,shellapi,optdlg,
   ResltWin, utils, compiler;
 
 var GameRunning,Computing:boolean;
     StartPositions:TMove;
-    History:TList;
-    OnMove:boolean;
+    History:TObjectList;
+    OnMove:integer;  //who must move: 1-first player, 2-second player
 
 procedure TNavigator.UpdateControls;
 var b:boolean;
@@ -200,7 +201,7 @@ var i:longint;
 begin
   LstHistory.Clear;
   for i:=0 to History.Count-1 do
-    LstHistory.Items.Add(IntToStr(i)+':'+TMove(History.Items[i]).Name);
+    LstHistory.Items.Add(IntToStr(i)+':'+(History.Items[i] as TMove).Name);
   if History.Count>0 then LstHistory.ItemIndex:=History.Count-1;
   RefreshVariantsLst;
 end;
@@ -211,7 +212,7 @@ var m:TMove;
 begin
   LstVariants.Clear;
   if History.Count=0 then exit;
-  m:=TMove(History.Items[LstHistory.ItemIndex]);
+  m:=History.Items[LstHistory.ItemIndex] as TMove;
   for i:=0 to m.NextMoves.Count-1 do
     LstVariants.Items.Add((m.NextMoves.Items[i] as TMove).Name);
 end;
@@ -225,11 +226,14 @@ begin
     items[1].depth:=2;
     items[1].degree:=10;
   end;
-  Players[false].Human:=true;
-  Players[false].Name:='Player';
-  Players[false].Level:=Levels.items[1];
-  Players[true]:=Players[false];
-  Players[true].Human:=false;
+  Players[1].Human:=true;
+  Players[1].Name:='Player 1';
+  Players[1].Level:=Levels.items[1];
+
+  Players[2].Human:=false;
+  Players[2].Name:='Player 2';
+  Players[2].Level:=Levels.items[1];
+
   AutoPlay:=true;
   ShowCompMove:=false;
   AutoSave:=true;
@@ -274,8 +278,9 @@ begin
 
   try
     GameRunning:=true;
-    OnMove:=false;
-    History:=TList.Create;
+    OnMove:=1;
+    History:=TObjectList.Create;
+    History.OwnsObjects:=false;
     StartPositions:=TMove.Create(nil);
     RefreshHistoryLst;
     Computing:=true;
@@ -297,6 +302,7 @@ procedure TNavigator.NewMove(m:TMove);
 begin
   History.Add(m);
   m.Played:=true;
+  OnMove:=3-OnMove;
   if not m.Generated then begin
     Computing:=true;
     UpdateControls;
@@ -308,14 +314,14 @@ begin
   DisplayMove(LstHistory);
   if m.NextMoves.Count=0 then begin
     if m.Gama=0 then ResultWin.Result.Caption:='Draw Game !'
-    else if m.Gama<0 then ResultWin.Result.Caption:='Player '+IntToStr(ord(OnMove)+1)+' wins !'
-    else ResultWin.Result.Caption:='Player '+IntToStr(2-ord(OnMove))+' wins !';
+    else if m.Gama>0 then ResultWin.Result.Caption:=Players[OnMove].name+' wins !'
+    else ResultWin.Result.Caption:=Players[3-OnMove].name+' wins !';
     ResultWin.ShowModal;
     //GameRunning:=false;
   end else begin
     if History.Count>1 then begin
-      OnMove:=not OnMove;
-      TMove(History.Items[History.Count-2]).FreeNextMoves(1);
+      //OnMove:=3-OnMove;
+      (History.Items[History.Count-2] as TMove).FreeNextMoves(1);
     end;
   end;
   UpdateControls;
@@ -326,7 +332,7 @@ var m:TMove;
     i:integer;
 begin
   while GameRunning and (Players[OnMove].Human=false) and (History.Count>0) do begin
-    m:=TMove(History.Last);
+    m:=History.Last as TMove;
     if m.NextMoves.Count=0 then exit;    
     Computing:=true;
     UpdateControls;
@@ -347,7 +353,7 @@ begin
   if History.Count=0 then begin
     m:=StartPositions;
   end else begin
-    m:=TMove(History.Items[LstHistory.ItemIndex]);
+    m:=History.Items[LstHistory.ItemIndex] as TMove;
   end;
   m:=m.NextMoves.Items[LstVariants.ItemIndex] as TMove;
   NewMove(m);
@@ -365,7 +371,7 @@ end;
 procedure TNavigator.BtnBackClick(Sender: TObject);
 begin
   History.Delete(History.Count-1);
-  OnMove:=not OnMove;
+  OnMove:=3-OnMove;
   RefreshHistoryLst;
   UpdateControls;
   LstHistory.ItemIndex:=LstHistory.Items.Count-1;
@@ -383,14 +389,14 @@ var m:TMove;
     f:float;
 begin
   if not (Sender is TListBox) then exit;
-  m:=TMove(History.Items[LstHistory.ItemIndex]);
+  m:=History.Items[LstHistory.ItemIndex] as TMove;
   if Sender=LstVariants then begin
     m:=m.NextMoves.Items[LstVariants.ItemIndex] as TMove;
   end else begin
     RefreshVariantsLst;
   end;
 
-//  if odd(LstHistory.ItemIndex) then f:=-1 else f:=1;
+  if odd(LstHistory.ItemIndex) then f:=1 else f:=-1;
 
   LblGama.Caption:=FloatToStr(f*m.Gama);
   LblAlphaBeta.Caption:=FloatToStr(f*m.AlphaBeta);
@@ -412,7 +418,7 @@ var m:TMove;
     i,strid:longint;
 begin
   if GameRunning and (LstHistory.ItemIndex=LstHistory.Items.Count-1) then begin
-    m:=TMove(History.Items[LstHistory.ItemIndex]);
+    m:=History.Items[LstHistory.ItemIndex] as TMove;
     strid:=0;
     p:=TMemoryStream.Create;
     try
@@ -511,7 +517,7 @@ begin
     if Gama>0 then AlphaBeta:=infinity else
     if Gama<0 then AlphaBeta:=-infinity
   end else for i:=0 to NextMoves.Count-1 do begin
-    (NextMoves.Items[i] as TMove).AlphaBeta:=(NextMoves.Items[i] as TMove).Gama;
+    (NextMoves.Items[i] as TMove).AlphaBeta:=(NextMoves.Items[i] as TMove).Gama;         //TODO: je to nutne?
     SortArray^[i]:=i;
   end;
 end;
@@ -578,6 +584,7 @@ begin
     depth:=1;
   if depth<=0 then begin NextMoves.Clear; Generated:=false; FreeMem(SortArray); SortArray:=nil; end
   else for i:=0 to NextMoves.Count-1 do (NextMoves.Items[i] as TMove).FreeNextMoves(depth-1);
+  Played:=false;
 end;
 
 procedure TMove.SetData(d:pointer;n:string;t:double);
@@ -603,6 +610,7 @@ end;
 
 destructor TMove.Destroy;
 begin
+  NextMoves.Clear;
   NextMoves.Free;
   if Data<>nil then FreeMem(Data);
   if SortArray<>nil then FreeMem(SortArray);
@@ -744,6 +752,12 @@ begin
 end;
 
 procedure TNavigator.SetGameImgSize(w,h:longint);
+begin
+  ImgGameState.Picture.Bitmap.Width:=w;
+  ImgGameState.Picture.Bitmap.Height:=h;
+end;
+
+procedure TNavigator.ExpandGameImgSize(w,h:longint);
 begin
   ImgGameState.Picture.Bitmap.Width:=max(ImgGameState.Picture.Bitmap.Width,w);
   ImgGameState.Picture.Bitmap.Height:=max(ImgGameState.Picture.Bitmap.Height,h);

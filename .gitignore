@@ -73,3 +73,9 @@ modules/
 LineHistogram.csv
 output.bin
 output.txt
+log.txt
+
+log.txt
+*.identcache
+diplomka.exe
+log.txt
