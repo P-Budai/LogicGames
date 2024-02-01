@@ -2,16 +2,16 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>1899.12.30 00:00:00.000.736,=C:\Users\tata\Documents\Delphi\diplomka\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.431,C:\Users\tata\Documents\Delphi\diplomka\Unit1.pas=C:\Users\tata\Documents\Delphi\diplomka\runtime.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.724,=C:\Users\tata\Documents\Delphi\diplomka\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.280,=C:\Users\tata\Documents\Delphi\diplomka\Unit2.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.431,C:\Users\tata\Documents\Delphi\diplomka\runtime.pas=C:\Users\tata\Documents\Delphi\diplomka\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.837,C:\Users\tata\Documents\Delphi\diplomka\runtime.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.725,C:\Users\tata\Documents\Delphi\diplomka\Unit1.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.552,=C:\Users\tata\Documents\Delphi\diplomka\INSTR.INC</Transaction>
     <Transaction>1899.12.30 00:00:00.000.494,C:\Users\tata\Documents\Delphi\diplomka\gamewin.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.366,=C:\Users\tata\Documents\Delphi\diplomka\SORTING.PAS</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.720,C:\Users\tata\Documents\Delphi\diplomka\sorting.pas=C:\Users\tata\Documents\Delphi\diplomka\sortinga.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.430,C:\Users\tata\Documents\Delphi\diplomka\sortinga.pas=C:\Users\tata\Documents\Delphi\diplomka\sorting.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.430,C:\Users\tata\Documents\Delphi\diplomka\sorting.pas=C:\Users\tata\Documents\Delphi\diplomka\sortinga.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.720,C:\Users\tata\Documents\Delphi\diplomka\sortinga.pas=C:\Users\tata\Documents\Delphi\diplomka\sorting.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="about.pas"/>

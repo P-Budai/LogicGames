@@ -117,12 +117,12 @@ begin
       end;
       Bitmaps.AddObject(s,bmp);
     end else bmp:=Bitmaps.Objects[bmpid] as TBitmap;
-    Navigator.SetGameImgSize(x+bmp.Width,y+bmp.Height);
+    Navigator.ExpandGameImgSize(x+bmp.Width,y+bmp.Height);
     Navigator.ImgGameState.Canvas.Draw(x,y,bmp);
   end else
   if info.Ident='DrawText' then with p^ do begin
     te:=Navigator.ImgGameState.Picture.Bitmap.Canvas.TextExtent(Strings[strid]);
-    Navigator.SetGameImgSize(x+te.cx,y+te.cy);
+    Navigator.ExpandGameImgSize(x+te.cx,y+te.cy);
     s:=Strings[strid];
     ImgDC:=CreateCompatibleDC(0);
     SelectObject(ImgDC,GetStockObject(DEFAULT_GUI_FONT));

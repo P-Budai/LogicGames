@@ -57,7 +57,7 @@ uses navig;
 
 procedure TDlgPlayer.FormShow(Sender: TObject);
 begin
-  with Players[false] do begin
+  with Players[1] do begin
     Player1.ActivePage:=Player1.Pages[1-ord(human)];
     Player1Name.Text:=name;
     Player1Level.Text:=level.name;
@@ -66,7 +66,7 @@ begin
     Player1Descr.Text:=level.descr;
   end;
 
-  with Players[true] do begin
+  with Players[2] do begin
     Player2.ActivePage:=Player1.Pages[1-ord(human)];
     Player2Name.Text:=name;
     Player2Level.Text:=level.name;
@@ -78,7 +78,7 @@ end;
 
 procedure TDlgPlayer.BtnOkClick(Sender: TObject);
 begin
-  with Players[false] do begin
+  with Players[1] do begin
     human:=Player1.ActivePage=Player1.Pages[0];
     name:=Player1Name.Text;
     level.name:=Player1Level.Text;
@@ -87,7 +87,7 @@ begin
     level.descr:=Player1Descr.Text;
   end;
 
-  with Players[true] do begin
+  with Players[2] do begin
     human:=Player2.ActivePage=Player2.Pages[0];
     name:=Player2Name.Text;
     level.name:=Player2Level.Text;
