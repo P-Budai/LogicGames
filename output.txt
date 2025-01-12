@@ -1,0 +1,4177 @@
+0000 02                  ENTRY   
+0001 1B 21               PUSH    33
+0003 03                  LOCINI  
+0004 00 0037             LINE    55        ;	  bit2[0]:=1;
+0007 35 04               PUSHG   4
+0009 19                  PUSH    0
+000A 16 02567388         ARRACC  39220104
+000F 1A                  PUSH    1
+0010 1D                  STORI   
+0011 00 0038             LINE    56        ;	  for i:=0 to 29 do
+0014 33                  PUSHG   0
+0015 19                  PUSH    0
+0016 1D                  STORI   
+0017 07 0006             JMP     $0020
+001A 33                  PUSHG   0
+001B 33                  PUSHG   0
+001C 20                  LOADI   
+001D 1A                  PUSH    1
+001E 25                  ADDI    
+001F 1D                  STORI   
+0020 33                  PUSHG   0
+0021 20                  LOADI   
+0022 1B 1D               PUSH    29
+0024 0E                  CIG     
+0025 08 0027             JNZ     $004F
+0028 00 0039             LINE    57        ;	    bit2[i+1]:=bit2[i]+bit2[i];
+002B 35 04               PUSHG   4
+002D 33                  PUSHG   0
+002E 20                  LOADI   
+002F 1A                  PUSH    1
+0030 25                  ADDI    
+0031 16 02567388         ARRACC  39220104
+0036 35 04               PUSHG   4
+0038 33                  PUSHG   0
+0039 20                  LOADI   
+003A 16 02567388         ARRACC  39220104
+003F 20                  LOADI   
+0040 35 04               PUSHG   4
+0042 33                  PUSHG   0
+0043 20                  LOADI   
+0044 16 02567388         ARRACC  39220104
+0049 20                  LOADI   
+004A 25                  ADDI    
+004B 1D                  STORI   
+004C 07 FFCB             JMP     $001A
+004F 00 003B             LINE    59        ;	  bit2[31]:=(0-bit2[30])-bit2[30];
+0052 35 04               PUSHG   4
+0054 1B 1F               PUSH    31
+0056 16 02567388         ARRACC  39220104
+005B 19                  PUSH    0
+005C 35 04               PUSHG   4
+005E 1B 1E               PUSH    30
+0060 16 02567388         ARRACC  39220104
+0065 20                  LOADI   
+0066 27                  SUBI    
+0067 35 04               PUSHG   4
+0069 1B 1E               PUSH    30
+006B 16 02567388         ARRACC  39220104
+0070 20                  LOADI   
+0071 27                  SUBI    
+0072 1D                  STORI   
+0073 00 003D             LINE    61        ;	  for i:=1 to 16 do
+0076 33                  PUSHG   0
+0077 1A                  PUSH    1
+0078 1D                  STORI   
+0079 07 0006             JMP     $0082
+007C 33                  PUSHG   0
+007D 33                  PUSHG   0
+007E 20                  LOADI   
+007F 1A                  PUSH    1
+0080 25                  ADDI    
+0081 1D                  STORI   
+0082 33                  PUSHG   0
+0083 20                  LOADI   
+0084 1B 10               PUSH    16
+0086 0E                  CIG     
+0087 08 0082             JNZ     $010C
+008A 00 003E             LINE    62        ;	    fig2bit[i]:=bit2[i-1];
+008D 1C 077C             PUSH    1916
+0090 33                  PUSHG   0
+0091 20                  LOADI   
+0092 16 02567348         ARRACC  39220040
+0097 35 04               PUSHG   4
+0099 33                  PUSHG   0
+009A 20                  LOADI   
+009B 1A                  PUSH    1
+009C 27                  SUBI    
+009D 16 02567388         ARRACC  39220104
+00A2 20                  LOADI   
+00A3 1D                  STORI   
+00A4 00 003F             LINE    63        ;	    fig2bit[-i]:=bit2[i+15];
+00A7 1C 077C             PUSH    1916
+00AA 33                  PUSHG   0
+00AB 20                  LOADI   
+00AC 2D                  NEGI    
+00AD 16 02567348         ARRACC  39220040
+00B2 35 04               PUSHG   4
+00B4 33                  PUSHG   0
+00B5 20                  LOADI   
+00B6 1B 0F               PUSH    15
+00B8 25                  ADDI    
+00B9 16 02567388         ARRACC  39220104
+00BE 20                  LOADI   
+00BF 1D                  STORI   
+00C0 00 0040             LINE    64        ;	    color2bit[1]:=color2bit[1] or fig2bit[i];
+00C3 1C 0800             PUSH    2048
+00C6 1A                  PUSH    1
+00C7 16 02567368         ARRACC  39220072
+00CC 1C 0800             PUSH    2048
+00CF 1A                  PUSH    1
+00D0 16 02567368         ARRACC  39220072
+00D5 20                  LOADI   
+00D6 1C 077C             PUSH    1916
+00D9 33                  PUSHG   0
+00DA 20                  LOADI   
+00DB 16 02567348         ARRACC  39220040
+00E0 20                  LOADI   
+00E1 30                  ORI     
+00E2 1D                  STORI   
+00E3 00 0041             LINE    65        ;	    color2bit[-1]:=color2bit[-1] or fig2bit[-i];
+00E6 1C 0800             PUSH    2048
+00E9 1A                  PUSH    1
+00EA 2D                  NEGI    
+00EB 16 02567368         ARRACC  39220072
+00F0 1C 0800             PUSH    2048
+00F3 1A                  PUSH    1
+00F4 2D                  NEGI    
+00F5 16 02567368         ARRACC  39220072
+00FA 20                  LOADI   
+00FB 1C 077C             PUSH    1916
+00FE 33                  PUSHG   0
+00FF 20                  LOADI   
+0100 2D                  NEGI    
+0101 16 02567348         ARRACC  39220040
+0106 20                  LOADI   
+0107 30                  ORI     
+0108 1D                  STORI   
+0109 07 FF70             JMP     $007C
+010C 00 0045             LINE    69        ;	  pawn:=1;
+010F 1C 0820             PUSH    2080
+0112 1A                  PUSH    1
+0113 1D                  STORI   
+0114 00 0046             LINE    70        ;	  knight:=2;
+0117 1C 0828             PUSH    2088
+011A 1B 02               PUSH    2
+011C 1D                  STORI   
+011D 00 0047             LINE    71        ;	  king:=3;
+0120 1C 0834             PUSH    2100
+0123 1B 03               PUSH    3
+0125 1D                  STORI   
+0126 00 0048             LINE    72        ;	  bishop:=4;
+0129 1C 0824             PUSH    2084
+012C 1B 04               PUSH    4
+012E 1D                  STORI   
+012F 00 0049             LINE    73        ;	  rook:=5;
+0132 1C 082C             PUSH    2092
+0135 1B 05               PUSH    5
+0137 1D                  STORI   
+0138 00 004A             LINE    74        ;	  queen:=6;
+013B 1C 0830             PUSH    2096
+013E 1B 06               PUSH    6
+0140 1D                  STORI   
+0141 00 004C             LINE    76        ;	  piece_weight[pawn  ]:=1;
+0144 1C 05D4             PUSH    1492
+0147 1C 0820             PUSH    2080
+014A 20                  LOADI   
+014B 16 025672A8         ARRACC  39219880
+0150 1A                  PUSH    1
+0151 18                  CNVF    
+0152 1E                  STORF   
+0153 00 004D             LINE    77        ;	  piece_weight[bishop]:=2.8;
+0156 1C 05D4             PUSH    1492
+0159 1C 0824             PUSH    2084
+015C 20                  LOADI   
+015D 16 025672A8         ARRACC  39219880
+0162 24 4006666666666666 PUSHF   2,80
+016B 1E                  STORF   
+016C 00 004E             LINE    78        ;	  piece_weight[knight]:=3;
+016F 1C 05D4             PUSH    1492
+0172 1C 0828             PUSH    2088
+0175 20                  LOADI   
+0176 16 025672A8         ARRACC  39219880
+017B 1B 03               PUSH    3
+017D 18                  CNVF    
+017E 1E                  STORF   
+017F 00 004F             LINE    79        ;	  piece_weight[rook  ]:=5;
+0182 1C 05D4             PUSH    1492
+0185 1C 082C             PUSH    2092
+0188 20                  LOADI   
+0189 16 025672A8         ARRACC  39219880
+018E 1B 05               PUSH    5
+0190 18                  CNVF    
+0191 1E                  STORF   
+0192 00 0050             LINE    80        ;	  piece_weight[queen ]:=10;
+0195 1C 05D4             PUSH    1492
+0198 1C 0830             PUSH    2096
+019B 20                  LOADI   
+019C 16 025672A8         ARRACC  39219880
+01A1 1B 0A               PUSH    10
+01A3 18                  CNVF    
+01A4 1E                  STORF   
+01A5 00 0051             LINE    81        ;	  piece_weight[king  ]:=20;
+01A8 1C 05D4             PUSH    1492
+01AB 1C 0834             PUSH    2100
+01AE 20                  LOADI   
+01AF 16 025672A8         ARRACC  39219880
+01B4 1B 14               PUSH    20
+01B6 18                  CNVF    
+01B7 1E                  STORF   
+01B8 00 0052             LINE    82        ;	  pieces_weight:=8;
+01BB 1C 0604             PUSH    1540
+01BE 1B 08               PUSH    8
+01C0 18                  CNVF    
+01C1 1E                  STORF   
+01C2 00 0053             LINE    83        ;	  pawn_weight:=1;
+01C5 1C 060C             PUSH    1548
+01C8 1A                  PUSH    1
+01C9 18                  CNVF    
+01CA 1E                  STORF   
+01CB 00 0054             LINE    84        ;	  attack_weight:=1.4;
+01CE 1C 0614             PUSH    1556
+01D1 24 3FF6666666666666 PUSHF   1,40
+01DA 1E                  STORF   
+01DB 00 0056             LINE    86        ;	  addRandomWeight:=0.5;
+01DE 1C 0818             PUSH    2072
+01E1 24 3FE0000000000000 PUSHF   0,50
+01EA 1E                  STORF   
+01EB 00 0058             LINE    88        ;	  piece_name[pawn  ]:="p";
+01EE 1C 05B0             PUSH    1456
+01F1 1C 0820             PUSH    2080
+01F4 20                  LOADI   
+01F5 16 02567268         ARRACC  39219816
+01FA 1A                  PUSH    1
+01FB 1A                  PUSH    1
+01FC 1F                  STORM   
+01FD 00 0059             LINE    89        ;	  piece_name[bishop]:="s";
+0200 1C 05B0             PUSH    1456
+0203 1C 0824             PUSH    2084
+0206 20                  LOADI   
+0207 16 02567268         ARRACC  39219816
+020C 1B 02               PUSH    2
+020E 1A                  PUSH    1
+020F 1F                  STORM   
+0210 00 005A             LINE    90        ;	  piece_name[knight]:="j";
+0213 1C 05B0             PUSH    1456
+0216 1C 0828             PUSH    2088
+0219 20                  LOADI   
+021A 16 02567268         ARRACC  39219816
+021F 1B 03               PUSH    3
+0221 1A                  PUSH    1
+0222 1F                  STORM   
+0223 00 005B             LINE    91        ;	  piece_name[rook  ]:="v";
+0226 1C 05B0             PUSH    1456
+0229 1C 082C             PUSH    2092
+022C 20                  LOADI   
+022D 16 02567268         ARRACC  39219816
+0232 1B 04               PUSH    4
+0234 1A                  PUSH    1
+0235 1F                  STORM   
+0236 00 005C             LINE    92        ;	  piece_name[queen ]:="d";
+0239 1C 05B0             PUSH    1456
+023C 1C 0830             PUSH    2096
+023F 20                  LOADI   
+0240 16 02567268         ARRACC  39219816
+0245 1B 05               PUSH    5
+0247 1A                  PUSH    1
+0248 1F                  STORM   
+0249 00 005D             LINE    93        ;	  piece_name[king  ]:="k";
+024C 1C 05B0             PUSH    1456
+024F 1C 0834             PUSH    2100
+0252 20                  LOADI   
+0253 16 02567268         ARRACC  39219816
+0258 1B 06               PUSH    6
+025A 1A                  PUSH    1
+025B 1F                  STORM   
+025C 00 005F             LINE    95        ;	  color_name[-1]:="c";
+025F 1C 05C8             PUSH    1480
+0262 1A                  PUSH    1
+0263 2D                  NEGI    
+0264 16 02567288         ARRACC  39219848
+0269 1B 07               PUSH    7
+026B 1A                  PUSH    1
+026C 1F                  STORM   
+026D 00 0060             LINE    96        ;	  color_name[ 1]:="b";
+0270 1C 05C8             PUSH    1480
+0273 1A                  PUSH    1
+0274 16 02567288         ARRACC  39219848
+0279 1B 08               PUSH    8
+027B 1A                  PUSH    1
+027C 1F                  STORM   
+027D 00 0061             LINE    97        ;	  border[ 1]:=1;
+0280 1C 061C             PUSH    1564
+0283 1A                  PUSH    1
+0284 16 025672C8         ARRACC  39219912
+0289 1A                  PUSH    1
+028A 1D                  STORI   
+028B 00 0062             LINE    98        ;	  border[-1]:=8;
+028E 1C 061C             PUSH    1564
+0291 1A                  PUSH    1
+0292 2D                  NEGI    
+0293 16 025672C8         ARRACC  39219912
+0298 1B 08               PUSH    8
+029A 1D                  STORI   
+029B 00 0064             LINE    100        ;	  movescount[bishop]:=4; {Bishop moves - 4 directions diagonally}
+029E 1C 0628             PUSH    1576
+02A1 1C 0824             PUSH    2084
+02A4 20                  LOADI   
+02A5 16 025672E8         ARRACC  39219944
+02AA 1B 04               PUSH    4
+02AC 1D                  STORI   
+02AD 00 0065             LINE    101        ;	  movescount[knight]:=8; {Knight moves - 8 "L" moves}
+02B0 1C 0628             PUSH    1576
+02B3 1C 0828             PUSH    2088
+02B6 20                  LOADI   
+02B7 16 025672E8         ARRACC  39219944
+02BC 1B 08               PUSH    8
+02BE 1D                  STORI   
+02BF 00 0066             LINE    102        ;	  movescount[rook  ]:=4; {Rook moves   - 4 directions}
+02C2 1C 0628             PUSH    1576
+02C5 1C 082C             PUSH    2092
+02C8 20                  LOADI   
+02C9 16 025672E8         ARRACC  39219944
+02CE 1B 04               PUSH    4
+02D0 1D                  STORI   
+02D1 00 0067             LINE    103        ;	  movescount[queen ]:=8; {Queen moves  - 8 directions}
+02D4 1C 0628             PUSH    1576
+02D7 1C 0830             PUSH    2096
+02DA 20                  LOADI   
+02DB 16 025672E8         ARRACC  39219944
+02E0 1B 08               PUSH    8
+02E2 1D                  STORI   
+02E3 00 0068             LINE    104        ;	  movescount[king  ]:=8; {King moves   - 8 moves}
+02E6 1C 0628             PUSH    1576
+02E9 1C 0834             PUSH    2100
+02EC 20                  LOADI   
+02ED 16 025672E8         ARRACC  39219944
+02F2 1B 08               PUSH    8
+02F4 1D                  STORI   
+02F5 00 006A             LINE    106        ;	  i:=bishop;
+02F8 33                  PUSHG   0
+02F9 1C 0824             PUSH    2084
+02FC 20                  LOADI   
+02FD 1D                  STORI   
+02FE 00 006B             LINE    107        ;	  moverel[i][1].x:= -1; moverel[i][1].y:= -1;
+0301 1C 063C             PUSH    1596
+0304 33                  PUSHG   0
+0305 20                  LOADI   
+0306 16 02567328         ARRACC  39220008
+030B 1A                  PUSH    1
+030C 16 02567308         ARRACC  39219976
+0311 1A                  PUSH    1
+0312 2D                  NEGI    
+0313 1D                  STORI   
+0314 00 006B             LINE    107        ;	  moverel[i][1].x:= -1; moverel[i][1].y:= -1;
+0317 1C 063C             PUSH    1596
+031A 33                  PUSHG   0
+031B 20                  LOADI   
+031C 16 02567328         ARRACC  39220008
+0321 1A                  PUSH    1
+0322 16 02567308         ARRACC  39219976
+0327 1B 04               PUSH    4
+0329 25                  ADDI    
+032A 1A                  PUSH    1
+032B 2D                  NEGI    
+032C 1D                  STORI   
+032D 00 006C             LINE    108        ;	  moverel[i][2].x:= 1;  moverel[i][2].y:= -1;
+0330 1C 063C             PUSH    1596
+0333 33                  PUSHG   0
+0334 20                  LOADI   
+0335 16 02567328         ARRACC  39220008
+033A 1B 02               PUSH    2
+033C 16 02567308         ARRACC  39219976
+0341 1A                  PUSH    1
+0342 1D                  STORI   
+0343 00 006C             LINE    108        ;	  moverel[i][2].x:= 1;  moverel[i][2].y:= -1;
+0346 1C 063C             PUSH    1596
+0349 33                  PUSHG   0
+034A 20                  LOADI   
+034B 16 02567328         ARRACC  39220008
+0350 1B 02               PUSH    2
+0352 16 02567308         ARRACC  39219976
+0357 1B 04               PUSH    4
+0359 25                  ADDI    
+035A 1A                  PUSH    1
+035B 2D                  NEGI    
+035C 1D                  STORI   
+035D 00 006D             LINE    109        ;	  moverel[i][3].x:= -1; moverel[i][3].y:= 1;
+0360 1C 063C             PUSH    1596
+0363 33                  PUSHG   0
+0364 20                  LOADI   
+0365 16 02567328         ARRACC  39220008
+036A 1B 03               PUSH    3
+036C 16 02567308         ARRACC  39219976
+0371 1A                  PUSH    1
+0372 2D                  NEGI    
+0373 1D                  STORI   
+0374 00 006D             LINE    109        ;	  moverel[i][3].x:= -1; moverel[i][3].y:= 1;
+0377 1C 063C             PUSH    1596
+037A 33                  PUSHG   0
+037B 20                  LOADI   
+037C 16 02567328         ARRACC  39220008
+0381 1B 03               PUSH    3
+0383 16 02567308         ARRACC  39219976
+0388 1B 04               PUSH    4
+038A 25                  ADDI    
+038B 1A                  PUSH    1
+038C 1D                  STORI   
+038D 00 006E             LINE    110        ;	  moverel[i][4].x:= 1;  moverel[i][4].y:= 1;
+0390 1C 063C             PUSH    1596
+0393 33                  PUSHG   0
+0394 20                  LOADI   
+0395 16 02567328         ARRACC  39220008
+039A 1B 04               PUSH    4
+039C 16 02567308         ARRACC  39219976
+03A1 1A                  PUSH    1
+03A2 1D                  STORI   
+03A3 00 006E             LINE    110        ;	  moverel[i][4].x:= 1;  moverel[i][4].y:= 1;
+03A6 1C 063C             PUSH    1596
+03A9 33                  PUSHG   0
+03AA 20                  LOADI   
+03AB 16 02567328         ARRACC  39220008
+03B0 1B 04               PUSH    4
+03B2 16 02567308         ARRACC  39219976
+03B7 1B 04               PUSH    4
+03B9 25                  ADDI    
+03BA 1A                  PUSH    1
+03BB 1D                  STORI   
+03BC 00 0070             LINE    112        ;	  i:=knight;
+03BF 33                  PUSHG   0
+03C0 1C 0828             PUSH    2088
+03C3 20                  LOADI   
+03C4 1D                  STORI   
+03C5 00 0071             LINE    113        ;	  moverel[i][1].x:= -1; moverel[i][1].y:= -2;
+03C8 1C 063C             PUSH    1596
+03CB 33                  PUSHG   0
+03CC 20                  LOADI   
+03CD 16 02567328         ARRACC  39220008
+03D2 1A                  PUSH    1
+03D3 16 02567308         ARRACC  39219976
+03D8 1A                  PUSH    1
+03D9 2D                  NEGI    
+03DA 1D                  STORI   
+03DB 00 0071             LINE    113        ;	  moverel[i][1].x:= -1; moverel[i][1].y:= -2;
+03DE 1C 063C             PUSH    1596
+03E1 33                  PUSHG   0
+03E2 20                  LOADI   
+03E3 16 02567328         ARRACC  39220008
+03E8 1A                  PUSH    1
+03E9 16 02567308         ARRACC  39219976
+03EE 1B 04               PUSH    4
+03F0 25                  ADDI    
+03F1 1B 02               PUSH    2
+03F3 2D                  NEGI    
+03F4 1D                  STORI   
+03F5 00 0072             LINE    114        ;	  moverel[i][2].x:=1;   moverel[i][2].y:= -2;
+03F8 1C 063C             PUSH    1596
+03FB 33                  PUSHG   0
+03FC 20                  LOADI   
+03FD 16 02567328         ARRACC  39220008
+0402 1B 02               PUSH    2
+0404 16 02567308         ARRACC  39219976
+0409 1A                  PUSH    1
+040A 1D                  STORI   
+040B 00 0072             LINE    114        ;	  moverel[i][2].x:=1;   moverel[i][2].y:= -2;
+040E 1C 063C             PUSH    1596
+0411 33                  PUSHG   0
+0412 20                  LOADI   
+0413 16 02567328         ARRACC  39220008
+0418 1B 02               PUSH    2
+041A 16 02567308         ARRACC  39219976
+041F 1B 04               PUSH    4
+0421 25                  ADDI    
+0422 1B 02               PUSH    2
+0424 2D                  NEGI    
+0425 1D                  STORI   
+0426 00 0073             LINE    115        ;	  moverel[i][3].x:= -2; moverel[i][3].y:= -1;
+0429 1C 063C             PUSH    1596
+042C 33                  PUSHG   0
+042D 20                  LOADI   
+042E 16 02567328         ARRACC  39220008
+0433 1B 03               PUSH    3
+0435 16 02567308         ARRACC  39219976
+043A 1B 02               PUSH    2
+043C 2D                  NEGI    
+043D 1D                  STORI   
+043E 00 0073             LINE    115        ;	  moverel[i][3].x:= -2; moverel[i][3].y:= -1;
+0441 1C 063C             PUSH    1596
+0444 33                  PUSHG   0
+0445 20                  LOADI   
+0446 16 02567328         ARRACC  39220008
+044B 1B 03               PUSH    3
+044D 16 02567308         ARRACC  39219976
+0452 1B 04               PUSH    4
+0454 25                  ADDI    
+0455 1A                  PUSH    1
+0456 2D                  NEGI    
+0457 1D                  STORI   
+0458 00 0074             LINE    116        ;	  moverel[i][4].x:=2;   moverel[i][4].y:= -1;
+045B 1C 063C             PUSH    1596
+045E 33                  PUSHG   0
+045F 20                  LOADI   
+0460 16 02567328         ARRACC  39220008
+0465 1B 04               PUSH    4
+0467 16 02567308         ARRACC  39219976
+046C 1B 02               PUSH    2
+046E 1D                  STORI   
+046F 00 0074             LINE    116        ;	  moverel[i][4].x:=2;   moverel[i][4].y:= -1;
+0472 1C 063C             PUSH    1596
+0475 33                  PUSHG   0
+0476 20                  LOADI   
+0477 16 02567328         ARRACC  39220008
+047C 1B 04               PUSH    4
+047E 16 02567308         ARRACC  39219976
+0483 1B 04               PUSH    4
+0485 25                  ADDI    
+0486 1A                  PUSH    1
+0487 2D                  NEGI    
+0488 1D                  STORI   
+0489 00 0075             LINE    117        ;	  moverel[i][5].x:= -2; moverel[i][5].y:=1;
+048C 1C 063C             PUSH    1596
+048F 33                  PUSHG   0
+0490 20                  LOADI   
+0491 16 02567328         ARRACC  39220008
+0496 1B 05               PUSH    5
+0498 16 02567308         ARRACC  39219976
+049D 1B 02               PUSH    2
+049F 2D                  NEGI    
+04A0 1D                  STORI   
+04A1 00 0075             LINE    117        ;	  moverel[i][5].x:= -2; moverel[i][5].y:=1;
+04A4 1C 063C             PUSH    1596
+04A7 33                  PUSHG   0
+04A8 20                  LOADI   
+04A9 16 02567328         ARRACC  39220008
+04AE 1B 05               PUSH    5
+04B0 16 02567308         ARRACC  39219976
+04B5 1B 04               PUSH    4
+04B7 25                  ADDI    
+04B8 1A                  PUSH    1
+04B9 1D                  STORI   
+04BA 00 0076             LINE    118        ;	  moverel[i][6].x:=2;   moverel[i][6].y:=1;
+04BD 1C 063C             PUSH    1596
+04C0 33                  PUSHG   0
+04C1 20                  LOADI   
+04C2 16 02567328         ARRACC  39220008
+04C7 1B 06               PUSH    6
+04C9 16 02567308         ARRACC  39219976
+04CE 1B 02               PUSH    2
+04D0 1D                  STORI   
+04D1 00 0076             LINE    118        ;	  moverel[i][6].x:=2;   moverel[i][6].y:=1;
+04D4 1C 063C             PUSH    1596
+04D7 33                  PUSHG   0
+04D8 20                  LOADI   
+04D9 16 02567328         ARRACC  39220008
+04DE 1B 06               PUSH    6
+04E0 16 02567308         ARRACC  39219976
+04E5 1B 04               PUSH    4
+04E7 25                  ADDI    
+04E8 1A                  PUSH    1
+04E9 1D                  STORI   
+04EA 00 0077             LINE    119        ;	  moverel[i][7].x:= -1; moverel[i][7].y:=2;
+04ED 1C 063C             PUSH    1596
+04F0 33                  PUSHG   0
+04F1 20                  LOADI   
+04F2 16 02567328         ARRACC  39220008
+04F7 1B 07               PUSH    7
+04F9 16 02567308         ARRACC  39219976
+04FE 1A                  PUSH    1
+04FF 2D                  NEGI    
+0500 1D                  STORI   
+0501 00 0077             LINE    119        ;	  moverel[i][7].x:= -1; moverel[i][7].y:=2;
+0504 1C 063C             PUSH    1596
+0507 33                  PUSHG   0
+0508 20                  LOADI   
+0509 16 02567328         ARRACC  39220008
+050E 1B 07               PUSH    7
+0510 16 02567308         ARRACC  39219976
+0515 1B 04               PUSH    4
+0517 25                  ADDI    
+0518 1B 02               PUSH    2
+051A 1D                  STORI   
+051B 00 0078             LINE    120        ;	  moverel[i][8].x:=1;   moverel[i][8].y:=2;
+051E 1C 063C             PUSH    1596
+0521 33                  PUSHG   0
+0522 20                  LOADI   
+0523 16 02567328         ARRACC  39220008
+0528 1B 08               PUSH    8
+052A 16 02567308         ARRACC  39219976
+052F 1A                  PUSH    1
+0530 1D                  STORI   
+0531 00 0078             LINE    120        ;	  moverel[i][8].x:=1;   moverel[i][8].y:=2;
+0534 1C 063C             PUSH    1596
+0537 33                  PUSHG   0
+0538 20                  LOADI   
+0539 16 02567328         ARRACC  39220008
+053E 1B 08               PUSH    8
+0540 16 02567308         ARRACC  39219976
+0545 1B 04               PUSH    4
+0547 25                  ADDI    
+0548 1B 02               PUSH    2
+054A 1D                  STORI   
+054B 00 007A             LINE    122        ;	  i:=rook;
+054E 33                  PUSHG   0
+054F 1C 082C             PUSH    2092
+0552 20                  LOADI   
+0553 1D                  STORI   
+0554 00 007B             LINE    123        ;	  moverel[i][1].x:= 0;  moverel[i][1].y:= -1;
+0557 1C 063C             PUSH    1596
+055A 33                  PUSHG   0
+055B 20                  LOADI   
+055C 16 02567328         ARRACC  39220008
+0561 1A                  PUSH    1
+0562 16 02567308         ARRACC  39219976
+0567 19                  PUSH    0
+0568 1D                  STORI   
+0569 00 007B             LINE    123        ;	  moverel[i][1].x:= 0;  moverel[i][1].y:= -1;
+056C 1C 063C             PUSH    1596
+056F 33                  PUSHG   0
+0570 20                  LOADI   
+0571 16 02567328         ARRACC  39220008
+0576 1A                  PUSH    1
+0577 16 02567308         ARRACC  39219976
+057C 1B 04               PUSH    4
+057E 25                  ADDI    
+057F 1A                  PUSH    1
+0580 2D                  NEGI    
+0581 1D                  STORI   
+0582 00 007C             LINE    124        ;	  moverel[i][2].x:= -1; moverel[i][2].y:= 0;
+0585 1C 063C             PUSH    1596
+0588 33                  PUSHG   0
+0589 20                  LOADI   
+058A 16 02567328         ARRACC  39220008
+058F 1B 02               PUSH    2
+0591 16 02567308         ARRACC  39219976
+0596 1A                  PUSH    1
+0597 2D                  NEGI    
+0598 1D                  STORI   
+0599 00 007C             LINE    124        ;	  moverel[i][2].x:= -1; moverel[i][2].y:= 0;
+059C 1C 063C             PUSH    1596
+059F 33                  PUSHG   0
+05A0 20                  LOADI   
+05A1 16 02567328         ARRACC  39220008
+05A6 1B 02               PUSH    2
+05A8 16 02567308         ARRACC  39219976
+05AD 1B 04               PUSH    4
+05AF 25                  ADDI    
+05B0 19                  PUSH    0
+05B1 1D                  STORI   
+05B2 00 007D             LINE    125        ;	  moverel[i][3].x:= 1;  moverel[i][3].y:= 0;
+05B5 1C 063C             PUSH    1596
+05B8 33                  PUSHG   0
+05B9 20                  LOADI   
+05BA 16 02567328         ARRACC  39220008
+05BF 1B 03               PUSH    3
+05C1 16 02567308         ARRACC  39219976
+05C6 1A                  PUSH    1
+05C7 1D                  STORI   
+05C8 00 007D             LINE    125        ;	  moverel[i][3].x:= 1;  moverel[i][3].y:= 0;
+05CB 1C 063C             PUSH    1596
+05CE 33                  PUSHG   0
+05CF 20                  LOADI   
+05D0 16 02567328         ARRACC  39220008
+05D5 1B 03               PUSH    3
+05D7 16 02567308         ARRACC  39219976
+05DC 1B 04               PUSH    4
+05DE 25                  ADDI    
+05DF 19                  PUSH    0
+05E0 1D                  STORI   
+05E1 00 007E             LINE    126        ;	  moverel[i][4].x:= 0;  moverel[i][4].y:= 1;
+05E4 1C 063C             PUSH    1596
+05E7 33                  PUSHG   0
+05E8 20                  LOADI   
+05E9 16 02567328         ARRACC  39220008
+05EE 1B 04               PUSH    4
+05F0 16 02567308         ARRACC  39219976
+05F5 19                  PUSH    0
+05F6 1D                  STORI   
+05F7 00 007E             LINE    126        ;	  moverel[i][4].x:= 0;  moverel[i][4].y:= 1;
+05FA 1C 063C             PUSH    1596
+05FD 33                  PUSHG   0
+05FE 20                  LOADI   
+05FF 16 02567328         ARRACC  39220008
+0604 1B 04               PUSH    4
+0606 16 02567308         ARRACC  39219976
+060B 1B 04               PUSH    4
+060D 25                  ADDI    
+060E 1A                  PUSH    1
+060F 1D                  STORI   
+0610 00 0080             LINE    128        ;	  i:=queen;
+0613 33                  PUSHG   0
+0614 1C 0830             PUSH    2096
+0617 20                  LOADI   
+0618 1D                  STORI   
+0619 00 0081             LINE    129        ;	  moverel[i][1].x:= -1; moverel[i][1].y:= -1;
+061C 1C 063C             PUSH    1596
+061F 33                  PUSHG   0
+0620 20                  LOADI   
+0621 16 02567328         ARRACC  39220008
+0626 1A                  PUSH    1
+0627 16 02567308         ARRACC  39219976
+062C 1A                  PUSH    1
+062D 2D                  NEGI    
+062E 1D                  STORI   
+062F 00 0081             LINE    129        ;	  moverel[i][1].x:= -1; moverel[i][1].y:= -1;
+0632 1C 063C             PUSH    1596
+0635 33                  PUSHG   0
+0636 20                  LOADI   
+0637 16 02567328         ARRACC  39220008
+063C 1A                  PUSH    1
+063D 16 02567308         ARRACC  39219976
+0642 1B 04               PUSH    4
+0644 25                  ADDI    
+0645 1A                  PUSH    1
+0646 2D                  NEGI    
+0647 1D                  STORI   
+0648 00 0082             LINE    130        ;	  moverel[i][2].x:=0;   moverel[i][2].y:= -1;
+064B 1C 063C             PUSH    1596
+064E 33                  PUSHG   0
+064F 20                  LOADI   
+0650 16 02567328         ARRACC  39220008
+0655 1B 02               PUSH    2
+0657 16 02567308         ARRACC  39219976
+065C 19                  PUSH    0
+065D 1D                  STORI   
+065E 00 0082             LINE    130        ;	  moverel[i][2].x:=0;   moverel[i][2].y:= -1;
+0661 1C 063C             PUSH    1596
+0664 33                  PUSHG   0
+0665 20                  LOADI   
+0666 16 02567328         ARRACC  39220008
+066B 1B 02               PUSH    2
+066D 16 02567308         ARRACC  39219976
+0672 1B 04               PUSH    4
+0674 25                  ADDI    
+0675 1A                  PUSH    1
+0676 2D                  NEGI    
+0677 1D                  STORI   
+0678 00 0083             LINE    131        ;	  moverel[i][3].x:=1;   moverel[i][3].y:= -1;
+067B 1C 063C             PUSH    1596
+067E 33                  PUSHG   0
+067F 20                  LOADI   
+0680 16 02567328         ARRACC  39220008
+0685 1B 03               PUSH    3
+0687 16 02567308         ARRACC  39219976
+068C 1A                  PUSH    1
+068D 1D                  STORI   
+068E 00 0083             LINE    131        ;	  moverel[i][3].x:=1;   moverel[i][3].y:= -1;
+0691 1C 063C             PUSH    1596
+0694 33                  PUSHG   0
+0695 20                  LOADI   
+0696 16 02567328         ARRACC  39220008
+069B 1B 03               PUSH    3
+069D 16 02567308         ARRACC  39219976
+06A2 1B 04               PUSH    4
+06A4 25                  ADDI    
+06A5 1A                  PUSH    1
+06A6 2D                  NEGI    
+06A7 1D                  STORI   
+06A8 00 0084             LINE    132        ;	  moverel[i][4].x:= -1; moverel[i][4].y:=0;
+06AB 1C 063C             PUSH    1596
+06AE 33                  PUSHG   0
+06AF 20                  LOADI   
+06B0 16 02567328         ARRACC  39220008
+06B5 1B 04               PUSH    4
+06B7 16 02567308         ARRACC  39219976
+06BC 1A                  PUSH    1
+06BD 2D                  NEGI    
+06BE 1D                  STORI   
+06BF 00 0084             LINE    132        ;	  moverel[i][4].x:= -1; moverel[i][4].y:=0;
+06C2 1C 063C             PUSH    1596
+06C5 33                  PUSHG   0
+06C6 20                  LOADI   
+06C7 16 02567328         ARRACC  39220008
+06CC 1B 04               PUSH    4
+06CE 16 02567308         ARRACC  39219976
+06D3 1B 04               PUSH    4
+06D5 25                  ADDI    
+06D6 19                  PUSH    0
+06D7 1D                  STORI   
+06D8 00 0085             LINE    133        ;	  moverel[i][5].x:=1;   moverel[i][5].y:=0;
+06DB 1C 063C             PUSH    1596
+06DE 33                  PUSHG   0
+06DF 20                  LOADI   
+06E0 16 02567328         ARRACC  39220008
+06E5 1B 05               PUSH    5
+06E7 16 02567308         ARRACC  39219976
+06EC 1A                  PUSH    1
+06ED 1D                  STORI   
+06EE 00 0085             LINE    133        ;	  moverel[i][5].x:=1;   moverel[i][5].y:=0;
+06F1 1C 063C             PUSH    1596
+06F4 33                  PUSHG   0
+06F5 20                  LOADI   
+06F6 16 02567328         ARRACC  39220008
+06FB 1B 05               PUSH    5
+06FD 16 02567308         ARRACC  39219976
+0702 1B 04               PUSH    4
+0704 25                  ADDI    
+0705 19                  PUSH    0
+0706 1D                  STORI   
+0707 00 0086             LINE    134        ;	  moverel[i][6].x:= -1; moverel[i][6].y:=1;
+070A 1C 063C             PUSH    1596
+070D 33                  PUSHG   0
+070E 20                  LOADI   
+070F 16 02567328         ARRACC  39220008
+0714 1B 06               PUSH    6
+0716 16 02567308         ARRACC  39219976
+071B 1A                  PUSH    1
+071C 2D                  NEGI    
+071D 1D                  STORI   
+071E 00 0086             LINE    134        ;	  moverel[i][6].x:= -1; moverel[i][6].y:=1;
+0721 1C 063C             PUSH    1596
+0724 33                  PUSHG   0
+0725 20                  LOADI   
+0726 16 02567328         ARRACC  39220008
+072B 1B 06               PUSH    6
+072D 16 02567308         ARRACC  39219976
+0732 1B 04               PUSH    4
+0734 25                  ADDI    
+0735 1A                  PUSH    1
+0736 1D                  STORI   
+0737 00 0087             LINE    135        ;	  moverel[i][7].x:=0;   moverel[i][7].y:=1;
+073A 1C 063C             PUSH    1596
+073D 33                  PUSHG   0
+073E 20                  LOADI   
+073F 16 02567328         ARRACC  39220008
+0744 1B 07               PUSH    7
+0746 16 02567308         ARRACC  39219976
+074B 19                  PUSH    0
+074C 1D                  STORI   
+074D 00 0087             LINE    135        ;	  moverel[i][7].x:=0;   moverel[i][7].y:=1;
+0750 1C 063C             PUSH    1596
+0753 33                  PUSHG   0
+0754 20                  LOADI   
+0755 16 02567328         ARRACC  39220008
+075A 1B 07               PUSH    7
+075C 16 02567308         ARRACC  39219976
+0761 1B 04               PUSH    4
+0763 25                  ADDI    
+0764 1A                  PUSH    1
+0765 1D                  STORI   
+0766 00 0088             LINE    136        ;	  moverel[i][8].x:=1;   moverel[i][8].y:=1;
+0769 1C 063C             PUSH    1596
+076C 33                  PUSHG   0
+076D 20                  LOADI   
+076E 16 02567328         ARRACC  39220008
+0773 1B 08               PUSH    8
+0775 16 02567308         ARRACC  39219976
+077A 1A                  PUSH    1
+077B 1D                  STORI   
+077C 00 0088             LINE    136        ;	  moverel[i][8].x:=1;   moverel[i][8].y:=1;
+077F 1C 063C             PUSH    1596
+0782 33                  PUSHG   0
+0783 20                  LOADI   
+0784 16 02567328         ARRACC  39220008
+0789 1B 08               PUSH    8
+078B 16 02567308         ARRACC  39219976
+0790 1B 04               PUSH    4
+0792 25                  ADDI    
+0793 1A                  PUSH    1
+0794 1D                  STORI   
+0795 00 008A             LINE    138        ;	  i:=king;
+0798 33                  PUSHG   0
+0799 1C 0834             PUSH    2100
+079C 20                  LOADI   
+079D 1D                  STORI   
+079E 00 008B             LINE    139        ;	  moverel[i][1].x:= -1; moverel[i][1].y:= -1;
+07A1 1C 063C             PUSH    1596
+07A4 33                  PUSHG   0
+07A5 20                  LOADI   
+07A6 16 02567328         ARRACC  39220008
+07AB 1A                  PUSH    1
+07AC 16 02567308         ARRACC  39219976
+07B1 1A                  PUSH    1
+07B2 2D                  NEGI    
+07B3 1D                  STORI   
+07B4 00 008B             LINE    139        ;	  moverel[i][1].x:= -1; moverel[i][1].y:= -1;
+07B7 1C 063C             PUSH    1596
+07BA 33                  PUSHG   0
+07BB 20                  LOADI   
+07BC 16 02567328         ARRACC  39220008
+07C1 1A                  PUSH    1
+07C2 16 02567308         ARRACC  39219976
+07C7 1B 04               PUSH    4
+07C9 25                  ADDI    
+07CA 1A                  PUSH    1
+07CB 2D                  NEGI    
+07CC 1D                  STORI   
+07CD 00 008C             LINE    140        ;	  moverel[i][2].x:=0;   moverel[i][2].y:= -1;
+07D0 1C 063C             PUSH    1596
+07D3 33                  PUSHG   0
+07D4 20                  LOADI   
+07D5 16 02567328         ARRACC  39220008
+07DA 1B 02               PUSH    2
+07DC 16 02567308         ARRACC  39219976
+07E1 19                  PUSH    0
+07E2 1D                  STORI   
+07E3 00 008C             LINE    140        ;	  moverel[i][2].x:=0;   moverel[i][2].y:= -1;
+07E6 1C 063C             PUSH    1596
+07E9 33                  PUSHG   0
+07EA 20                  LOADI   
+07EB 16 02567328         ARRACC  39220008
+07F0 1B 02               PUSH    2
+07F2 16 02567308         ARRACC  39219976
+07F7 1B 04               PUSH    4
+07F9 25                  ADDI    
+07FA 1A                  PUSH    1
+07FB 2D                  NEGI    
+07FC 1D                  STORI   
+07FD 00 008D             LINE    141        ;	  moverel[i][3].x:=1;   moverel[i][3].y:= -1;
+0800 1C 063C             PUSH    1596
+0803 33                  PUSHG   0
+0804 20                  LOADI   
+0805 16 02567328         ARRACC  39220008
+080A 1B 03               PUSH    3
+080C 16 02567308         ARRACC  39219976
+0811 1A                  PUSH    1
+0812 1D                  STORI   
+0813 00 008D             LINE    141        ;	  moverel[i][3].x:=1;   moverel[i][3].y:= -1;
+0816 1C 063C             PUSH    1596
+0819 33                  PUSHG   0
+081A 20                  LOADI   
+081B 16 02567328         ARRACC  39220008
+0820 1B 03               PUSH    3
+0822 16 02567308         ARRACC  39219976
+0827 1B 04               PUSH    4
+0829 25                  ADDI    
+082A 1A                  PUSH    1
+082B 2D                  NEGI    
+082C 1D                  STORI   
+082D 00 008E             LINE    142        ;	  moverel[i][4].x:= -1; moverel[i][4].y:=0;
+0830 1C 063C             PUSH    1596
+0833 33                  PUSHG   0
+0834 20                  LOADI   
+0835 16 02567328         ARRACC  39220008
+083A 1B 04               PUSH    4
+083C 16 02567308         ARRACC  39219976
+0841 1A                  PUSH    1
+0842 2D                  NEGI    
+0843 1D                  STORI   
+0844 00 008E             LINE    142        ;	  moverel[i][4].x:= -1; moverel[i][4].y:=0;
+0847 1C 063C             PUSH    1596
+084A 33                  PUSHG   0
+084B 20                  LOADI   
+084C 16 02567328         ARRACC  39220008
+0851 1B 04               PUSH    4
+0853 16 02567308         ARRACC  39219976
+0858 1B 04               PUSH    4
+085A 25                  ADDI    
+085B 19                  PUSH    0
+085C 1D                  STORI   
+085D 00 008F             LINE    143        ;	  moverel[i][5].x:=1;   moverel[i][5].y:=0;
+0860 1C 063C             PUSH    1596
+0863 33                  PUSHG   0
+0864 20                  LOADI   
+0865 16 02567328         ARRACC  39220008
+086A 1B 05               PUSH    5
+086C 16 02567308         ARRACC  39219976
+0871 1A                  PUSH    1
+0872 1D                  STORI   
+0873 00 008F             LINE    143        ;	  moverel[i][5].x:=1;   moverel[i][5].y:=0;
+0876 1C 063C             PUSH    1596
+0879 33                  PUSHG   0
+087A 20                  LOADI   
+087B 16 02567328         ARRACC  39220008
+0880 1B 05               PUSH    5
+0882 16 02567308         ARRACC  39219976
+0887 1B 04               PUSH    4
+0889 25                  ADDI    
+088A 19                  PUSH    0
+088B 1D                  STORI   
+088C 00 0090             LINE    144        ;	  moverel[i][6].x:= -1; moverel[i][6].y:=1;
+088F 1C 063C             PUSH    1596
+0892 33                  PUSHG   0
+0893 20                  LOADI   
+0894 16 02567328         ARRACC  39220008
+0899 1B 06               PUSH    6
+089B 16 02567308         ARRACC  39219976
+08A0 1A                  PUSH    1
+08A1 2D                  NEGI    
+08A2 1D                  STORI   
+08A3 00 0090             LINE    144        ;	  moverel[i][6].x:= -1; moverel[i][6].y:=1;
+08A6 1C 063C             PUSH    1596
+08A9 33                  PUSHG   0
+08AA 20                  LOADI   
+08AB 16 02567328         ARRACC  39220008
+08B0 1B 06               PUSH    6
+08B2 16 02567308         ARRACC  39219976
+08B7 1B 04               PUSH    4
+08B9 25                  ADDI    
+08BA 1A                  PUSH    1
+08BB 1D                  STORI   
+08BC 00 0091             LINE    145        ;	  moverel[i][7].x:=0;   moverel[i][7].y:=1;
+08BF 1C 063C             PUSH    1596
+08C2 33                  PUSHG   0
+08C3 20                  LOADI   
+08C4 16 02567328         ARRACC  39220008
+08C9 1B 07               PUSH    7
+08CB 16 02567308         ARRACC  39219976
+08D0 19                  PUSH    0
+08D1 1D                  STORI   
+08D2 00 0091             LINE    145        ;	  moverel[i][7].x:=0;   moverel[i][7].y:=1;
+08D5 1C 063C             PUSH    1596
+08D8 33                  PUSHG   0
+08D9 20                  LOADI   
+08DA 16 02567328         ARRACC  39220008
+08DF 1B 07               PUSH    7
+08E1 16 02567308         ARRACC  39219976
+08E6 1B 04               PUSH    4
+08E8 25                  ADDI    
+08E9 1A                  PUSH    1
+08EA 1D                  STORI   
+08EB 00 0092             LINE    146        ;	  moverel[i][8].x:=1;   moverel[i][8].y:=1;
+08EE 1C 063C             PUSH    1596
+08F1 33                  PUSHG   0
+08F2 20                  LOADI   
+08F3 16 02567328         ARRACC  39220008
+08F8 1B 08               PUSH    8
+08FA 16 02567308         ARRACC  39219976
+08FF 1A                  PUSH    1
+0900 1D                  STORI   
+0901 00 0092             LINE    146        ;	  moverel[i][8].x:=1;   moverel[i][8].y:=1;
+0904 1C 063C             PUSH    1596
+0907 33                  PUSHG   0
+0908 20                  LOADI   
+0909 16 02567328         ARRACC  39220008
+090E 1B 08               PUSH    8
+0910 16 02567308         ARRACC  39219976
+0915 1B 04               PUSH    4
+0917 25                  ADDI    
+0918 1A                  PUSH    1
+0919 1D                  STORI   
+091A 00 0094             LINE    148        ;	end proc;
+091D 19                  PUSH    0
+091E 04                  RET     
+091F 02                  ENTRY   
+0920 1A                  PUSH    1
+0921 03                  LOCINI  
+0922 00 0099             LINE    153        ;	  if akce=1 
+0925 35 F4               PUSHG   -12
+0927 20                  LOADI   
+0928 1A                  PUSH    1
+0929 0A                  CIE     
+092A 09 003F             JZ      $096C
+092D 00 009A             LINE    154        ;	    then gp.attacked[yn][xn]:=gp.attacked[yn][xn] or fig2bit[f]
+0930 19                  PUSH    0
+0931 35 F0               PUSHG   -16
+0933 20                  LOADI   
+0934 16 02567208         ARRACC  39219720
+0939 35 EC               PUSHG   -20
+093B 20                  LOADI   
+093C 16 025671E8         ARRACC  39219688
+0941 1C 0114             PUSH    276
+0944 25                  ADDI    
+0945 19                  PUSH    0
+0946 35 F0               PUSHG   -16
+0948 20                  LOADI   
+0949 16 02567208         ARRACC  39219720
+094E 35 EC               PUSHG   -20
+0950 20                  LOADI   
+0951 16 025671E8         ARRACC  39219688
+0956 1C 0114             PUSH    276
+0959 25                  ADDI    
+095A 20                  LOADI   
+095B 1C 077C             PUSH    1916
+095E 35 E8               PUSHG   -24
+0960 20                  LOADI   
+0961 16 02567348         ARRACC  39220040
+0966 20                  LOADI   
+0967 30                  ORI     
+0968 1D                  STORI   
+0969 07 003F             JMP     $09AB
+096C 00 009B             LINE    155        ;	            else gp.attacked[yn][xn]:=gp.attacked[yn][xn] and (-1 xor fig2bit[f]);
+096F 19                  PUSH    0
+0970 35 F0               PUSHG   -16
+0972 20                  LOADI   
+0973 16 02567208         ARRACC  39219720
+0978 35 EC               PUSHG   -20
+097A 20                  LOADI   
+097B 16 025671E8         ARRACC  39219688
+0980 1C 0114             PUSH    276
+0983 25                  ADDI    
+0984 19                  PUSH    0
+0985 35 F0               PUSHG   -16
+0987 20                  LOADI   
+0988 16 02567208         ARRACC  39219720
+098D 35 EC               PUSHG   -20
+098F 20                  LOADI   
+0990 16 025671E8         ARRACC  39219688
+0995 1C 0114             PUSH    276
+0998 25                  ADDI    
+0999 20                  LOADI   
+099A 1A                  PUSH    1
+099B 2D                  NEGI    
+099C 1C 077C             PUSH    1916
+099F 35 E8               PUSHG   -24
+09A1 20                  LOADI   
+09A2 16 02567348         ARRACC  39220040
+09A7 20                  LOADI   
+09A8 31                  XORI    
+09A9 32                  ANDI    
+09AA 1D                  STORI   
+09AB 00 009D             LINE    157        ;	  gp.pieces[f].attacked_cells:=gp.pieces[f].attacked_cells+akce;
+09AE 19                  PUSH    0
+09AF 35 E8               PUSHG   -24
+09B1 20                  LOADI   
+09B2 16 02567228         ARRACC  39219752
+09B7 1C 0224             PUSH    548
+09BA 25                  ADDI    
+09BB 19                  PUSH    0
+09BC 35 E8               PUSHG   -24
+09BE 20                  LOADI   
+09BF 16 02567228         ARRACC  39219752
+09C4 1C 0224             PUSH    548
+09C7 25                  ADDI    
+09C8 20                  LOADI   
+09C9 35 F4               PUSHG   -12
+09CB 20                  LOADI   
+09CC 25                  ADDI    
+09CD 1D                  STORI   
+09CE 00 009F             LINE    159        ;	  f2:=gp.board[yn][xn];
+09D1 33                  PUSHG   0
+09D2 19                  PUSH    0
+09D3 35 F0               PUSHG   -16
+09D5 20                  LOADI   
+09D6 16 02567208         ARRACC  39219720
+09DB 35 EC               PUSHG   -20
+09DD 20                  LOADI   
+09DE 16 025671E8         ARRACC  39219688
+09E3 1B 14               PUSH    20
+09E5 25                  ADDI    
+09E6 20                  LOADI   
+09E7 1D                  STORI   
+09E8 00 00A0             LINE    160        ;	  if sgn(f2)=0-sgn(f) 
+09EB 1A                  PUSH    1
+09EC 03                  LOCINI  
+09ED 33                  PUSHG   0
+09EE 20                  LOADI   
+09EF 23 02582C30         PUSH    39332912
+09F4 06                  SYS     
+09F5 19                  PUSH    0
+09F6 1A                  PUSH    1
+09F7 03                  LOCINI  
+09F8 35 E8               PUSHG   -24
+09FA 20                  LOADI   
+09FB 23 02582C30         PUSH    39332912
+0A00 06                  SYS     
+0A01 27                  SUBI    
+0A02 0A                  CIE     
+0A03 09 003B             JZ      $0A41
+0A06 00 00A1             LINE    161        ;	    then gp.pieces[f].attacked_weight:=gp.pieces[f].attacked_weight+akce*piece_weight[gp.pieces[f2].figtype];
+0A09 19                  PUSH    0
+0A0A 35 E8               PUSHG   -24
+0A0C 20                  LOADI   
+0A0D 16 02567228         ARRACC  39219752
+0A12 1C 0228             PUSH    552
+0A15 25                  ADDI    
+0A16 19                  PUSH    0
+0A17 35 E8               PUSHG   -24
+0A19 20                  LOADI   
+0A1A 16 02567228         ARRACC  39219752
+0A1F 1C 0228             PUSH    552
+0A22 25                  ADDI    
+0A23 21                  LOADF   
+0A24 35 F4               PUSHG   -12
+0A26 20                  LOADI   
+0A27 18                  CNVF    
+0A28 1C 05D4             PUSH    1492
+0A2B 19                  PUSH    0
+0A2C 33                  PUSHG   0
+0A2D 20                  LOADI   
+0A2E 16 02567228         ARRACC  39219752
+0A33 1C 0214             PUSH    532
+0A36 25                  ADDI    
+0A37 20                  LOADI   
+0A38 16 025672A8         ARRACC  39219880
+0A3D 21                  LOADF   
+0A3E 2A                  MULF    
+0A3F 26                  ADDF    
+0A40 1E                  STORF   
+0A41 00 00A2             LINE    162        ;	        end proc;
+0A44 1B 10               PUSH    16
+0A46 04                  RET     
+0A47 02                  ENTRY   
+0A48 1B 0A               PUSH    10
+0A4A 03                  LOCINI  
+0A4B 00 00AB             LINE    171        ;	  pce:=gp.pieces[f];
+0A4E 33                  PUSHG   0
+0A4F 19                  PUSH    0
+0A50 35 F0               PUSHG   -16
+0A52 20                  LOADI   
+0A53 16 02567228         ARRACC  39219752
+0A58 1C 0214             PUSH    532
+0A5B 25                  ADDI    
+0A5C 1B 07               PUSH    7
+0A5E 22                  LOADM   
+0A5F 1B 07               PUSH    7
+0A61 1F                  STORM   
+0A62 00 00AC             LINE    172        ;	  if (pce.figtype=pawn) then do
+0A65 33                  PUSHG   0
+0A66 20                  LOADI   
+0A67 1C 0820             PUSH    2080
+0A6A 20                  LOADI   
+0A6B 0A                  CIE     
+0A6C 09 008F             JZ      $0AFE
+0A6F 00 00AC             LINE    172        ;	  if (pce.figtype=pawn) then do
+0A72 00 00AE             LINE    174        ;	    yn:=pce.pos.y-sgn(f);
+0A75 35 20               PUSHG   32
+0A77 33                  PUSHG   0
+0A78 1B 0C               PUSH    12
+0A7A 25                  ADDI    
+0A7B 20                  LOADI   
+0A7C 1A                  PUSH    1
+0A7D 03                  LOCINI  
+0A7E 35 F0               PUSHG   -16
+0A80 20                  LOADI   
+0A81 23 02582C30         PUSH    39332912
+0A86 06                  SYS     
+0A87 27                  SUBI    
+0A88 1D                  STORI   
+0A89 00 00AF             LINE    175        ;	    if (yn>=1) and (yn<=8) then do
+0A8C 35 20               PUSHG   32
+0A8E 20                  LOADI   
+0A8F 1A                  PUSH    1
+0A90 0F                  CIGE    
+0A91 08 0004             JNZ     $0A98
+0A94 19                  PUSH    0
+0A95 07 0006             JMP     $0A9E
+0A98 35 20               PUSHG   32
+0A9A 20                  LOADI   
+0A9B 1B 08               PUSH    8
+0A9D 0D                  CILE    
+0A9E 09 005A             JZ      $0AFB
+0AA1 00 00AF             LINE    175        ;	    if (yn>=1) and (yn<=8) then do
+0AA4 00 00B0             LINE    176        ;	      xn:=pce.pos.x-1;
+0AA7 35 1C               PUSHG   28
+0AA9 33                  PUSHG   0
+0AAA 1B 08               PUSH    8
+0AAC 25                  ADDI    
+0AAD 20                  LOADI   
+0AAE 1A                  PUSH    1
+0AAF 27                  SUBI    
+0AB0 1D                  STORI   
+0AB1 00 00B1             LINE    177        ;	      if (xn>=1) then UpravNapadanePolicko(f,xn,yn,akce);
+0AB4 35 1C               PUSHG   28
+0AB6 20                  LOADI   
+0AB7 1A                  PUSH    1
+0AB8 0F                  CIGE    
+0AB9 09 0013             JZ      $0ACF
+0ABC 00 00B1             LINE    177        ;	      if (xn>=1) then UpravNapadanePolicko(f,xn,yn,akce);
+0ABF 35 F0               PUSHG   -16
+0AC1 20                  LOADI   
+0AC2 35 1C               PUSHG   28
+0AC4 20                  LOADI   
+0AC5 35 20               PUSHG   32
+0AC7 20                  LOADI   
+0AC8 35 F4               PUSHG   -12
+0ACA 20                  LOADI   
+0ACB 1C 091F             PUSH    2335
+0ACE 05                  CALL    
+0ACF 00 00B2             LINE    178        ;	      xn:=pce.pos.x+1;
+0AD2 35 1C               PUSHG   28
+0AD4 33                  PUSHG   0
+0AD5 1B 08               PUSH    8
+0AD7 25                  ADDI    
+0AD8 20                  LOADI   
+0AD9 1A                  PUSH    1
+0ADA 25                  ADDI    
+0ADB 1D                  STORI   
+0ADC 00 00B3             LINE    179        ;	      if (xn<=8) then UpravNapadanePolicko(f,xn,yn,akce);
+0ADF 35 1C               PUSHG   28
+0AE1 20                  LOADI   
+0AE2 1B 08               PUSH    8
+0AE4 0D                  CILE    
+0AE5 09 0013             JZ      $0AFB
+0AE8 00 00B3             LINE    179        ;	      if (xn<=8) then UpravNapadanePolicko(f,xn,yn,akce);
+0AEB 35 F0               PUSHG   -16
+0AED 20                  LOADI   
+0AEE 35 1C               PUSHG   28
+0AF0 20                  LOADI   
+0AF1 35 20               PUSHG   32
+0AF3 20                  LOADI   
+0AF4 35 F4               PUSHG   -12
+0AF6 20                  LOADI   
+0AF7 1C 091F             PUSH    2335
+0AFA 05                  CALL    
+0AFB 07 020A             JMP     $0D08
+0AFE 00 00B5             LINE    181        ;	  end else if (pce.figtype=knight) or (pce.figtype=king) then do
+0B01 33                  PUSHG   0
+0B02 20                  LOADI   
+0B03 1C 0828             PUSH    2088
+0B06 20                  LOADI   
+0B07 0A                  CIE     
+0B08 09 0004             JZ      $0B0F
+0B0B 1A                  PUSH    1
+0B0C 07 0007             JMP     $0B16
+0B0F 33                  PUSHG   0
+0B10 20                  LOADI   
+0B11 1C 0834             PUSH    2100
+0B14 20                  LOADI   
+0B15 0A                  CIE     
+0B16 09 00B2             JZ      $0BCB
+0B19 00 00B5             LINE    181        ;	  end else if (pce.figtype=knight) or (pce.figtype=king) then do
+0B1C 00 00B7             LINE    183        ;	    for i:=1 to movescount[pce.figtype] do
+0B1F 35 24               PUSHG   36
+0B21 1A                  PUSH    1
+0B22 1D                  STORI   
+0B23 07 0008             JMP     $0B2E
+0B26 35 24               PUSHG   36
+0B28 35 24               PUSHG   36
+0B2A 20                  LOADI   
+0B2B 1A                  PUSH    1
+0B2C 25                  ADDI    
+0B2D 1D                  STORI   
+0B2E 35 24               PUSHG   36
+0B30 20                  LOADI   
+0B31 1C 0628             PUSH    1576
+0B34 33                  PUSHG   0
+0B35 20                  LOADI   
+0B36 16 025672E8         ARRACC  39219944
+0B3B 20                  LOADI   
+0B3C 0E                  CIG     
+0B3D 08 0088             JNZ     $0BC8
+0B40 00 00B8             LINE    184        ;	      xn:=pce.pos.x+moverel[pce.figtype][i].x;
+0B43 35 1C               PUSHG   28
+0B45 33                  PUSHG   0
+0B46 1B 08               PUSH    8
+0B48 25                  ADDI    
+0B49 20                  LOADI   
+0B4A 1C 063C             PUSH    1596
+0B4D 33                  PUSHG   0
+0B4E 20                  LOADI   
+0B4F 16 02567328         ARRACC  39220008
+0B54 35 24               PUSHG   36
+0B56 20                  LOADI   
+0B57 16 02567308         ARRACC  39219976
+0B5C 20                  LOADI   
+0B5D 25                  ADDI    
+0B5E 1D                  STORI   
+0B5F 00 00B9             LINE    185        ;	      yn:=pce.pos.y+moverel[pce.figtype][i].y;
+0B62 35 20               PUSHG   32
+0B64 33                  PUSHG   0
+0B65 1B 0C               PUSH    12
+0B67 25                  ADDI    
+0B68 20                  LOADI   
+0B69 1C 063C             PUSH    1596
+0B6C 33                  PUSHG   0
+0B6D 20                  LOADI   
+0B6E 16 02567328         ARRACC  39220008
+0B73 35 24               PUSHG   36
+0B75 20                  LOADI   
+0B76 16 02567308         ARRACC  39219976
+0B7B 1B 04               PUSH    4
+0B7D 25                  ADDI    
+0B7E 20                  LOADI   
+0B7F 25                  ADDI    
+0B80 1D                  STORI   
+0B81 00 00BA             LINE    186        ;	      if (xn>=1) and (xn<=8) and (yn>=1) and (yn<=8) then UpravNapadanePolicko(f,xn,yn,akce);
+0B84 35 1C               PUSHG   28
+0B86 20                  LOADI   
+0B87 1A                  PUSH    1
+0B88 0F                  CIGE    
+0B89 08 0004             JNZ     $0B90
+0B8C 19                  PUSH    0
+0B8D 07 0006             JMP     $0B96
+0B90 35 1C               PUSHG   28
+0B92 20                  LOADI   
+0B93 1B 08               PUSH    8
+0B95 0D                  CILE    
+0B96 08 0004             JNZ     $0B9D
+0B99 19                  PUSH    0
+0B9A 07 0005             JMP     $0BA2
+0B9D 35 20               PUSHG   32
+0B9F 20                  LOADI   
+0BA0 1A                  PUSH    1
+0BA1 0F                  CIGE    
+0BA2 08 0004             JNZ     $0BA9
+0BA5 19                  PUSH    0
+0BA6 07 0006             JMP     $0BAF
+0BA9 35 20               PUSHG   32
+0BAB 20                  LOADI   
+0BAC 1B 08               PUSH    8
+0BAE 0D                  CILE    
+0BAF 09 0013             JZ      $0BC5
+0BB2 00 00BA             LINE    186        ;	      if (xn>=1) and (xn<=8) and (yn>=1) and (yn<=8) then UpravNapadanePolicko(f,xn,yn,akce);
+0BB5 35 F0               PUSHG   -16
+0BB7 20                  LOADI   
+0BB8 35 1C               PUSHG   28
+0BBA 20                  LOADI   
+0BBB 35 20               PUSHG   32
+0BBD 20                  LOADI   
+0BBE 35 F4               PUSHG   -12
+0BC0 20                  LOADI   
+0BC1 1C 091F             PUSH    2335
+0BC4 05                  CALL    
+0BC5 07 FF5E             JMP     $0B26
+0BC8 07 013D             JMP     $0D08
+0BCB 00 00BC             LINE    188        ;	  end else if (pce.figtype=bishop) or (pce.figtype=rook) or (pce.figtype=queen) then do
+0BCE 33                  PUSHG   0
+0BCF 20                  LOADI   
+0BD0 1C 0824             PUSH    2084
+0BD3 20                  LOADI   
+0BD4 0A                  CIE     
+0BD5 09 0004             JZ      $0BDC
+0BD8 1A                  PUSH    1
+0BD9 07 0007             JMP     $0BE3
+0BDC 33                  PUSHG   0
+0BDD 20                  LOADI   
+0BDE 1C 082C             PUSH    2092
+0BE1 20                  LOADI   
+0BE2 0A                  CIE     
+0BE3 09 0004             JZ      $0BEA
+0BE6 1A                  PUSH    1
+0BE7 07 0007             JMP     $0BF1
+0BEA 33                  PUSHG   0
+0BEB 20                  LOADI   
+0BEC 1C 0830             PUSH    2096
+0BEF 20                  LOADI   
+0BF0 0A                  CIE     
+0BF1 09 0114             JZ      $0D08
+0BF4 00 00BC             LINE    188        ;	  end else if (pce.figtype=bishop) or (pce.figtype=rook) or (pce.figtype=queen) then do
+0BF7 00 00BE             LINE    190        ;	    for i:=1 to movescount[pce.figtype] do
+0BFA 35 24               PUSHG   36
+0BFC 1A                  PUSH    1
+0BFD 1D                  STORI   
+0BFE 07 0008             JMP     $0C09
+0C01 35 24               PUSHG   36
+0C03 35 24               PUSHG   36
+0C05 20                  LOADI   
+0C06 1A                  PUSH    1
+0C07 25                  ADDI    
+0C08 1D                  STORI   
+0C09 35 24               PUSHG   36
+0C0B 20                  LOADI   
+0C0C 1C 0628             PUSH    1576
+0C0F 33                  PUSHG   0
+0C10 20                  LOADI   
+0C11 16 025672E8         ARRACC  39219944
+0C16 20                  LOADI   
+0C17 0E                  CIG     
+0C18 08 00ED             JNZ     $0D08
+0C1B 00 00BF             LINE    191        ;	      xn:=pce.pos.x+moverel[pce.figtype][i].x;
+0C1E 35 1C               PUSHG   28
+0C20 33                  PUSHG   0
+0C21 1B 08               PUSH    8
+0C23 25                  ADDI    
+0C24 20                  LOADI   
+0C25 1C 063C             PUSH    1596
+0C28 33                  PUSHG   0
+0C29 20                  LOADI   
+0C2A 16 02567328         ARRACC  39220008
+0C2F 35 24               PUSHG   36
+0C31 20                  LOADI   
+0C32 16 02567308         ARRACC  39219976
+0C37 20                  LOADI   
+0C38 25                  ADDI    
+0C39 1D                  STORI   
+0C3A 00 00C0             LINE    192        ;	      yn:=pce.pos.y+moverel[pce.figtype][i].y;
+0C3D 35 20               PUSHG   32
+0C3F 33                  PUSHG   0
+0C40 1B 0C               PUSH    12
+0C42 25                  ADDI    
+0C43 20                  LOADI   
+0C44 1C 063C             PUSH    1596
+0C47 33                  PUSHG   0
+0C48 20                  LOADI   
+0C49 16 02567328         ARRACC  39220008
+0C4E 35 24               PUSHG   36
+0C50 20                  LOADI   
+0C51 16 02567308         ARRACC  39219976
+0C56 1B 04               PUSH    4
+0C58 25                  ADDI    
+0C59 20                  LOADI   
+0C5A 25                  ADDI    
+0C5B 1D                  STORI   
+0C5C 00 00C1             LINE    193        ;	      while (xn>=1) and (xn<=8) and (yn>=1) and (yn<=8) do
+0C5F 35 1C               PUSHG   28
+0C61 20                  LOADI   
+0C62 1A                  PUSH    1
+0C63 0F                  CIGE    
+0C64 08 0004             JNZ     $0C6B
+0C67 19                  PUSH    0
+0C68 07 0006             JMP     $0C71
+0C6B 35 1C               PUSHG   28
+0C6D 20                  LOADI   
+0C6E 1B 08               PUSH    8
+0C70 0D                  CILE    
+0C71 08 0004             JNZ     $0C78
+0C74 19                  PUSH    0
+0C75 07 0005             JMP     $0C7D
+0C78 35 20               PUSHG   32
+0C7A 20                  LOADI   
+0C7B 1A                  PUSH    1
+0C7C 0F                  CIGE    
+0C7D 08 0004             JNZ     $0C84
+0C80 19                  PUSH    0
+0C81 07 0006             JMP     $0C8A
+0C84 35 20               PUSHG   32
+0C86 20                  LOADI   
+0C87 1B 08               PUSH    8
+0C89 0D                  CILE    
+0C8A 09 0078             JZ      $0D05
+0C8D 00 00C2             LINE    194        ;	        UpravNapadanePolicko(f,xn,yn,akce);
+0C90 35 F0               PUSHG   -16
+0C92 20                  LOADI   
+0C93 35 1C               PUSHG   28
+0C95 20                  LOADI   
+0C96 35 20               PUSHG   32
+0C98 20                  LOADI   
+0C99 35 F4               PUSHG   -12
+0C9B 20                  LOADI   
+0C9C 1C 091F             PUSH    2335
+0C9F 05                  CALL    
+0CA0 00 00C3             LINE    195        ;	        if gp.board[yn][xn]<>0 then xn:=100;
+0CA3 19                  PUSH    0
+0CA4 35 20               PUSHG   32
+0CA6 20                  LOADI   
+0CA7 16 02567208         ARRACC  39219720
+0CAC 35 1C               PUSHG   28
+0CAE 20                  LOADI   
+0CAF 16 025671E8         ARRACC  39219688
+0CB4 1B 14               PUSH    20
+0CB6 25                  ADDI    
+0CB7 20                  LOADI   
+0CB8 19                  PUSH    0
+0CB9 0B                  CINE    
+0CBA 09 0008             JZ      $0CC5
+0CBD 00 00C3             LINE    195        ;	        if gp.board[yn][xn]<>0 then xn:=100;
+0CC0 35 1C               PUSHG   28
+0CC2 1B 64               PUSH    100
+0CC4 1D                  STORI   
+0CC5 00 00C4             LINE    196        ;	        xn:=xn+moverel[pce.figtype][i].x;
+0CC8 35 1C               PUSHG   28
+0CCA 35 1C               PUSHG   28
+0CCC 20                  LOADI   
+0CCD 1C 063C             PUSH    1596
+0CD0 33                  PUSHG   0
+0CD1 20                  LOADI   
+0CD2 16 02567328         ARRACC  39220008
+0CD7 35 24               PUSHG   36
+0CD9 20                  LOADI   
+0CDA 16 02567308         ARRACC  39219976
+0CDF 20                  LOADI   
+0CE0 25                  ADDI    
+0CE1 1D                  STORI   
+0CE2 00 00C5             LINE    197        ;	        yn:=yn+moverel[pce.figtype][i].y;
+0CE5 35 20               PUSHG   32
+0CE7 35 20               PUSHG   32
+0CE9 20                  LOADI   
+0CEA 1C 063C             PUSH    1596
+0CED 33                  PUSHG   0
+0CEE 20                  LOADI   
+0CEF 16 02567328         ARRACC  39220008
+0CF4 35 24               PUSHG   36
+0CF6 20                  LOADI   
+0CF7 16 02567308         ARRACC  39219976
+0CFC 1B 04               PUSH    4
+0CFE 25                  ADDI    
+0CFF 20                  LOADI   
+0D00 25                  ADDI    
+0D01 1D                  STORI   
+0D02 07 FF5A             JMP     $0C5F
+0D05 07 FEF9             JMP     $0C01
+0D08 00 00C9             LINE    201        ;	end proc;
+0D0B 1B 08               PUSH    8
+0D0D 04                  RET     
+0D0E 02                  ENTRY   
+0D0F 1C 016D             PUSH    365
+0D12 03                  LOCINI  
+0D13 00 00CE             LINE    206        ;	  InitVars;
+0D16 19                  PUSH    0
+0D17 05                  CALL    
+0D18 00 00D2             LINE    210        ;	  p.pieces[9].figtype:=rook;
+0D1B 33                  PUSHG   0
+0D1C 1B 09               PUSH    9
+0D1E 16 02567228         ARRACC  39219752
+0D23 1C 0214             PUSH    532
+0D26 25                  ADDI    
+0D27 1C 082C             PUSH    2092
+0D2A 20                  LOADI   
+0D2B 1D                  STORI   
+0D2C 00 00D3             LINE    211        ;	  p.pieces[10].figtype:=knight;
+0D2F 33                  PUSHG   0
+0D30 1B 0A               PUSH    10
+0D32 16 02567228         ARRACC  39219752
+0D37 1C 0214             PUSH    532
+0D3A 25                  ADDI    
+0D3B 1C 0828             PUSH    2088
+0D3E 20                  LOADI   
+0D3F 1D                  STORI   
+0D40 00 00D4             LINE    212        ;	  p.pieces[11].figtype:=bishop;
+0D43 33                  PUSHG   0
+0D44 1B 0B               PUSH    11
+0D46 16 02567228         ARRACC  39219752
+0D4B 1C 0214             PUSH    532
+0D4E 25                  ADDI    
+0D4F 1C 0824             PUSH    2084
+0D52 20                  LOADI   
+0D53 1D                  STORI   
+0D54 00 00D5             LINE    213        ;	  p.pieces[12].figtype:=queen;
+0D57 33                  PUSHG   0
+0D58 1B 0C               PUSH    12
+0D5A 16 02567228         ARRACC  39219752
+0D5F 1C 0214             PUSH    532
+0D62 25                  ADDI    
+0D63 1C 0830             PUSH    2096
+0D66 20                  LOADI   
+0D67 1D                  STORI   
+0D68 00 00D6             LINE    214        ;	  p.pieces[13].figtype:=king;
+0D6B 33                  PUSHG   0
+0D6C 1B 0D               PUSH    13
+0D6E 16 02567228         ARRACC  39219752
+0D73 1C 0214             PUSH    532
+0D76 25                  ADDI    
+0D77 1C 0834             PUSH    2100
+0D7A 20                  LOADI   
+0D7B 1D                  STORI   
+0D7C 00 00D7             LINE    215        ;	  p.pieces[14].figtype:=bishop;
+0D7F 33                  PUSHG   0
+0D80 1B 0E               PUSH    14
+0D82 16 02567228         ARRACC  39219752
+0D87 1C 0214             PUSH    532
+0D8A 25                  ADDI    
+0D8B 1C 0824             PUSH    2084
+0D8E 20                  LOADI   
+0D8F 1D                  STORI   
+0D90 00 00D8             LINE    216        ;	  p.pieces[15].figtype:=knight;
+0D93 33                  PUSHG   0
+0D94 1B 0F               PUSH    15
+0D96 16 02567228         ARRACC  39219752
+0D9B 1C 0214             PUSH    532
+0D9E 25                  ADDI    
+0D9F 1C 0828             PUSH    2088
+0DA2 20                  LOADI   
+0DA3 1D                  STORI   
+0DA4 00 00D9             LINE    217        ;	  p.pieces[16].figtype:=rook;
+0DA7 33                  PUSHG   0
+0DA8 1B 10               PUSH    16
+0DAA 16 02567228         ARRACC  39219752
+0DAF 1C 0214             PUSH    532
+0DB2 25                  ADDI    
+0DB3 1C 082C             PUSH    2092
+0DB6 20                  LOADI   
+0DB7 1D                  STORI   
+0DB8 00 00DB             LINE    219        ;	  for i:=1 to 8 do
+0DBB 36 05B0             PUSHG   1456
+0DBE 1A                  PUSH    1
+0DBF 1D                  STORI   
+0DC0 07 000A             JMP     $0DCD
+0DC3 36 05B0             PUSHG   1456
+0DC6 36 05B0             PUSHG   1456
+0DC9 20                  LOADI   
+0DCA 1A                  PUSH    1
+0DCB 25                  ADDI    
+0DCC 1D                  STORI   
+0DCD 36 05B0             PUSHG   1456
+0DD0 20                  LOADI   
+0DD1 1B 08               PUSH    8
+0DD3 0E                  CIG     
+0DD4 08 018C             JNZ     $0F63
+0DD7 00 00DC             LINE    220        ;	    p.pieces[i].figtype:=pawn;
+0DDA 33                  PUSHG   0
+0DDB 36 05B0             PUSHG   1456
+0DDE 20                  LOADI   
+0DDF 16 02567228         ARRACC  39219752
+0DE4 1C 0214             PUSH    532
+0DE7 25                  ADDI    
+0DE8 1C 0820             PUSH    2080
+0DEB 20                  LOADI   
+0DEC 1D                  STORI   
+0DED 00 00DD             LINE    221        ;	    p.pieces[0-i].figtype:=pawn;
+0DF0 33                  PUSHG   0
+0DF1 19                  PUSH    0
+0DF2 36 05B0             PUSHG   1456
+0DF5 20                  LOADI   
+0DF6 27                  SUBI    
+0DF7 16 02567228         ARRACC  39219752
+0DFC 1C 0214             PUSH    532
+0DFF 25                  ADDI    
+0E00 1C 0820             PUSH    2080
+0E03 20                  LOADI   
+0E04 1D                  STORI   
+0E05 00 00DE             LINE    222        ;	    p.pieces[0-8-i].figtype:=p.pieces[8+i].figtype;
+0E08 33                  PUSHG   0
+0E09 19                  PUSH    0
+0E0A 1B 08               PUSH    8
+0E0C 27                  SUBI    
+0E0D 36 05B0             PUSHG   1456
+0E10 20                  LOADI   
+0E11 27                  SUBI    
+0E12 16 02567228         ARRACC  39219752
+0E17 1C 0214             PUSH    532
+0E1A 25                  ADDI    
+0E1B 33                  PUSHG   0
+0E1C 1B 08               PUSH    8
+0E1E 36 05B0             PUSHG   1456
+0E21 20                  LOADI   
+0E22 25                  ADDI    
+0E23 16 02567228         ARRACC  39219752
+0E28 1C 0214             PUSH    532
+0E2B 25                  ADDI    
+0E2C 20                  LOADI   
+0E2D 1D                  STORI   
+0E2E 00 00E0             LINE    224        ;	    p.board[1][i]:=0-8-i; p.pieces[-8-i].pos.x:=i; p.pieces[-8-i].pos.y:=1;
+0E31 33                  PUSHG   0
+0E32 1A                  PUSH    1
+0E33 16 02567208         ARRACC  39219720
+0E38 36 05B0             PUSHG   1456
+0E3B 20                  LOADI   
+0E3C 16 025671E8         ARRACC  39219688
+0E41 1B 14               PUSH    20
+0E43 25                  ADDI    
+0E44 19                  PUSH    0
+0E45 1B 08               PUSH    8
+0E47 27                  SUBI    
+0E48 36 05B0             PUSHG   1456
+0E4B 20                  LOADI   
+0E4C 27                  SUBI    
+0E4D 1D                  STORI   
+0E4E 00 00E0             LINE    224        ;	    p.board[1][i]:=0-8-i; p.pieces[-8-i].pos.x:=i; p.pieces[-8-i].pos.y:=1;
+0E51 33                  PUSHG   0
+0E52 1B 08               PUSH    8
+0E54 2D                  NEGI    
+0E55 36 05B0             PUSHG   1456
+0E58 20                  LOADI   
+0E59 27                  SUBI    
+0E5A 16 02567228         ARRACC  39219752
+0E5F 1C 021C             PUSH    540
+0E62 25                  ADDI    
+0E63 36 05B0             PUSHG   1456
+0E66 20                  LOADI   
+0E67 1D                  STORI   
+0E68 00 00E0             LINE    224        ;	    p.board[1][i]:=0-8-i; p.pieces[-8-i].pos.x:=i; p.pieces[-8-i].pos.y:=1;
+0E6B 33                  PUSHG   0
+0E6C 1B 08               PUSH    8
+0E6E 2D                  NEGI    
+0E6F 36 05B0             PUSHG   1456
+0E72 20                  LOADI   
+0E73 27                  SUBI    
+0E74 16 02567228         ARRACC  39219752
+0E79 1C 0220             PUSH    544
+0E7C 25                  ADDI    
+0E7D 1A                  PUSH    1
+0E7E 1D                  STORI   
+0E7F 00 00E1             LINE    225        ;	    p.board[2][i]:=0-i;   p.pieces[0-i].pos.x:=i;  p.pieces[0-i].pos.y:=2;
+0E82 33                  PUSHG   0
+0E83 1B 02               PUSH    2
+0E85 16 02567208         ARRACC  39219720
+0E8A 36 05B0             PUSHG   1456
+0E8D 20                  LOADI   
+0E8E 16 025671E8         ARRACC  39219688
+0E93 1B 14               PUSH    20
+0E95 25                  ADDI    
+0E96 19                  PUSH    0
+0E97 36 05B0             PUSHG   1456
+0E9A 20                  LOADI   
+0E9B 27                  SUBI    
+0E9C 1D                  STORI   
+0E9D 00 00E1             LINE    225        ;	    p.board[2][i]:=0-i;   p.pieces[0-i].pos.x:=i;  p.pieces[0-i].pos.y:=2;
+0EA0 33                  PUSHG   0
+0EA1 19                  PUSH    0
+0EA2 36 05B0             PUSHG   1456
+0EA5 20                  LOADI   
+0EA6 27                  SUBI    
+0EA7 16 02567228         ARRACC  39219752
+0EAC 1C 021C             PUSH    540
+0EAF 25                  ADDI    
+0EB0 36 05B0             PUSHG   1456
+0EB3 20                  LOADI   
+0EB4 1D                  STORI   
+0EB5 00 00E1             LINE    225        ;	    p.board[2][i]:=0-i;   p.pieces[0-i].pos.x:=i;  p.pieces[0-i].pos.y:=2;
+0EB8 33                  PUSHG   0
+0EB9 19                  PUSH    0
+0EBA 36 05B0             PUSHG   1456
+0EBD 20                  LOADI   
+0EBE 27                  SUBI    
+0EBF 16 02567228         ARRACC  39219752
+0EC4 1C 0220             PUSH    544
+0EC7 25                  ADDI    
+0EC8 1B 02               PUSH    2
+0ECA 1D                  STORI   
+0ECB 00 00E2             LINE    226        ;	    p.board[7][i]:=i;     p.pieces[i].pos.x:=i;    p.pieces[i].pos.y:=7;
+0ECE 33                  PUSHG   0
+0ECF 1B 07               PUSH    7
+0ED1 16 02567208         ARRACC  39219720
+0ED6 36 05B0             PUSHG   1456
+0ED9 20                  LOADI   
+0EDA 16 025671E8         ARRACC  39219688
+0EDF 1B 14               PUSH    20
+0EE1 25                  ADDI    
+0EE2 36 05B0             PUSHG   1456
+0EE5 20                  LOADI   
+0EE6 1D                  STORI   
+0EE7 00 00E2             LINE    226        ;	    p.board[7][i]:=i;     p.pieces[i].pos.x:=i;    p.pieces[i].pos.y:=7;
+0EEA 33                  PUSHG   0
+0EEB 36 05B0             PUSHG   1456
+0EEE 20                  LOADI   
+0EEF 16 02567228         ARRACC  39219752
+0EF4 1C 021C             PUSH    540
+0EF7 25                  ADDI    
+0EF8 36 05B0             PUSHG   1456
+0EFB 20                  LOADI   
+0EFC 1D                  STORI   
+0EFD 00 00E2             LINE    226        ;	    p.board[7][i]:=i;     p.pieces[i].pos.x:=i;    p.pieces[i].pos.y:=7;
+0F00 33                  PUSHG   0
+0F01 36 05B0             PUSHG   1456
+0F04 20                  LOADI   
+0F05 16 02567228         ARRACC  39219752
+0F0A 1C 0220             PUSH    544
+0F0D 25                  ADDI    
+0F0E 1B 07               PUSH    7
+0F10 1D                  STORI   
+0F11 00 00E3             LINE    227        ;	    p.board[8][i]:=8+i;   p.pieces[8+i].pos.x:=i;  p.pieces[8+i].pos.y:=8;
+0F14 33                  PUSHG   0
+0F15 1B 08               PUSH    8
+0F17 16 02567208         ARRACC  39219720
+0F1C 36 05B0             PUSHG   1456
+0F1F 20                  LOADI   
+0F20 16 025671E8         ARRACC  39219688
+0F25 1B 14               PUSH    20
+0F27 25                  ADDI    
+0F28 1B 08               PUSH    8
+0F2A 36 05B0             PUSHG   1456
+0F2D 20                  LOADI   
+0F2E 25                  ADDI    
+0F2F 1D                  STORI   
+0F30 00 00E3             LINE    227        ;	    p.board[8][i]:=8+i;   p.pieces[8+i].pos.x:=i;  p.pieces[8+i].pos.y:=8;
+0F33 33                  PUSHG   0
+0F34 1B 08               PUSH    8
+0F36 36 05B0             PUSHG   1456
+0F39 20                  LOADI   
+0F3A 25                  ADDI    
+0F3B 16 02567228         ARRACC  39219752
+0F40 1C 021C             PUSH    540
+0F43 25                  ADDI    
+0F44 36 05B0             PUSHG   1456
+0F47 20                  LOADI   
+0F48 1D                  STORI   
+0F49 00 00E3             LINE    227        ;	    p.board[8][i]:=8+i;   p.pieces[8+i].pos.x:=i;  p.pieces[8+i].pos.y:=8;
+0F4C 33                  PUSHG   0
+0F4D 1B 08               PUSH    8
+0F4F 36 05B0             PUSHG   1456
+0F52 20                  LOADI   
+0F53 25                  ADDI    
+0F54 16 02567228         ARRACC  39219752
+0F59 1C 0220             PUSH    544
+0F5C 25                  ADDI    
+0F5D 1B 08               PUSH    8
+0F5F 1D                  STORI   
+0F60 07 FE60             JMP     $0DC3
+0F63 00 00E5             LINE    229        ;	  p.onmove:=1;
+0F66 33                  PUSHG   0
+0F67 1A                  PUSH    1
+0F68 1D                  STORI   
+0F69 00 00E6             LINE    230        ;	  gp:=p;
+0F6C 19                  PUSH    0
+0F6D 33                  PUSHG   0
+0F6E 1C 016C             PUSH    364
+0F71 22                  LOADM   
+0F72 1C 016C             PUSH    364
+0F75 1F                  STORM   
+0F76 00 00E7             LINE    231        ;	  for i:=1 to 16 do
+0F79 36 05B0             PUSHG   1456
+0F7C 1A                  PUSH    1
+0F7D 1D                  STORI   
+0F7E 07 000A             JMP     $0F8B
+0F81 36 05B0             PUSHG   1456
+0F84 36 05B0             PUSHG   1456
+0F87 20                  LOADI   
+0F88 1A                  PUSH    1
+0F89 25                  ADDI    
+0F8A 1D                  STORI   
+0F8B 36 05B0             PUSHG   1456
+0F8E 20                  LOADI   
+0F8F 1B 10               PUSH    16
+0F91 0E                  CIG     
+0F92 08 001C             JNZ     $0FB1
+0F95 00 00E8             LINE    232        ;	    OznacPolickaFigurky(i,1);
+0F98 36 05B0             PUSHG   1456
+0F9B 20                  LOADI   
+0F9C 1A                  PUSH    1
+0F9D 1C 0A47             PUSH    2631
+0FA0 05                  CALL    
+0FA1 00 00E9             LINE    233        ;	    OznacPolickaFigurky(-i,1);
+0FA4 36 05B0             PUSHG   1456
+0FA7 20                  LOADI   
+0FA8 2D                  NEGI    
+0FA9 1A                  PUSH    1
+0FAA 1C 0A47             PUSH    2631
+0FAD 05                  CALL    
+0FAE 07 FFD0             JMP     $0F81
+0FB1 00 00EB             LINE    235        ;	  p:=gp;
+0FB4 33                  PUSHG   0
+0FB5 19                  PUSH    0
+0FB6 1C 016C             PUSH    364
+0FB9 22                  LOADM   
+0FBA 1C 016C             PUSH    364
+0FBD 1F                  STORM   
+0FBE 00 00EC             LINE    236        ;	  NewMove(p,"Start",0);
+0FC1 33                  PUSHG   0
+0FC2 1C 016C             PUSH    364
+0FC5 22                  LOADM   
+0FC6 1B 09               PUSH    9
+0FC8 19                  PUSH    0
+0FC9 18                  CNVF    
+0FCA 23 02583080         PUSH    39334016
+0FCF 06                  SYS     
+0FD0 00 00ED             LINE    237        ;	end proc;
+0FD3 19                  PUSH    0
+0FD4 04                  RET     
+0FD5 02                  ENTRY   
+0FD6 1B 05               PUSH    5
+0FD8 03                  LOCINI  
+0FD9 00 00F6             LINE    246        ;	  xn:=gp.pieces[f].pos.x;
+0FDC 35 08               PUSHG   8
+0FDE 19                  PUSH    0
+0FDF 35 EC               PUSHG   -20
+0FE1 20                  LOADI   
+0FE2 16 02567228         ARRACC  39219752
+0FE7 1C 021C             PUSH    540
+0FEA 25                  ADDI    
+0FEB 20                  LOADI   
+0FEC 1D                  STORI   
+0FED 00 00F7             LINE    247        ;	  yn:=gp.pieces[f].pos.y;
+0FF0 35 0C               PUSHG   12
+0FF2 19                  PUSH    0
+0FF3 35 EC               PUSHG   -20
+0FF5 20                  LOADI   
+0FF6 16 02567228         ARRACC  39219752
+0FFB 1C 0220             PUSH    544
+0FFE 25                  ADDI    
+0FFF 20                  LOADI   
+1000 1D                  STORI   
+1001 00 00F8             LINE    248        ;	  xd:=sgn(col-xn);
+1004 33                  PUSHG   0
+1005 1A                  PUSH    1
+1006 03                  LOCINI  
+1007 35 F0               PUSHG   -16
+1009 20                  LOADI   
+100A 35 08               PUSHG   8
+100C 20                  LOADI   
+100D 27                  SUBI    
+100E 23 02582C30         PUSH    39332912
+1013 06                  SYS     
+1014 1D                  STORI   
+1015 00 00F9             LINE    249        ;	  yd:=sgn(line-yn);
+1018 35 04               PUSHG   4
+101A 1A                  PUSH    1
+101B 03                  LOCINI  
+101C 35 F4               PUSHG   -12
+101E 20                  LOADI   
+101F 35 0C               PUSHG   12
+1021 20                  LOADI   
+1022 27                  SUBI    
+1023 23 02582C30         PUSH    39332912
+1028 06                  SYS     
+1029 1D                  STORI   
+102A 00 00FA             LINE    250        ;	  xn:=col+xd;
+102D 35 08               PUSHG   8
+102F 35 F0               PUSHG   -16
+1031 20                  LOADI   
+1032 33                  PUSHG   0
+1033 20                  LOADI   
+1034 25                  ADDI    
+1035 1D                  STORI   
+1036 00 00FB             LINE    251        ;	  yn:=line+yd;
+1039 35 0C               PUSHG   12
+103B 35 F4               PUSHG   -12
+103D 20                  LOADI   
+103E 35 04               PUSHG   4
+1040 20                  LOADI   
+1041 25                  ADDI    
+1042 1D                  STORI   
+1043 00 00FC             LINE    252        ;	  pocet:=0;
+1046 35 10               PUSHG   16
+1048 19                  PUSH    0
+1049 1D                  STORI   
+104A 00 00FD             LINE    253        ;	  while (xn>=1) and (xn<=8) and (yn>=1) and (yn<=8) do
+104D 35 08               PUSHG   8
+104F 20                  LOADI   
+1050 1A                  PUSH    1
+1051 0F                  CIGE    
+1052 08 0004             JNZ     $1059
+1055 19                  PUSH    0
+1056 07 0006             JMP     $105F
+1059 35 08               PUSHG   8
+105B 20                  LOADI   
+105C 1B 08               PUSH    8
+105E 0D                  CILE    
+105F 08 0004             JNZ     $1066
+1062 19                  PUSH    0
+1063 07 0005             JMP     $106B
+1066 35 0C               PUSHG   12
+1068 20                  LOADI   
+1069 1A                  PUSH    1
+106A 0F                  CIGE    
+106B 08 0004             JNZ     $1072
+106E 19                  PUSH    0
+106F 07 0006             JMP     $1078
+1072 35 0C               PUSHG   12
+1074 20                  LOADI   
+1075 1B 08               PUSH    8
+1077 0D                  CILE    
+1078 09 0088             JZ      $1103
+107B 00 00FE             LINE    254        ;	    gp.attacked[yn][xn]:=gp.attacked[yn][xn] or fig2bit[f];
+107E 19                  PUSH    0
+107F 35 0C               PUSHG   12
+1081 20                  LOADI   
+1082 16 02567208         ARRACC  39219720
+1087 35 08               PUSHG   8
+1089 20                  LOADI   
+108A 16 025671E8         ARRACC  39219688
+108F 1C 0114             PUSH    276
+1092 25                  ADDI    
+1093 19                  PUSH    0
+1094 35 0C               PUSHG   12
+1096 20                  LOADI   
+1097 16 02567208         ARRACC  39219720
+109C 35 08               PUSHG   8
+109E 20                  LOADI   
+109F 16 025671E8         ARRACC  39219688
+10A4 1C 0114             PUSH    276
+10A7 25                  ADDI    
+10A8 20                  LOADI   
+10A9 1C 077C             PUSH    1916
+10AC 35 EC               PUSHG   -20
+10AE 20                  LOADI   
+10AF 16 02567348         ARRACC  39220040
+10B4 20                  LOADI   
+10B5 30                  ORI     
+10B6 1D                  STORI   
+10B7 00 00FF             LINE    255        ;	    pocet:=pocet+1;
+10BA 35 10               PUSHG   16
+10BC 35 10               PUSHG   16
+10BE 20                  LOADI   
+10BF 1A                  PUSH    1
+10C0 25                  ADDI    
+10C1 1D                  STORI   
+10C2 00 0100             LINE    256        ;	    if gp.board[yn][xn]<>0 then xn:=100; {nasty trick - exit the while loop}
+10C5 19                  PUSH    0
+10C6 35 0C               PUSHG   12
+10C8 20                  LOADI   
+10C9 16 02567208         ARRACC  39219720
+10CE 35 08               PUSHG   8
+10D0 20                  LOADI   
+10D1 16 025671E8         ARRACC  39219688
+10D6 1B 14               PUSH    20
+10D8 25                  ADDI    
+10D9 20                  LOADI   
+10DA 19                  PUSH    0
+10DB 0B                  CINE    
+10DC 09 0008             JZ      $10E7
+10DF 00 0100             LINE    256        ;	    if gp.board[yn][xn]<>0 then xn:=100; {nasty trick - exit the while loop}
+10E2 35 08               PUSHG   8
+10E4 1B 64               PUSH    100
+10E6 1D                  STORI   
+10E7 00 0101             LINE    257        ;	    xn:=xn+xd;
+10EA 35 08               PUSHG   8
+10EC 35 08               PUSHG   8
+10EE 20                  LOADI   
+10EF 33                  PUSHG   0
+10F0 20                  LOADI   
+10F1 25                  ADDI    
+10F2 1D                  STORI   
+10F3 00 0102             LINE    258        ;	    yn:=yn+yd;
+10F6 35 0C               PUSHG   12
+10F8 35 0C               PUSHG   12
+10FA 20                  LOADI   
+10FB 35 04               PUSHG   4
+10FD 20                  LOADI   
+10FE 25                  ADDI    
+10FF 1D                  STORI   
+1100 07 FF4A             JMP     $104D
+1103 00 0104             LINE    260        ;	  gp.pieces[f].attacked_cells:=gp.pieces[f].attacked_cells+pocet;
+1106 19                  PUSH    0
+1107 35 EC               PUSHG   -20
+1109 20                  LOADI   
+110A 16 02567228         ARRACC  39219752
+110F 1C 0224             PUSH    548
+1112 25                  ADDI    
+1113 19                  PUSH    0
+1114 35 EC               PUSHG   -20
+1116 20                  LOADI   
+1117 16 02567228         ARRACC  39219752
+111C 1C 0224             PUSH    548
+111F 25                  ADDI    
+1120 20                  LOADI   
+1121 35 10               PUSHG   16
+1123 20                  LOADI   
+1124 25                  ADDI    
+1125 1D                  STORI   
+1126 00 0105             LINE    261        ;	end proc;
+1129 1B 0C               PUSH    12
+112B 04                  RET     
+112C 02                  ENTRY   
+112D 1B 05               PUSH    5
+112F 03                  LOCINI  
+1130 00 010E             LINE    270        ;	  xn:=gp.pieces[f].pos.x;
+1133 35 08               PUSHG   8
+1135 19                  PUSH    0
+1136 35 EC               PUSHG   -20
+1138 20                  LOADI   
+1139 16 02567228         ARRACC  39219752
+113E 1C 021C             PUSH    540
+1141 25                  ADDI    
+1142 20                  LOADI   
+1143 1D                  STORI   
+1144 00 010F             LINE    271        ;	  yn:=gp.pieces[f].pos.y;
+1147 35 0C               PUSHG   12
+1149 19                  PUSH    0
+114A 35 EC               PUSHG   -20
+114C 20                  LOADI   
+114D 16 02567228         ARRACC  39219752
+1152 1C 0220             PUSH    544
+1155 25                  ADDI    
+1156 20                  LOADI   
+1157 1D                  STORI   
+1158 00 0110             LINE    272        ;	  xd:=sgn(col-xn);
+115B 33                  PUSHG   0
+115C 1A                  PUSH    1
+115D 03                  LOCINI  
+115E 35 F0               PUSHG   -16
+1160 20                  LOADI   
+1161 35 08               PUSHG   8
+1163 20                  LOADI   
+1164 27                  SUBI    
+1165 23 02582C30         PUSH    39332912
+116A 06                  SYS     
+116B 1D                  STORI   
+116C 00 0111             LINE    273        ;	  yd:=sgn(line-yn);
+116F 35 04               PUSHG   4
+1171 1A                  PUSH    1
+1172 03                  LOCINI  
+1173 35 F4               PUSHG   -12
+1175 20                  LOADI   
+1176 35 0C               PUSHG   12
+1178 20                  LOADI   
+1179 27                  SUBI    
+117A 23 02582C30         PUSH    39332912
+117F 06                  SYS     
+1180 1D                  STORI   
+1181 00 0112             LINE    274        ;	  xn:=col+xd;
+1184 35 08               PUSHG   8
+1186 35 F0               PUSHG   -16
+1188 20                  LOADI   
+1189 33                  PUSHG   0
+118A 20                  LOADI   
+118B 25                  ADDI    
+118C 1D                  STORI   
+118D 00 0113             LINE    275        ;	  yn:=line+yd;
+1190 35 0C               PUSHG   12
+1192 35 F4               PUSHG   -12
+1194 20                  LOADI   
+1195 35 04               PUSHG   4
+1197 20                  LOADI   
+1198 25                  ADDI    
+1199 1D                  STORI   
+119A 00 0114             LINE    276        ;	  while (xn>=1) and (xn<=8) and (yn>=1) and (yn<=8) do
+119D 35 08               PUSHG   8
+119F 20                  LOADI   
+11A0 1A                  PUSH    1
+11A1 0F                  CIGE    
+11A2 08 0004             JNZ     $11A9
+11A5 19                  PUSH    0
+11A6 07 0006             JMP     $11AF
+11A9 35 08               PUSHG   8
+11AB 20                  LOADI   
+11AC 1B 08               PUSH    8
+11AE 0D                  CILE    
+11AF 08 0004             JNZ     $11B6
+11B2 19                  PUSH    0
+11B3 07 0005             JMP     $11BB
+11B6 35 0C               PUSHG   12
+11B8 20                  LOADI   
+11B9 1A                  PUSH    1
+11BA 0F                  CIGE    
+11BB 08 0004             JNZ     $11C2
+11BE 19                  PUSH    0
+11BF 07 0006             JMP     $11C8
+11C2 35 0C               PUSHG   12
+11C4 20                  LOADI   
+11C5 1B 08               PUSH    8
+11C7 0D                  CILE    
+11C8 09 009F             JZ      $126A
+11CB 00 0115             LINE    277        ;	    if gp.attacked[yn][xn] and fig2bit[f]=0 then xn:=100
+11CE 19                  PUSH    0
+11CF 35 0C               PUSHG   12
+11D1 20                  LOADI   
+11D2 16 02567208         ARRACC  39219720
+11D7 35 08               PUSHG   8
+11D9 20                  LOADI   
+11DA 16 025671E8         ARRACC  39219688
+11DF 1C 0114             PUSH    276
+11E2 25                  ADDI    
+11E3 20                  LOADI   
+11E4 1C 077C             PUSH    1916
+11E7 35 EC               PUSHG   -20
+11E9 20                  LOADI   
+11EA 16 02567348         ARRACC  39220040
+11EF 20                  LOADI   
+11F0 32                  ANDI    
+11F1 19                  PUSH    0
+11F2 0A                  CIE     
+11F3 09 000B             JZ      $1201
+11F6 00 0115             LINE    277        ;	    if gp.attacked[yn][xn] and fig2bit[f]=0 then xn:=100
+11F9 35 08               PUSHG   8
+11FB 1B 64               PUSH    100
+11FD 1D                  STORI   
+11FE 07 004D             JMP     $124E
+1201 00 0116             LINE    278        ;	    else do
+1204 00 0117             LINE    279        ;	      gp.attacked[yn][xn]:=gp.attacked[yn][xn] and (-1 xor fig2bit[f]);
+1207 19                  PUSH    0
+1208 35 0C               PUSHG   12
+120A 20                  LOADI   
+120B 16 02567208         ARRACC  39219720
+1210 35 08               PUSHG   8
+1212 20                  LOADI   
+1213 16 025671E8         ARRACC  39219688
+1218 1C 0114             PUSH    276
+121B 25                  ADDI    
+121C 19                  PUSH    0
+121D 35 0C               PUSHG   12
+121F 20                  LOADI   
+1220 16 02567208         ARRACC  39219720
+1225 35 08               PUSHG   8
+1227 20                  LOADI   
+1228 16 025671E8         ARRACC  39219688
+122D 1C 0114             PUSH    276
+1230 25                  ADDI    
+1231 20                  LOADI   
+1232 1A                  PUSH    1
+1233 2D                  NEGI    
+1234 1C 077C             PUSH    1916
+1237 35 EC               PUSHG   -20
+1239 20                  LOADI   
+123A 16 02567348         ARRACC  39220040
+123F 20                  LOADI   
+1240 31                  XORI    
+1241 32                  ANDI    
+1242 1D                  STORI   
+1243 00 0118             LINE    280        ;	      pocet:=pocet+1;
+1246 35 10               PUSHG   16
+1248 35 10               PUSHG   16
+124A 20                  LOADI   
+124B 1A                  PUSH    1
+124C 25                  ADDI    
+124D 1D                  STORI   
+124E 00 011A             LINE    282        ;	    xn:=xn+xd;
+1251 35 08               PUSHG   8
+1253 35 08               PUSHG   8
+1255 20                  LOADI   
+1256 33                  PUSHG   0
+1257 20                  LOADI   
+1258 25                  ADDI    
+1259 1D                  STORI   
+125A 00 011B             LINE    283        ;	    yn:=yn+yd;
+125D 35 0C               PUSHG   12
+125F 35 0C               PUSHG   12
+1261 20                  LOADI   
+1262 35 04               PUSHG   4
+1264 20                  LOADI   
+1265 25                  ADDI    
+1266 1D                  STORI   
+1267 07 FF33             JMP     $119D
+126A 00 011D             LINE    285        ;	  gp.pieces[f].attacked_cells:=gp.pieces[f].attacked_cells-pocet;
+126D 19                  PUSH    0
+126E 35 EC               PUSHG   -20
+1270 20                  LOADI   
+1271 16 02567228         ARRACC  39219752
+1276 1C 0224             PUSH    548
+1279 25                  ADDI    
+127A 19                  PUSH    0
+127B 35 EC               PUSHG   -20
+127D 20                  LOADI   
+127E 16 02567228         ARRACC  39219752
+1283 1C 0224             PUSH    548
+1286 25                  ADDI    
+1287 20                  LOADI   
+1288 35 10               PUSHG   16
+128A 20                  LOADI   
+128B 27                  SUBI    
+128C 1D                  STORI   
+128D 00 011E             LINE    286        ;	end proc;
+1290 1B 0C               PUSH    12
+1292 04                  RET     
+1293 02                  ENTRY   
+1294 1A                  PUSH    1
+1295 03                  LOCINI  
+1296 00 0125             LINE    293        ;	  for i:= -16 to 16 do
+1299 33                  PUSHG   0
+129A 1B 10               PUSH    16
+129C 2D                  NEGI    
+129D 1D                  STORI   
+129E 07 0006             JMP     $12A7
+12A1 33                  PUSHG   0
+12A2 33                  PUSHG   0
+12A3 20                  LOADI   
+12A4 1A                  PUSH    1
+12A5 25                  ADDI    
+12A6 1D                  STORI   
+12A7 33                  PUSHG   0
+12A8 20                  LOADI   
+12A9 1B 10               PUSH    16
+12AB 0E                  CIG     
+12AC 08 0055             JNZ     $1304
+12AF 00 0126             LINE    294        ;	    if (gp.pieces[i].figtype>=bishop) and (gp.attacked[line][col] and fig2bit[i]<>0) 
+12B2 19                  PUSH    0
+12B3 33                  PUSHG   0
+12B4 20                  LOADI   
+12B5 16 02567228         ARRACC  39219752
+12BA 1C 0214             PUSH    532
+12BD 25                  ADDI    
+12BE 20                  LOADI   
+12BF 1C 0824             PUSH    2084
+12C2 20                  LOADI   
+12C3 0F                  CIGE    
+12C4 08 0004             JNZ     $12CB
+12C7 19                  PUSH    0
+12C8 07 0024             JMP     $12EF
+12CB 19                  PUSH    0
+12CC 35 F4               PUSHG   -12
+12CE 20                  LOADI   
+12CF 16 02567208         ARRACC  39219720
+12D4 35 F0               PUSHG   -16
+12D6 20                  LOADI   
+12D7 16 025671E8         ARRACC  39219688
+12DC 1C 0114             PUSH    276
+12DF 25                  ADDI    
+12E0 20                  LOADI   
+12E1 1C 077C             PUSH    1916
+12E4 33                  PUSHG   0
+12E5 20                  LOADI   
+12E6 16 02567348         ARRACC  39220040
+12EB 20                  LOADI   
+12EC 32                  ANDI    
+12ED 19                  PUSH    0
+12EE 0B                  CINE    
+12EF 09 000F             JZ      $1301
+12F2 00 0127             LINE    295        ;	              then Predlz(i,col,line);
+12F5 33                  PUSHG   0
+12F6 20                  LOADI   
+12F7 35 F0               PUSHG   -16
+12F9 20                  LOADI   
+12FA 35 F4               PUSHG   -12
+12FC 20                  LOADI   
+12FD 1C 0FD5             PUSH    4053
+1300 05                  CALL    
+1301 07 FF9D             JMP     $12A1
+1304 00 0129             LINE    297        ;	end proc;
+1307 1B 08               PUSH    8
+1309 04                  RET     
+130A 02                  ENTRY   
+130B 1A                  PUSH    1
+130C 03                  LOCINI  
+130D 00 012F             LINE    303        ;	  for i:= -16 to 16 do
+1310 33                  PUSHG   0
+1311 1B 10               PUSH    16
+1313 2D                  NEGI    
+1314 1D                  STORI   
+1315 07 0006             JMP     $131E
+1318 33                  PUSHG   0
+1319 33                  PUSHG   0
+131A 20                  LOADI   
+131B 1A                  PUSH    1
+131C 25                  ADDI    
+131D 1D                  STORI   
+131E 33                  PUSHG   0
+131F 20                  LOADI   
+1320 1B 10               PUSH    16
+1322 0E                  CIG     
+1323 08 0055             JNZ     $137B
+1326 00 0130             LINE    304        ;	    if (gp.pieces[i].figtype>=bishop) and (gp.attacked[line][col] and fig2bit[i]<>0) 
+1329 19                  PUSH    0
+132A 33                  PUSHG   0
+132B 20                  LOADI   
+132C 16 02567228         ARRACC  39219752
+1331 1C 0214             PUSH    532
+1334 25                  ADDI    
+1335 20                  LOADI   
+1336 1C 0824             PUSH    2084
+1339 20                  LOADI   
+133A 0F                  CIGE    
+133B 08 0004             JNZ     $1342
+133E 19                  PUSH    0
+133F 07 0024             JMP     $1366
+1342 19                  PUSH    0
+1343 35 F4               PUSHG   -12
+1345 20                  LOADI   
+1346 16 02567208         ARRACC  39219720
+134B 35 F0               PUSHG   -16
+134D 20                  LOADI   
+134E 16 025671E8         ARRACC  39219688
+1353 1C 0114             PUSH    276
+1356 25                  ADDI    
+1357 20                  LOADI   
+1358 1C 077C             PUSH    1916
+135B 33                  PUSHG   0
+135C 20                  LOADI   
+135D 16 02567348         ARRACC  39220040
+1362 20                  LOADI   
+1363 32                  ANDI    
+1364 19                  PUSH    0
+1365 0B                  CINE    
+1366 09 000F             JZ      $1378
+1369 00 0131             LINE    305        ;	              then Skrat(i,col,line);
+136C 33                  PUSHG   0
+136D 20                  LOADI   
+136E 35 F0               PUSHG   -16
+1370 20                  LOADI   
+1371 35 F4               PUSHG   -12
+1373 20                  LOADI   
+1374 1C 112C             PUSH    4396
+1377 05                  CALL    
+1378 07 FF9D             JMP     $1318
+137B 00 0133             LINE    307        ;	end proc;
+137E 1B 08               PUSH    8
+1380 04                  RET     
+1381 02                  ENTRY   
+1382 1B 02               PUSH    2
+1384 03                  LOCINI  
+1385 00 0138             LINE    312        ;	  Result:=0;
+1388 35 E8               PUSHG   -24
+138A 19                  PUSH    0
+138B 1D                  STORI   
+138C 00 0139             LINE    313        ;	  i:=1;
+138F 33                  PUSHG   0
+1390 1A                  PUSH    1
+1391 1D                  STORI   
+1392 00 013A             LINE    314        ;	  a:=gp.attacked[y][x];
+1395 35 04               PUSHG   4
+1397 19                  PUSH    0
+1398 35 F0               PUSHG   -16
+139A 20                  LOADI   
+139B 16 02567208         ARRACC  39219720
+13A0 35 EC               PUSHG   -20
+13A2 20                  LOADI   
+13A3 16 025671E8         ARRACC  39219688
+13A8 1C 0114             PUSH    276
+13AB 25                  ADDI    
+13AC 20                  LOADI   
+13AD 1D                  STORI   
+13AE 00 013B             LINE    315        ;	  while i<17 do
+13B1 33                  PUSHG   0
+13B2 20                  LOADI   
+13B3 1B 11               PUSH    17
+13B5 0C                  CIL     
+13B6 09 0040             JZ      $13F9
+13B9 00 013C             LINE    316        ;	    if a and fig2bit[i*s]<>0 then do
+13BC 35 04               PUSHG   4
+13BE 20                  LOADI   
+13BF 1C 077C             PUSH    1916
+13C2 33                  PUSHG   0
+13C3 20                  LOADI   
+13C4 35 F4               PUSHG   -12
+13C6 20                  LOADI   
+13C7 29                  MULI    
+13C8 16 02567348         ARRACC  39220040
+13CD 20                  LOADI   
+13CE 32                  ANDI    
+13CF 19                  PUSH    0
+13D0 0B                  CINE    
+13D1 09 0019             JZ      $13ED
+13D4 00 013C             LINE    316        ;	    if a and fig2bit[i*s]<>0 then do
+13D7 00 013D             LINE    317        ;	      Result:=i*s;
+13DA 35 E8               PUSHG   -24
+13DC 33                  PUSHG   0
+13DD 20                  LOADI   
+13DE 35 F4               PUSHG   -12
+13E0 20                  LOADI   
+13E1 29                  MULI    
+13E2 1D                  STORI   
+13E3 00 013E             LINE    318        ;	      i:=100;
+13E6 33                  PUSHG   0
+13E7 1B 64               PUSH    100
+13E9 1D                  STORI   
+13EA 07 0009             JMP     $13F6
+13ED 00 013F             LINE    319        ;	    end else i:=i+1;
+13F0 33                  PUSHG   0
+13F1 33                  PUSHG   0
+13F2 20                  LOADI   
+13F3 1A                  PUSH    1
+13F4 25                  ADDI    
+13F5 1D                  STORI   
+13F6 07 FFB8             JMP     $13B1
+13F9 00 0141             LINE    321        ;	end func;
+13FC 1B 0C               PUSH    12
+13FE 04                  RET     
+13FF 02                  ENTRY   
+1400 1B 0D               PUSH    13
+1402 03                  LOCINI  
+1403 00 014B             LINE    331        ;	  gp:=p;                 {optimization trick.. access to global var is faster}
+1406 19                  PUSH    0
+1407 36 FA3C             PUSHG   -1476
+140A 1C 016C             PUSH    364
+140D 22                  LOADM   
+140E 1C 016C             PUSH    364
+1411 1F                  STORM   
+1412 00 014C             LINE    332        ;	  pce:=gp.pieces[f];     {this is moved piece}
+1415 33                  PUSHG   0
+1416 19                  PUSH    0
+1417 35 EC               PUSHG   -20
+1419 20                  LOADI   
+141A 16 02567228         ARRACC  39219752
+141F 1C 0214             PUSH    532
+1422 25                  ADDI    
+1423 1B 07               PUSH    7
+1425 22                  LOADM   
+1426 1B 07               PUSH    7
+1428 1F                  STORM   
+1429 00 014D             LINE    333        ;	  curpos:=pce.pos;       {an its current position}
+142C 35 2C               PUSHG   44
+142E 33                  PUSHG   0
+142F 1B 08               PUSH    8
+1431 25                  ADDI    
+1432 1B 02               PUSH    2
+1434 22                  LOADM   
+1435 1B 02               PUSH    2
+1437 1F                  STORM   
+1438 00 014F             LINE    335        ;	  dstf:=gp.board[destline][destcol];
+143B 35 1C               PUSHG   28
+143D 19                  PUSH    0
+143E 35 F4               PUSHG   -12
+1440 20                  LOADI   
+1441 16 02567208         ARRACC  39219720
+1446 35 F0               PUSHG   -16
+1448 20                  LOADI   
+1449 16 025671E8         ARRACC  39219688
+144E 1B 14               PUSH    20
+1450 25                  ADDI    
+1451 20                  LOADI   
+1452 1D                  STORI   
+1453 00 0151             LINE    337        ;	  if dstf<>0 then do   {if something is at destination, pick it up and destroy it}      
+1456 35 1C               PUSHG   28
+1458 20                  LOADI   
+1459 19                  PUSH    0
+145A 0B                  CINE    
+145B 09 006C             JZ      $14CA
+145E 00 0151             LINE    337        ;	  if dstf<>0 then do   {if something is at destination, pick it up and destroy it}      
+1461 00 0152             LINE    338        ;	    	    OznacPolickaFigurky(dstf,-1);
+1464 35 1C               PUSHG   28
+1466 20                  LOADI   
+1467 1A                  PUSH    1
+1468 2D                  NEGI    
+1469 1C 0A47             PUSH    2631
+146C 05                  CALL    
+146D 00 0153             LINE    339        ;	    gp.board[destline][destcol]:=0;
+1470 19                  PUSH    0
+1471 35 F4               PUSHG   -12
+1473 20                  LOADI   
+1474 16 02567208         ARRACC  39219720
+1479 35 F0               PUSHG   -16
+147B 20                  LOADI   
+147C 16 025671E8         ARRACC  39219688
+1481 1B 14               PUSH    20
+1483 25                  ADDI    
+1484 19                  PUSH    0
+1485 1D                  STORI   
+1486 00 0154             LINE    340        ;	    Zdvihni(destcol,destline);
+1489 35 F0               PUSHG   -16
+148B 20                  LOADI   
+148C 35 F4               PUSHG   -12
+148E 20                  LOADI   
+148F 1C 1293             PUSH    4755
+1492 05                  CALL    
+1493 00 0155             LINE    341        ;	    gp.pieces[dstf].figtype:=0;
+1496 19                  PUSH    0
+1497 35 1C               PUSHG   28
+1499 20                  LOADI   
+149A 16 02567228         ARRACC  39219752
+149F 1C 0214             PUSH    532
+14A2 25                  ADDI    
+14A3 19                  PUSH    0
+14A4 1D                  STORI   
+14A5 00 0156             LINE    342        ;	    gp.pieces[dstf].attacked_cells:=0;
+14A8 19                  PUSH    0
+14A9 35 1C               PUSHG   28
+14AB 20                  LOADI   
+14AC 16 02567228         ARRACC  39219752
+14B1 1C 0224             PUSH    548
+14B4 25                  ADDI    
+14B5 19                  PUSH    0
+14B6 1D                  STORI   
+14B7 00 0157             LINE    343        ;	    gp.pieces[dstf].attacked_weight:=0;
+14BA 19                  PUSH    0
+14BB 35 1C               PUSHG   28
+14BD 20                  LOADI   
+14BE 16 02567228         ARRACC  39219752
+14C3 1C 0228             PUSH    552
+14C6 25                  ADDI    
+14C7 19                  PUSH    0
+14C8 18                  CNVF    
+14C9 1E                  STORF   
+14CA 00 015B             LINE    347        ;	  OznacPolickaFigurky(f,-1);
+14CD 35 EC               PUSHG   -20
+14CF 20                  LOADI   
+14D0 1A                  PUSH    1
+14D1 2D                  NEGI    
+14D2 1C 0A47             PUSH    2631
+14D5 05                  CALL    
+14D6 00 015C             LINE    348        ;	  gp.board[curpos.y][curpos.x]:=0;
+14D9 19                  PUSH    0
+14DA 35 2C               PUSHG   44
+14DC 1B 04               PUSH    4
+14DE 25                  ADDI    
+14DF 20                  LOADI   
+14E0 16 02567208         ARRACC  39219720
+14E5 35 2C               PUSHG   44
+14E7 20                  LOADI   
+14E8 16 025671E8         ARRACC  39219688
+14ED 1B 14               PUSH    20
+14EF 25                  ADDI    
+14F0 19                  PUSH    0
+14F1 1D                  STORI   
+14F2 00 015D             LINE    349        ;	  Zdvihni(curpos.x,curpos.y);
+14F5 35 2C               PUSHG   44
+14F7 20                  LOADI   
+14F8 35 2C               PUSHG   44
+14FA 1B 04               PUSH    4
+14FC 25                  ADDI    
+14FD 20                  LOADI   
+14FE 1C 1293             PUSH    4755
+1501 05                  CALL    
+1502 00 0160             LINE    352        ;	  gp.board[destline][destcol]:=f;
+1505 19                  PUSH    0
+1506 35 F4               PUSHG   -12
+1508 20                  LOADI   
+1509 16 02567208         ARRACC  39219720
+150E 35 F0               PUSHG   -16
+1510 20                  LOADI   
+1511 16 025671E8         ARRACC  39219688
+1516 1B 14               PUSH    20
+1518 25                  ADDI    
+1519 35 EC               PUSHG   -20
+151B 20                  LOADI   
+151C 1D                  STORI   
+151D 00 0161             LINE    353        ;	  gp.pieces[f].pos.x:=destcol;
+1520 19                  PUSH    0
+1521 35 EC               PUSHG   -20
+1523 20                  LOADI   
+1524 16 02567228         ARRACC  39219752
+1529 1C 021C             PUSH    540
+152C 25                  ADDI    
+152D 35 F0               PUSHG   -16
+152F 20                  LOADI   
+1530 1D                  STORI   
+1531 00 0162             LINE    354        ;	  gp.pieces[f].pos.y:=destline;
+1534 19                  PUSH    0
+1535 35 EC               PUSHG   -20
+1537 20                  LOADI   
+1538 16 02567228         ARRACC  39219752
+153D 1C 0220             PUSH    544
+1540 25                  ADDI    
+1541 35 F4               PUSHG   -12
+1543 20                  LOADI   
+1544 1D                  STORI   
+1545 00 0165             LINE    357        ;	  if (pce.figtype=pawn) and ((destline=1) or (destline=8)) then do
+1548 33                  PUSHG   0
+1549 20                  LOADI   
+154A 1C 0820             PUSH    2080
+154D 20                  LOADI   
+154E 0A                  CIE     
+154F 08 0004             JNZ     $1556
+1552 19                  PUSH    0
+1553 07 0012             JMP     $1568
+1556 35 F4               PUSHG   -12
+1558 20                  LOADI   
+1559 1A                  PUSH    1
+155A 0A                  CIE     
+155B 09 0004             JZ      $1562
+155E 1A                  PUSH    1
+155F 07 0006             JMP     $1568
+1562 35 F4               PUSHG   -12
+1564 20                  LOADI   
+1565 1B 08               PUSH    8
+1567 0A                  CIE     
+1568 09 0018             JZ      $1583
+156B 00 0165             LINE    357        ;	  if (pce.figtype=pawn) and ((destline=1) or (destline=8)) then do
+156E 00 0166             LINE    358        ;	    gp.pieces[f].figtype:=queen;
+1571 19                  PUSH    0
+1572 35 EC               PUSHG   -20
+1574 20                  LOADI   
+1575 16 02567228         ARRACC  39219752
+157A 1C 0214             PUSH    532
+157D 25                  ADDI    
+157E 1C 0830             PUSH    2096
+1581 20                  LOADI   
+1582 1D                  STORI   
+1583 00 016A             LINE    362        ;	  OznacPolickaFigurky(f,1);
+1586 35 EC               PUSHG   -20
+1588 20                  LOADI   
+1589 1A                  PUSH    1
+158A 1C 0A47             PUSH    2631
+158D 05                  CALL    
+158E 00 016D             LINE    365        ;	  Poloz(destcol,destline);
+1591 35 F0               PUSHG   -16
+1593 20                  LOADI   
+1594 35 F4               PUSHG   -12
+1596 20                  LOADI   
+1597 1C 130A             PUSH    4874
+159A 05                  CALL    
+159B 00 0170             LINE    368        ;	  gp.onmove:=0-gp.onmove;
+159E 19                  PUSH    0
+159F 19                  PUSH    0
+15A0 19                  PUSH    0
+15A1 20                  LOADI   
+15A2 27                  SUBI    
+15A3 1D                  STORI   
+15A4 00 0171             LINE    369        ;	  gp.movenr:=gp.movenr+1;
+15A7 19                  PUSH    0
+15A8 1B 04               PUSH    4
+15AA 25                  ADDI    
+15AB 19                  PUSH    0
+15AC 1B 04               PUSH    4
+15AE 25                  ADDI    
+15AF 20                  LOADI   
+15B0 1A                  PUSH    1
+15B1 25                  ADDI    
+15B2 1D                  STORI   
+15B3 00 0174             LINE    372        ;	  if (pce.figtype=rook) or (pce.figtype=king) then gp.pieces[f].note:=1 {ak je to veza alebo kral, ze sa hybal}
+15B6 33                  PUSHG   0
+15B7 20                  LOADI   
+15B8 1C 082C             PUSH    2092
+15BB 20                  LOADI   
+15BC 0A                  CIE     
+15BD 09 0004             JZ      $15C4
+15C0 1A                  PUSH    1
+15C1 07 0007             JMP     $15CB
+15C4 33                  PUSHG   0
+15C5 20                  LOADI   
+15C6 1C 0834             PUSH    2100
+15C9 20                  LOADI   
+15CA 0A                  CIE     
+15CB 09 0015             JZ      $15E3
+15CE 00 0174             LINE    372        ;	  if (pce.figtype=rook) or (pce.figtype=king) then gp.pieces[f].note:=1 {ak je to veza alebo kral, ze sa hybal}
+15D1 19                  PUSH    0
+15D2 35 EC               PUSHG   -20
+15D4 20                  LOADI   
+15D5 16 02567228         ARRACC  39219752
+15DA 1C 0218             PUSH    536
+15DD 25                  ADDI    
+15DE 1A                  PUSH    1
+15DF 1D                  STORI   
+15E0 07 003E             JMP     $1621
+15E3 00 0175             LINE    373        ;	  else if (pce.figtype=pawn) and (abs(pce.pos.y-destline)=2) then gp.pieces[f].note:=gp.movenr; {tah skoku pesiaka}
+15E6 33                  PUSHG   0
+15E7 20                  LOADI   
+15E8 1C 0820             PUSH    2080
+15EB 20                  LOADI   
+15EC 0A                  CIE     
+15ED 08 0004             JNZ     $15F4
+15F0 19                  PUSH    0
+15F1 07 0014             JMP     $1608
+15F4 1A                  PUSH    1
+15F5 03                  LOCINI  
+15F6 33                  PUSHG   0
+15F7 1B 0C               PUSH    12
+15F9 25                  ADDI    
+15FA 20                  LOADI   
+15FB 35 F4               PUSHG   -12
+15FD 20                  LOADI   
+15FE 27                  SUBI    
+15FF 23 02582C90         PUSH    39333008
+1604 06                  SYS     
+1605 1B 02               PUSH    2
+1607 0A                  CIE     
+1608 09 0016             JZ      $1621
+160B 00 0175             LINE    373        ;	  else if (pce.figtype=pawn) and (abs(pce.pos.y-destline)=2) then gp.pieces[f].note:=gp.movenr; {tah skoku pesiaka}
+160E 19                  PUSH    0
+160F 35 EC               PUSHG   -20
+1611 20                  LOADI   
+1612 16 02567228         ARRACC  39219752
+1617 1C 0218             PUSH    536
+161A 25                  ADDI    
+161B 19                  PUSH    0
+161C 1B 04               PUSH    4
+161E 25                  ADDI    
+161F 20                  LOADI   
+1620 1D                  STORI   
+1621 00 0177             LINE    375        ;	  if drawMoves then DrawBitmap("frame2",destcol*40-34,destline*40-35);
+1624 1C 0814             PUSH    2068
+1627 20                  LOADI   
+1628 09 001D             JZ      $1648
+162B 00 0177             LINE    375        ;	  if drawMoves then DrawBitmap("frame2",destcol*40-34,destline*40-35);
+162E 1B 0A               PUSH    10
+1630 35 F0               PUSHG   -16
+1632 20                  LOADI   
+1633 1B 28               PUSH    40
+1635 29                  MULI    
+1636 1B 22               PUSH    34
+1638 27                  SUBI    
+1639 35 F4               PUSHG   -12
+163B 20                  LOADI   
+163C 1B 28               PUSH    40
+163E 29                  MULI    
+163F 1B 23               PUSH    35
+1641 27                  SUBI    
+1642 23 02582AB0         PUSH    39332528
+1647 06                  SYS     
+1648 00 019A             LINE    410        ;	  gp.gama:=0;
+164B 19                  PUSH    0
+164C 1B 08               PUSH    8
+164E 25                  ADDI    
+164F 19                  PUSH    0
+1650 18                  CNVF    
+1651 1E                  STORF   
+1652 00 019B             LINE    411        ;	  for i:= -16 to 16 do
+1655 35 20               PUSHG   32
+1657 1B 10               PUSH    16
+1659 2D                  NEGI    
+165A 1D                  STORI   
+165B 07 0008             JMP     $1666
+165E 35 20               PUSHG   32
+1660 35 20               PUSHG   32
+1662 20                  LOADI   
+1663 1A                  PUSH    1
+1664 25                  ADDI    
+1665 1D                  STORI   
+1666 35 20               PUSHG   32
+1668 20                  LOADI   
+1669 1B 10               PUSH    16
+166B 0E                  CIG     
+166C 08 01C1             JNZ     $1830
+166F 00 019C             LINE    412        ;	    pce:=gp.pieces[i];
+1672 33                  PUSHG   0
+1673 19                  PUSH    0
+1674 35 20               PUSHG   32
+1676 20                  LOADI   
+1677 16 02567228         ARRACC  39219752
+167C 1C 0214             PUSH    532
+167F 25                  ADDI    
+1680 1B 07               PUSH    7
+1682 22                  LOADM   
+1683 1B 07               PUSH    7
+1685 1F                  STORM   
+1686 00 019D             LINE    413        ;	    if pce.figtype<>0 then do
+1689 33                  PUSHG   0
+168A 20                  LOADI   
+168B 19                  PUSH    0
+168C 0B                  CINE    
+168D 09 019D             JZ      $182D
+1690 00 019D             LINE    413        ;	    if pce.figtype<>0 then do
+1693 00 019F             LINE    415        ;	      gp.gama:=gp.gama+(pce.attacked_cells+pieces_weight*piece_weight[pce.figtype])*sgn(i);
+1696 19                  PUSH    0
+1697 1B 08               PUSH    8
+1699 25                  ADDI    
+169A 19                  PUSH    0
+169B 1B 08               PUSH    8
+169D 25                  ADDI    
+169E 21                  LOADF   
+169F 33                  PUSHG   0
+16A0 1B 10               PUSH    16
+16A2 25                  ADDI    
+16A3 20                  LOADI   
+16A4 18                  CNVF    
+16A5 1C 0604             PUSH    1540
+16A8 21                  LOADF   
+16A9 1C 05D4             PUSH    1492
+16AC 33                  PUSHG   0
+16AD 20                  LOADI   
+16AE 16 025672A8         ARRACC  39219880
+16B3 21                  LOADF   
+16B4 2A                  MULF    
+16B5 26                  ADDF    
+16B6 1A                  PUSH    1
+16B7 03                  LOCINI  
+16B8 35 20               PUSHG   32
+16BA 20                  LOADI   
+16BB 23 02582C30         PUSH    39332912
+16C0 06                  SYS     
+16C1 18                  CNVF    
+16C2 2A                  MULF    
+16C3 26                  ADDF    
+16C4 1E                  STORF   
+16C5 00 01A2             LINE    418        ;	      if pce.figtype=pawn then gp.gama:=gp.gama+pawn_weight*(7-abs(border[sgn(i)]-pce.pos.y))*sgn(i);
+16C8 33                  PUSHG   0
+16C9 20                  LOADI   
+16CA 1C 0820             PUSH    2080
+16CD 20                  LOADI   
+16CE 0A                  CIE     
+16CF 09 0046             JZ      $1718
+16D2 00 01A2             LINE    418        ;	      if pce.figtype=pawn then gp.gama:=gp.gama+pawn_weight*(7-abs(border[sgn(i)]-pce.pos.y))*sgn(i);
+16D5 19                  PUSH    0
+16D6 1B 08               PUSH    8
+16D8 25                  ADDI    
+16D9 19                  PUSH    0
+16DA 1B 08               PUSH    8
+16DC 25                  ADDI    
+16DD 21                  LOADF   
+16DE 1C 060C             PUSH    1548
+16E1 21                  LOADF   
+16E2 1B 07               PUSH    7
+16E4 1A                  PUSH    1
+16E5 03                  LOCINI  
+16E6 1C 061C             PUSH    1564
+16E9 1A                  PUSH    1
+16EA 03                  LOCINI  
+16EB 35 20               PUSHG   32
+16ED 20                  LOADI   
+16EE 23 02582C30         PUSH    39332912
+16F3 06                  SYS     
+16F4 16 025672C8         ARRACC  39219912
+16F9 20                  LOADI   
+16FA 33                  PUSHG   0
+16FB 1B 0C               PUSH    12
+16FD 25                  ADDI    
+16FE 20                  LOADI   
+16FF 27                  SUBI    
+1700 23 02582C90         PUSH    39333008
+1705 06                  SYS     
+1706 27                  SUBI    
+1707 18                  CNVF    
+1708 2A                  MULF    
+1709 1A                  PUSH    1
+170A 03                  LOCINI  
+170B 35 20               PUSHG   32
+170D 20                  LOADI   
+170E 23 02582C30         PUSH    39332912
+1713 06                  SYS     
+1714 18                  CNVF    
+1715 2A                  MULF    
+1716 26                  ADDF    
+1717 1E                  STORF   
+1718 00 01A5             LINE    421        ;	      if gp.attacked[pce.pos.y][pce.pos.x] and color2bit[0-sgn(i)]<>0 then do
+171B 19                  PUSH    0
+171C 33                  PUSHG   0
+171D 1B 0C               PUSH    12
+171F 25                  ADDI    
+1720 20                  LOADI   
+1721 16 02567208         ARRACC  39219720
+1726 33                  PUSHG   0
+1727 1B 08               PUSH    8
+1729 25                  ADDI    
+172A 20                  LOADI   
+172B 16 025671E8         ARRACC  39219688
+1730 1C 0114             PUSH    276
+1733 25                  ADDI    
+1734 20                  LOADI   
+1735 1C 0800             PUSH    2048
+1738 19                  PUSH    0
+1739 1A                  PUSH    1
+173A 03                  LOCINI  
+173B 35 20               PUSHG   32
+173D 20                  LOADI   
+173E 23 02582C30         PUSH    39332912
+1743 06                  SYS     
+1744 27                  SUBI    
+1745 16 02567368         ARRACC  39220072
+174A 20                  LOADI   
+174B 32                  ANDI    
+174C 19                  PUSH    0
+174D 0B                  CINE    
+174E 09 00DC             JZ      $182D
+1751 00 01A5             LINE    421        ;	      if gp.attacked[pce.pos.y][pce.pos.x] and color2bit[0-sgn(i)]<>0 then do
+1754 00 01A8             LINE    424        ;	        if gp.attacked[pce.pos.y][pce.pos.x] and color2bit[sgn(i)]<>0 then do
+1757 19                  PUSH    0
+1758 33                  PUSHG   0
+1759 1B 0C               PUSH    12
+175B 25                  ADDI    
+175C 20                  LOADI   
+175D 16 02567208         ARRACC  39219720
+1762 33                  PUSHG   0
+1763 1B 08               PUSH    8
+1765 25                  ADDI    
+1766 20                  LOADI   
+1767 16 025671E8         ARRACC  39219688
+176C 1C 0114             PUSH    276
+176F 25                  ADDI    
+1770 20                  LOADI   
+1771 1C 0800             PUSH    2048
+1774 1A                  PUSH    1
+1775 03                  LOCINI  
+1776 35 20               PUSHG   32
+1778 20                  LOADI   
+1779 23 02582C30         PUSH    39332912
+177E 06                  SYS     
+177F 16 02567368         ARRACC  39220072
+1784 20                  LOADI   
+1785 32                  ANDI    
+1786 19                  PUSH    0
+1787 0B                  CINE    
+1788 09 0077             JZ      $1802
+178B 00 01A8             LINE    424        ;	        if gp.attacked[pce.pos.y][pce.pos.x] and color2bit[sgn(i)]<>0 then do
+178E 00 01AA             LINE    426        ;	          j:=Napadana(pce.pos.x,pce.pos.y,0-sgn(i));
+1791 35 24               PUSHG   36
+1793 1A                  PUSH    1
+1794 03                  LOCINI  
+1795 33                  PUSHG   0
+1796 1B 08               PUSH    8
+1798 25                  ADDI    
+1799 20                  LOADI   
+179A 33                  PUSHG   0
+179B 1B 0C               PUSH    12
+179D 25                  ADDI    
+179E 20                  LOADI   
+179F 19                  PUSH    0
+17A0 1A                  PUSH    1
+17A1 03                  LOCINI  
+17A2 35 20               PUSHG   32
+17A4 20                  LOADI   
+17A5 23 02582C30         PUSH    39332912
+17AA 06                  SYS     
+17AB 27                  SUBI    
+17AC 1C 1381             PUSH    4993
+17AF 05                  CALL    
+17B0 1D                  STORI   
+17B1 00 01AC             LINE    428        ;	          gp.gama:=gp.gama-attack_weight*maxf(0,piece_weight[pce.figtype]-piece_weight[gp.pieces[j].figtype])*sgn(i);
+17B4 19                  PUSH    0
+17B5 1B 08               PUSH    8
+17B7 25                  ADDI    
+17B8 19                  PUSH    0
+17B9 1B 08               PUSH    8
+17BB 25                  ADDI    
+17BC 21                  LOADF   
+17BD 1C 0614             PUSH    1556
+17C0 21                  LOADF   
+17C1 1B 02               PUSH    2
+17C3 03                  LOCINI  
+17C4 19                  PUSH    0
+17C5 18                  CNVF    
+17C6 1C 05D4             PUSH    1492
+17C9 33                  PUSHG   0
+17CA 20                  LOADI   
+17CB 16 025672A8         ARRACC  39219880
+17D0 21                  LOADF   
+17D1 1C 05D4             PUSH    1492
+17D4 19                  PUSH    0
+17D5 35 24               PUSHG   36
+17D7 20                  LOADI   
+17D8 16 02567228         ARRACC  39219752
+17DD 1C 0214             PUSH    532
+17E0 25                  ADDI    
+17E1 20                  LOADI   
+17E2 16 025672A8         ARRACC  39219880
+17E7 21                  LOADF   
+17E8 28                  SUBF    
+17E9 23 02582E10         PUSH    39333392
+17EE 06                  SYS     
+17EF 2A                  MULF    
+17F0 1A                  PUSH    1
+17F1 03                  LOCINI  
+17F2 35 20               PUSHG   32
+17F4 20                  LOADI   
+17F5 23 02582C30         PUSH    39332912
+17FA 06                  SYS     
+17FB 18                  CNVF    
+17FC 2A                  MULF    
+17FD 28                  SUBF    
+17FE 1E                  STORF   
+17FF 07 002B             JMP     $182D
+1802 00 01AF             LINE    431        ;	          gp.gama:=gp.gama-attack_weight*piece_weight[pce.figtype]*sgn(i);
+1805 19                  PUSH    0
+1806 1B 08               PUSH    8
+1808 25                  ADDI    
+1809 19                  PUSH    0
+180A 1B 08               PUSH    8
+180C 25                  ADDI    
+180D 21                  LOADF   
+180E 1C 0614             PUSH    1556
+1811 21                  LOADF   
+1812 1C 05D4             PUSH    1492
+1815 33                  PUSHG   0
+1816 20                  LOADI   
+1817 16 025672A8         ARRACC  39219880
+181C 21                  LOADF   
+181D 2A                  MULF    
+181E 1A                  PUSH    1
+181F 03                  LOCINI  
+1820 35 20               PUSHG   32
+1822 20                  LOADI   
+1823 23 02582C30         PUSH    39332912
+1828 06                  SYS     
+1829 18                  CNVF    
+182A 2A                  MULF    
+182B 28                  SUBF    
+182C 1E                  STORF   
+182D 07 FE2E             JMP     $165E
+1830 00 01B6             LINE    438        ;	  gp.gama:=gp.gama+addRandomWeight*(rndf(2)-1);
+1833 19                  PUSH    0
+1834 1B 08               PUSH    8
+1836 25                  ADDI    
+1837 19                  PUSH    0
+1838 1B 08               PUSH    8
+183A 25                  ADDI    
+183B 21                  LOADF   
+183C 1C 0818             PUSH    2072
+183F 21                  LOADF   
+1840 1B 02               PUSH    2
+1842 03                  LOCINI  
+1843 1B 02               PUSH    2
+1845 18                  CNVF    
+1846 23 02582F30         PUSH    39333680
+184B 06                  SYS     
+184C 1A                  PUSH    1
+184D 18                  CNVF    
+184E 28                  SUBF    
+184F 2A                  MULF    
+1850 26                  ADDF    
+1851 1E                  STORF   
+1852 00 01B8             LINE    440        ;	  p:=gp;
+1855 36 FA3C             PUSHG   -1476
+1858 19                  PUSH    0
+1859 1C 016C             PUSH    364
+185C 22                  LOADM   
+185D 1C 016C             PUSH    364
+1860 1F                  STORM   
+1861 00 01BB             LINE    443        ;	  pce:=p.pieces[0-13*p.onmove];
+1864 33                  PUSHG   0
+1865 36 FA3C             PUSHG   -1476
+1868 19                  PUSH    0
+1869 1B 0D               PUSH    13
+186B 36 FA3C             PUSHG   -1476
+186E 20                  LOADI   
+186F 29                  MULI    
+1870 27                  SUBI    
+1871 16 02567228         ARRACC  39219752
+1876 1C 0214             PUSH    532
+1879 25                  ADDI    
+187A 1B 07               PUSH    7
+187C 22                  LOADM   
+187D 1B 07               PUSH    7
+187F 1F                  STORM   
+1880 00 01BD             LINE    445        ;	  if p.attacked[pce.pos.y][pce.pos.x] and color2bit[p.onmove]=0 then do
+1883 36 FA3C             PUSHG   -1476
+1886 33                  PUSHG   0
+1887 1B 0C               PUSH    12
+1889 25                  ADDI    
+188A 20                  LOADI   
+188B 16 02567208         ARRACC  39219720
+1890 33                  PUSHG   0
+1891 1B 08               PUSH    8
+1893 25                  ADDI    
+1894 20                  LOADI   
+1895 16 025671E8         ARRACC  39219688
+189A 1C 0114             PUSH    276
+189D 25                  ADDI    
+189E 20                  LOADI   
+189F 1C 0800             PUSH    2048
+18A2 36 FA3C             PUSHG   -1476
+18A5 20                  LOADI   
+18A6 16 02567368         ARRACC  39220072
+18AB 20                  LOADI   
+18AC 32                  ANDI    
+18AD 19                  PUSH    0
+18AE 0A                  CIE     
+18AF 09 00AE             JZ      $1960
+18B2 00 01BD             LINE    445        ;	  if p.attacked[pce.pos.y][pce.pos.x] and color2bit[p.onmove]=0 then do
+18B5 00 01BE             LINE    446        ;	    p.name:=piece_name[p.pieces[f].figtype]+" "+SubStr("ABCDEFGH",curpos.x,1)+IntToStr(9-curpos.y)+":"+SubStr("ABCDEFGH",destcol,1)+IntToStr(9-destline);
+18B8 36 FA3C             PUSHG   -1476
+18BB 1B 10               PUSH    16
+18BD 25                  ADDI    
+18BE 1C 05B0             PUSH    1456
+18C1 36 FA3C             PUSHG   -1476
+18C4 35 EC               PUSHG   -20
+18C6 20                  LOADI   
+18C7 16 02567228         ARRACC  39219752
+18CC 1C 0214             PUSH    532
+18CF 25                  ADDI    
+18D0 20                  LOADI   
+18D1 16 02567268         ARRACC  39219816
+18D6 20                  LOADI   
+18D7 1B 0B               PUSH    11
+18D9 23 025825D0         PUSH    39331280
+18DE 06                  SYS     
+18DF 1A                  PUSH    1
+18E0 03                  LOCINI  
+18E1 1B 0C               PUSH    12
+18E3 35 2C               PUSHG   44
+18E5 20                  LOADI   
+18E6 1A                  PUSH    1
+18E7 23 02582840         PUSH    39331904
+18EC 06                  SYS     
+18ED 23 025825D0         PUSH    39331280
+18F2 06                  SYS     
+18F3 1A                  PUSH    1
+18F4 03                  LOCINI  
+18F5 1B 09               PUSH    9
+18F7 35 2C               PUSHG   44
+18F9 1B 04               PUSH    4
+18FB 25                  ADDI    
+18FC 20                  LOADI   
+18FD 27                  SUBI    
+18FE 23 02582990         PUSH    39332240
+1903 06                  SYS     
+1904 23 025825D0         PUSH    39331280
+1909 06                  SYS     
+190A 1B 0D               PUSH    13
+190C 23 025825D0         PUSH    39331280
+1911 06                  SYS     
+1912 1A                  PUSH    1
+1913 03                  LOCINI  
+1914 1B 0E               PUSH    14
+1916 35 F0               PUSHG   -16
+1918 20                  LOADI   
+1919 1A                  PUSH    1
+191A 23 02582840         PUSH    39331904
+191F 06                  SYS     
+1920 23 025825D0         PUSH    39331280
+1925 06                  SYS     
+1926 1A                  PUSH    1
+1927 03                  LOCINI  
+1928 1B 09               PUSH    9
+192A 35 F4               PUSHG   -12
+192C 20                  LOADI   
+192D 27                  SUBI    
+192E 23 02582990         PUSH    39332240
+1933 06                  SYS     
+1934 23 025825D0         PUSH    39331280
+1939 06                  SYS     
+193A 1A                  PUSH    1
+193B 1F                  STORM   
+193C 00 01BF             LINE    447        ;	    NewMove(p,p.name,p.onmove*p.gama);
+193F 36 FA3C             PUSHG   -1476
+1942 1C 016C             PUSH    364
+1945 22                  LOADM   
+1946 36 FA3C             PUSHG   -1476
+1949 1B 10               PUSH    16
+194B 25                  ADDI    
+194C 20                  LOADI   
+194D 36 FA3C             PUSHG   -1476
+1950 20                  LOADI   
+1951 18                  CNVF    
+1952 36 FA3C             PUSHG   -1476
+1955 1B 08               PUSH    8
+1957 25                  ADDI    
+1958 21                  LOADF   
+1959 2A                  MULF    
+195A 23 02583080         PUSH    39334016
+195F 06                  SYS     
+1960 00 01C1             LINE    449        ;	end proc;
+1963 1C 05BC             PUSH    1468
+1966 04                  RET     
+1967 02                  ENTRY   
+1968 1B 0A               PUSH    10
+196A 03                  LOCINI  
+196B 00 01C8             LINE    456        ;	  pce:=p.pieces[f];
+196E 33                  PUSHG   0
+196F 36 FA44             PUSHG   -1468
+1972 35 F4               PUSHG   -12
+1974 20                  LOADI   
+1975 16 02567228         ARRACC  39219752
+197A 1C 0214             PUSH    532
+197D 25                  ADDI    
+197E 1B 07               PUSH    7
+1980 22                  LOADM   
+1981 1B 07               PUSH    7
+1983 1F                  STORM   
+1984 00 01D3             LINE    467        ;	  if (pce.figtype=pawn) then do
+1987 33                  PUSHG   0
+1988 20                  LOADI   
+1989 1C 0820             PUSH    2080
+198C 20                  LOADI   
+198D 0A                  CIE     
+198E 09 01A5             JZ      $1B36
+1991 00 01D3             LINE    467        ;	  if (pce.figtype=pawn) then do
+1994 00 01D5             LINE    469        ;	    yn:=pce.pos.y-sgn(f);
+1997 35 20               PUSHG   32
+1999 33                  PUSHG   0
+199A 1B 0C               PUSH    12
+199C 25                  ADDI    
+199D 20                  LOADI   
+199E 1A                  PUSH    1
+199F 03                  LOCINI  
+19A0 35 F4               PUSHG   -12
+19A2 20                  LOADI   
+19A3 23 02582C30         PUSH    39332912
+19A8 06                  SYS     
+19A9 27                  SUBI    
+19AA 1D                  STORI   
+19AB 00 01D6             LINE    470        ;	    if (yn>=1) and (yn<=8) then do
+19AE 35 20               PUSHG   32
+19B0 20                  LOADI   
+19B1 1A                  PUSH    1
+19B2 0F                  CIGE    
+19B3 08 0004             JNZ     $19BA
+19B6 19                  PUSH    0
+19B7 07 0006             JMP     $19C0
+19BA 35 20               PUSHG   32
+19BC 20                  LOADI   
+19BD 1B 08               PUSH    8
+19BF 0D                  CILE    
+19C0 09 0170             JZ      $1B33
+19C3 00 01D6             LINE    470        ;	    if (yn>=1) and (yn<=8) then do
+19C6 00 01D7             LINE    471        ;	      xn:=pce.pos.x-1;
+19C9 35 1C               PUSHG   28
+19CB 33                  PUSHG   0
+19CC 1B 08               PUSH    8
+19CE 25                  ADDI    
+19CF 20                  LOADI   
+19D0 1A                  PUSH    1
+19D1 27                  SUBI    
+19D2 1D                  STORI   
+19D3 00 01D8             LINE    472        ;	      if (xn>=1) and (sgn(p.board[yn][xn])=0-p.onmove) then Presun(p,f,xn,yn);
+19D6 35 1C               PUSHG   28
+19D8 20                  LOADI   
+19D9 1A                  PUSH    1
+19DA 0F                  CIGE    
+19DB 08 0004             JNZ     $19E2
+19DE 19                  PUSH    0
+19DF 07 0026             JMP     $1A08
+19E2 1A                  PUSH    1
+19E3 03                  LOCINI  
+19E4 36 FA44             PUSHG   -1468
+19E7 35 20               PUSHG   32
+19E9 20                  LOADI   
+19EA 16 02567208         ARRACC  39219720
+19EF 35 1C               PUSHG   28
+19F1 20                  LOADI   
+19F2 16 025671E8         ARRACC  39219688
+19F7 1B 14               PUSH    20
+19F9 25                  ADDI    
+19FA 20                  LOADI   
+19FB 23 02582C30         PUSH    39332912
+1A00 06                  SYS     
+1A01 19                  PUSH    0
+1A02 36 FA44             PUSHG   -1468
+1A05 20                  LOADI   
+1A06 27                  SUBI    
+1A07 0A                  CIE     
+1A08 09 0017             JZ      $1A22
+1A0B 00 01D8             LINE    472        ;	      if (xn>=1) and (sgn(p.board[yn][xn])=0-p.onmove) then Presun(p,f,xn,yn);
+1A0E 36 FA44             PUSHG   -1468
+1A11 1C 016C             PUSH    364
+1A14 22                  LOADM   
+1A15 35 F4               PUSHG   -12
+1A17 20                  LOADI   
+1A18 35 1C               PUSHG   28
+1A1A 20                  LOADI   
+1A1B 35 20               PUSHG   32
+1A1D 20                  LOADI   
+1A1E 1C 13FF             PUSH    5119
+1A21 05                  CALL    
+1A22 00 01D9             LINE    473        ;	      xn:=pce.pos.x+1;
+1A25 35 1C               PUSHG   28
+1A27 33                  PUSHG   0
+1A28 1B 08               PUSH    8
+1A2A 25                  ADDI    
+1A2B 20                  LOADI   
+1A2C 1A                  PUSH    1
+1A2D 25                  ADDI    
+1A2E 1D                  STORI   
+1A2F 00 01DA             LINE    474        ;	      if (xn<=8) and (sgn(p.board[yn][xn])=0-p.onmove) then Presun(p,f,xn,yn);
+1A32 35 1C               PUSHG   28
+1A34 20                  LOADI   
+1A35 1B 08               PUSH    8
+1A37 0D                  CILE    
+1A38 08 0004             JNZ     $1A3F
+1A3B 19                  PUSH    0
+1A3C 07 0026             JMP     $1A65
+1A3F 1A                  PUSH    1
+1A40 03                  LOCINI  
+1A41 36 FA44             PUSHG   -1468
+1A44 35 20               PUSHG   32
+1A46 20                  LOADI   
+1A47 16 02567208         ARRACC  39219720
+1A4C 35 1C               PUSHG   28
+1A4E 20                  LOADI   
+1A4F 16 025671E8         ARRACC  39219688
+1A54 1B 14               PUSH    20
+1A56 25                  ADDI    
+1A57 20                  LOADI   
+1A58 23 02582C30         PUSH    39332912
+1A5D 06                  SYS     
+1A5E 19                  PUSH    0
+1A5F 36 FA44             PUSHG   -1468
+1A62 20                  LOADI   
+1A63 27                  SUBI    
+1A64 0A                  CIE     
+1A65 09 0017             JZ      $1A7F
+1A68 00 01DA             LINE    474        ;	      if (xn<=8) and (sgn(p.board[yn][xn])=0-p.onmove) then Presun(p,f,xn,yn);
+1A6B 36 FA44             PUSHG   -1468
+1A6E 1C 016C             PUSH    364
+1A71 22                  LOADM   
+1A72 35 F4               PUSHG   -12
+1A74 20                  LOADI   
+1A75 35 1C               PUSHG   28
+1A77 20                  LOADI   
+1A78 35 20               PUSHG   32
+1A7A 20                  LOADI   
+1A7B 1C 13FF             PUSH    5119
+1A7E 05                  CALL    
+1A7F 00 01DD             LINE    477        ;	      xn:=pce.pos.x;
+1A82 35 1C               PUSHG   28
+1A84 33                  PUSHG   0
+1A85 1B 08               PUSH    8
+1A87 25                  ADDI    
+1A88 20                  LOADI   
+1A89 1D                  STORI   
+1A8A 00 01DE             LINE    478        ;	      if p.board[yn][xn]=0 then do
+1A8D 36 FA44             PUSHG   -1468
+1A90 35 20               PUSHG   32
+1A92 20                  LOADI   
+1A93 16 02567208         ARRACC  39219720
+1A98 35 1C               PUSHG   28
+1A9A 20                  LOADI   
+1A9B 16 025671E8         ARRACC  39219688
+1AA0 1B 14               PUSH    20
+1AA2 25                  ADDI    
+1AA3 20                  LOADI   
+1AA4 19                  PUSH    0
+1AA5 0A                  CIE     
+1AA6 09 008A             JZ      $1B33
+1AA9 00 01DE             LINE    478        ;	      if p.board[yn][xn]=0 then do
+1AAC 00 01DF             LINE    479        ;	        Presun(p,f,xn,yn);
+1AAF 36 FA44             PUSHG   -1468
+1AB2 1C 016C             PUSH    364
+1AB5 22                  LOADM   
+1AB6 35 F4               PUSHG   -12
+1AB8 20                  LOADI   
+1AB9 35 1C               PUSHG   28
+1ABB 20                  LOADI   
+1ABC 35 20               PUSHG   32
+1ABE 20                  LOADI   
+1ABF 1C 13FF             PUSH    5119
+1AC2 05                  CALL    
+1AC3 00 01E2             LINE    482        ;	        yn:=yn-sgn(f);
+1AC6 35 20               PUSHG   32
+1AC8 35 20               PUSHG   32
+1ACA 20                  LOADI   
+1ACB 1A                  PUSH    1
+1ACC 03                  LOCINI  
+1ACD 35 F4               PUSHG   -12
+1ACF 20                  LOADI   
+1AD0 23 02582C30         PUSH    39332912
+1AD5 06                  SYS     
+1AD6 27                  SUBI    
+1AD7 1D                  STORI   
+1AD8 00 01E3             LINE    483        ;	        if (abs(pce.pos.y-border[p.onmove])=6) and (p.board[yn][xn]=0) then Presun(p,f,xn,yn);
+1ADB 1A                  PUSH    1
+1ADC 03                  LOCINI  
+1ADD 33                  PUSHG   0
+1ADE 1B 0C               PUSH    12
+1AE0 25                  ADDI    
+1AE1 20                  LOADI   
+1AE2 1C 061C             PUSH    1564
+1AE5 36 FA44             PUSHG   -1468
+1AE8 20                  LOADI   
+1AE9 16 025672C8         ARRACC  39219912
+1AEE 20                  LOADI   
+1AEF 27                  SUBI    
+1AF0 23 02582C90         PUSH    39333008
+1AF5 06                  SYS     
+1AF6 1B 06               PUSH    6
+1AF8 0A                  CIE     
+1AF9 08 0004             JNZ     $1B00
+1AFC 19                  PUSH    0
+1AFD 07 0019             JMP     $1B19
+1B00 36 FA44             PUSHG   -1468
+1B03 35 20               PUSHG   32
+1B05 20                  LOADI   
+1B06 16 02567208         ARRACC  39219720
+1B0B 35 1C               PUSHG   28
+1B0D 20                  LOADI   
+1B0E 16 025671E8         ARRACC  39219688
+1B13 1B 14               PUSH    20
+1B15 25                  ADDI    
+1B16 20                  LOADI   
+1B17 19                  PUSH    0
+1B18 0A                  CIE     
+1B19 09 0017             JZ      $1B33
+1B1C 00 01E3             LINE    483        ;	        if (abs(pce.pos.y-border[p.onmove])=6) and (p.board[yn][xn]=0) then Presun(p,f,xn,yn);
+1B1F 36 FA44             PUSHG   -1468
+1B22 1C 016C             PUSH    364
+1B25 22                  LOADM   
+1B26 35 F4               PUSHG   -12
+1B28 20                  LOADI   
+1B29 35 1C               PUSHG   28
+1B2B 20                  LOADI   
+1B2C 35 20               PUSHG   32
+1B2E 20                  LOADI   
+1B2F 1C 13FF             PUSH    5119
+1B32 05                  CALL    
+1B33 07 0272             JMP     $1DA8
+1B36 00 01E6             LINE    486        ;	  end else if (pce.figtype=knight) or (pce.figtype=king) then do
+1B39 33                  PUSHG   0
+1B3A 20                  LOADI   
+1B3B 1C 0828             PUSH    2088
+1B3E 20                  LOADI   
+1B3F 0A                  CIE     
+1B40 09 0004             JZ      $1B47
+1B43 1A                  PUSH    1
+1B44 07 0007             JMP     $1B4E
+1B47 33                  PUSHG   0
+1B48 20                  LOADI   
+1B49 1C 0834             PUSH    2100
+1B4C 20                  LOADI   
+1B4D 0A                  CIE     
+1B4E 09 00E1             JZ      $1C32
+1B51 00 01E6             LINE    486        ;	  end else if (pce.figtype=knight) or (pce.figtype=king) then do
+1B54 00 01E8             LINE    488        ;	    for i:=1 to movescount[pce.figtype] do
+1B57 35 24               PUSHG   36
+1B59 1A                  PUSH    1
+1B5A 1D                  STORI   
+1B5B 07 0008             JMP     $1B66
+1B5E 35 24               PUSHG   36
+1B60 35 24               PUSHG   36
+1B62 20                  LOADI   
+1B63 1A                  PUSH    1
+1B64 25                  ADDI    
+1B65 1D                  STORI   
+1B66 35 24               PUSHG   36
+1B68 20                  LOADI   
+1B69 1C 0628             PUSH    1576
+1B6C 33                  PUSHG   0
+1B6D 20                  LOADI   
+1B6E 16 025672E8         ARRACC  39219944
+1B73 20                  LOADI   
+1B74 0E                  CIG     
+1B75 08 00B7             JNZ     $1C2F
+1B78 00 01E9             LINE    489        ;	      xn:=pce.pos.x+moverel[pce.figtype][i].x;
+1B7B 35 1C               PUSHG   28
+1B7D 33                  PUSHG   0
+1B7E 1B 08               PUSH    8
+1B80 25                  ADDI    
+1B81 20                  LOADI   
+1B82 1C 063C             PUSH    1596
+1B85 33                  PUSHG   0
+1B86 20                  LOADI   
+1B87 16 02567328         ARRACC  39220008
+1B8C 35 24               PUSHG   36
+1B8E 20                  LOADI   
+1B8F 16 02567308         ARRACC  39219976
+1B94 20                  LOADI   
+1B95 25                  ADDI    
+1B96 1D                  STORI   
+1B97 00 01EA             LINE    490        ;	      yn:=pce.pos.y+moverel[pce.figtype][i].y;
+1B9A 35 20               PUSHG   32
+1B9C 33                  PUSHG   0
+1B9D 1B 0C               PUSH    12
+1B9F 25                  ADDI    
+1BA0 20                  LOADI   
+1BA1 1C 063C             PUSH    1596
+1BA4 33                  PUSHG   0
+1BA5 20                  LOADI   
+1BA6 16 02567328         ARRACC  39220008
+1BAB 35 24               PUSHG   36
+1BAD 20                  LOADI   
+1BAE 16 02567308         ARRACC  39219976
+1BB3 1B 04               PUSH    4
+1BB5 25                  ADDI    
+1BB6 20                  LOADI   
+1BB7 25                  ADDI    
+1BB8 1D                  STORI   
+1BB9 00 01EB             LINE    491        ;	      if (xn>=1) and (xn<=8) and (yn>=1) and (yn<=8) and
+1BBC 35 1C               PUSHG   28
+1BBE 20                  LOADI   
+1BBF 1A                  PUSH    1
+1BC0 0F                  CIGE    
+1BC1 08 0004             JNZ     $1BC8
+1BC4 19                  PUSH    0
+1BC5 07 0006             JMP     $1BCE
+1BC8 35 1C               PUSHG   28
+1BCA 20                  LOADI   
+1BCB 1B 08               PUSH    8
+1BCD 0D                  CILE    
+1BCE 08 0004             JNZ     $1BD5
+1BD1 19                  PUSH    0
+1BD2 07 0005             JMP     $1BDA
+1BD5 35 20               PUSHG   32
+1BD7 20                  LOADI   
+1BD8 1A                  PUSH    1
+1BD9 0F                  CIGE    
+1BDA 08 0004             JNZ     $1BE1
+1BDD 19                  PUSH    0
+1BDE 07 0006             JMP     $1BE7
+1BE1 35 20               PUSHG   32
+1BE3 20                  LOADI   
+1BE4 1B 08               PUSH    8
+1BE6 0D                  CILE    
+1BE7 08 0004             JNZ     $1BEE
+1BEA 19                  PUSH    0
+1BEB 07 0024             JMP     $1C12
+1BEE 1A                  PUSH    1
+1BEF 03                  LOCINI  
+1BF0 36 FA44             PUSHG   -1468
+1BF3 35 20               PUSHG   32
+1BF5 20                  LOADI   
+1BF6 16 02567208         ARRACC  39219720
+1BFB 35 1C               PUSHG   28
+1BFD 20                  LOADI   
+1BFE 16 025671E8         ARRACC  39219688
+1C03 1B 14               PUSH    20
+1C05 25                  ADDI    
+1C06 20                  LOADI   
+1C07 23 02582C30         PUSH    39332912
+1C0C 06                  SYS     
+1C0D 36 FA44             PUSHG   -1468
+1C10 20                  LOADI   
+1C11 0B                  CINE    
+1C12 09 0017             JZ      $1C2C
+1C15 00 01EC             LINE    492        ;	         (sgn(p.board[yn][xn])<>p.onmove) then Presun(p,f,xn,yn);
+1C18 36 FA44             PUSHG   -1468
+1C1B 1C 016C             PUSH    364
+1C1E 22                  LOADM   
+1C1F 35 F4               PUSHG   -12
+1C21 20                  LOADI   
+1C22 35 1C               PUSHG   28
+1C24 20                  LOADI   
+1C25 35 20               PUSHG   32
+1C27 20                  LOADI   
+1C28 1C 13FF             PUSH    5119
+1C2B 05                  CALL    
+1C2C 07 FF2F             JMP     $1B5E
+1C2F 07 0176             JMP     $1DA8
+1C32 00 01EE             LINE    494        ;	  end else if (pce.figtype=bishop) or (pce.figtype=rook) or (pce.figtype=queen) then do
+1C35 33                  PUSHG   0
+1C36 20                  LOADI   
+1C37 1C 0824             PUSH    2084
+1C3A 20                  LOADI   
+1C3B 0A                  CIE     
+1C3C 09 0004             JZ      $1C43
+1C3F 1A                  PUSH    1
+1C40 07 0007             JMP     $1C4A
+1C43 33                  PUSHG   0
+1C44 20                  LOADI   
+1C45 1C 082C             PUSH    2092
+1C48 20                  LOADI   
+1C49 0A                  CIE     
+1C4A 09 0004             JZ      $1C51
+1C4D 1A                  PUSH    1
+1C4E 07 0007             JMP     $1C58
+1C51 33                  PUSHG   0
+1C52 20                  LOADI   
+1C53 1C 0830             PUSH    2096
+1C56 20                  LOADI   
+1C57 0A                  CIE     
+1C58 09 014D             JZ      $1DA8
+1C5B 00 01EE             LINE    494        ;	  end else if (pce.figtype=bishop) or (pce.figtype=rook) or (pce.figtype=queen) then do
+1C5E 00 01F0             LINE    496        ;	    for i:=1 to movescount[pce.figtype] do
+1C61 35 24               PUSHG   36
+1C63 1A                  PUSH    1
+1C64 1D                  STORI   
+1C65 07 0008             JMP     $1C70
+1C68 35 24               PUSHG   36
+1C6A 35 24               PUSHG   36
+1C6C 20                  LOADI   
+1C6D 1A                  PUSH    1
+1C6E 25                  ADDI    
+1C6F 1D                  STORI   
+1C70 35 24               PUSHG   36
+1C72 20                  LOADI   
+1C73 1C 0628             PUSH    1576
+1C76 33                  PUSHG   0
+1C77 20                  LOADI   
+1C78 16 025672E8         ARRACC  39219944
+1C7D 20                  LOADI   
+1C7E 0E                  CIG     
+1C7F 08 0126             JNZ     $1DA8
+1C82 00 01F1             LINE    497        ;	      xn:=pce.pos.x+moverel[pce.figtype][i].x;
+1C85 35 1C               PUSHG   28
+1C87 33                  PUSHG   0
+1C88 1B 08               PUSH    8
+1C8A 25                  ADDI    
+1C8B 20                  LOADI   
+1C8C 1C 063C             PUSH    1596
+1C8F 33                  PUSHG   0
+1C90 20                  LOADI   
+1C91 16 02567328         ARRACC  39220008
+1C96 35 24               PUSHG   36
+1C98 20                  LOADI   
+1C99 16 02567308         ARRACC  39219976
+1C9E 20                  LOADI   
+1C9F 25                  ADDI    
+1CA0 1D                  STORI   
+1CA1 00 01F2             LINE    498        ;	      yn:=pce.pos.y+moverel[pce.figtype][i].y;
+1CA4 35 20               PUSHG   32
+1CA6 33                  PUSHG   0
+1CA7 1B 0C               PUSH    12
+1CA9 25                  ADDI    
+1CAA 20                  LOADI   
+1CAB 1C 063C             PUSH    1596
+1CAE 33                  PUSHG   0
+1CAF 20                  LOADI   
+1CB0 16 02567328         ARRACC  39220008
+1CB5 35 24               PUSHG   36
+1CB7 20                  LOADI   
+1CB8 16 02567308         ARRACC  39219976
+1CBD 1B 04               PUSH    4
+1CBF 25                  ADDI    
+1CC0 20                  LOADI   
+1CC1 25                  ADDI    
+1CC2 1D                  STORI   
+1CC3 00 01F3             LINE    499        ;	      while (xn>=1) and (xn<=8) and (yn>=1) and (yn<=8) and
+1CC6 35 1C               PUSHG   28
+1CC8 20                  LOADI   
+1CC9 1A                  PUSH    1
+1CCA 0F                  CIGE    
+1CCB 08 0004             JNZ     $1CD2
+1CCE 19                  PUSH    0
+1CCF 07 0006             JMP     $1CD8
+1CD2 35 1C               PUSHG   28
+1CD4 20                  LOADI   
+1CD5 1B 08               PUSH    8
+1CD7 0D                  CILE    
+1CD8 08 0004             JNZ     $1CDF
+1CDB 19                  PUSH    0
+1CDC 07 0005             JMP     $1CE4
+1CDF 35 20               PUSHG   32
+1CE1 20                  LOADI   
+1CE2 1A                  PUSH    1
+1CE3 0F                  CIGE    
+1CE4 08 0004             JNZ     $1CEB
+1CE7 19                  PUSH    0
+1CE8 07 0006             JMP     $1CF1
+1CEB 35 20               PUSHG   32
+1CED 20                  LOADI   
+1CEE 1B 08               PUSH    8
+1CF0 0D                  CILE    
+1CF1 08 0004             JNZ     $1CF8
+1CF4 19                  PUSH    0
+1CF5 07 0024             JMP     $1D1C
+1CF8 1A                  PUSH    1
+1CF9 03                  LOCINI  
+1CFA 36 FA44             PUSHG   -1468
+1CFD 35 20               PUSHG   32
+1CFF 20                  LOADI   
+1D00 16 02567208         ARRACC  39219720
+1D05 35 1C               PUSHG   28
+1D07 20                  LOADI   
+1D08 16 025671E8         ARRACC  39219688
+1D0D 1B 14               PUSH    20
+1D0F 25                  ADDI    
+1D10 20                  LOADI   
+1D11 23 02582C30         PUSH    39332912
+1D16 06                  SYS     
+1D17 36 FA44             PUSHG   -1468
+1D1A 20                  LOADI   
+1D1B 0B                  CINE    
+1D1C 09 0086             JZ      $1DA5
+1D1F 00 01F5             LINE    501        ;	        Presun(p,f,xn,yn);
+1D22 36 FA44             PUSHG   -1468
+1D25 1C 016C             PUSH    364
+1D28 22                  LOADM   
+1D29 35 F4               PUSHG   -12
+1D2B 20                  LOADI   
+1D2C 35 1C               PUSHG   28
+1D2E 20                  LOADI   
+1D2F 35 20               PUSHG   32
+1D31 20                  LOADI   
+1D32 1C 13FF             PUSH    5119
+1D35 05                  CALL    
+1D36 00 01F6             LINE    502        ;	        if sgn(p.board[yn][xn])<>0 then xn:=100;
+1D39 1A                  PUSH    1
+1D3A 03                  LOCINI  
+1D3B 36 FA44             PUSHG   -1468
+1D3E 35 20               PUSHG   32
+1D40 20                  LOADI   
+1D41 16 02567208         ARRACC  39219720
+1D46 35 1C               PUSHG   28
+1D48 20                  LOADI   
+1D49 16 025671E8         ARRACC  39219688
+1D4E 1B 14               PUSH    20
+1D50 25                  ADDI    
+1D51 20                  LOADI   
+1D52 23 02582C30         PUSH    39332912
+1D57 06                  SYS     
+1D58 19                  PUSH    0
+1D59 0B                  CINE    
+1D5A 09 0008             JZ      $1D65
+1D5D 00 01F6             LINE    502        ;	        if sgn(p.board[yn][xn])<>0 then xn:=100;
+1D60 35 1C               PUSHG   28
+1D62 1B 64               PUSH    100
+1D64 1D                  STORI   
+1D65 00 01F7             LINE    503        ;	        xn:=xn+moverel[pce.figtype][i].x;
+1D68 35 1C               PUSHG   28
+1D6A 35 1C               PUSHG   28
+1D6C 20                  LOADI   
+1D6D 1C 063C             PUSH    1596
+1D70 33                  PUSHG   0
+1D71 20                  LOADI   
+1D72 16 02567328         ARRACC  39220008
+1D77 35 24               PUSHG   36
+1D79 20                  LOADI   
+1D7A 16 02567308         ARRACC  39219976
+1D7F 20                  LOADI   
+1D80 25                  ADDI    
+1D81 1D                  STORI   
+1D82 00 01F8             LINE    504        ;	        yn:=yn+moverel[pce.figtype][i].y;
+1D85 35 20               PUSHG   32
+1D87 35 20               PUSHG   32
+1D89 20                  LOADI   
+1D8A 1C 063C             PUSH    1596
+1D8D 33                  PUSHG   0
+1D8E 20                  LOADI   
+1D8F 16 02567328         ARRACC  39220008
+1D94 35 24               PUSHG   36
+1D96 20                  LOADI   
+1D97 16 02567308         ARRACC  39219976
+1D9C 1B 04               PUSH    4
+1D9E 25                  ADDI    
+1D9F 20                  LOADI   
+1DA0 25                  ADDI    
+1DA1 1D                  STORI   
+1DA2 07 FF21             JMP     $1CC6
+1DA5 07 FEC0             JMP     $1C68
+1DA8 00 0211             LINE    529        ;	end proc;
+1DAB 1C 05B4             PUSH    1460
+1DAE 04                  RET     
+1DAF 02                  ENTRY   
+1DB0 1A                  PUSH    1
+1DB1 03                  LOCINI  
+1DB2 00 0215             LINE    533        ;	  for i:=1 to 16 do
+1DB5 33                  PUSHG   0
+1DB6 1A                  PUSH    1
+1DB7 1D                  STORI   
+1DB8 07 0006             JMP     $1DC1
+1DBB 33                  PUSHG   0
+1DBC 33                  PUSHG   0
+1DBD 20                  LOADI   
+1DBE 1A                  PUSH    1
+1DBF 25                  ADDI    
+1DC0 1D                  STORI   
+1DC1 33                  PUSHG   0
+1DC2 20                  LOADI   
+1DC3 1B 10               PUSH    16
+1DC5 0E                  CIG     
+1DC6 08 0034             JNZ     $1DFD
+1DC9 00 0216             LINE    534        ;	    if p.pieces[p.onmove*i].figtype<>0 then TahFigurkou(p,p.onmove*i);
+1DCC 36 FA48             PUSHG   -1464
+1DCF 36 FA48             PUSHG   -1464
+1DD2 20                  LOADI   
+1DD3 33                  PUSHG   0
+1DD4 20                  LOADI   
+1DD5 29                  MULI    
+1DD6 16 02567228         ARRACC  39219752
+1DDB 1C 0214             PUSH    532
+1DDE 25                  ADDI    
+1DDF 20                  LOADI   
+1DE0 19                  PUSH    0
+1DE1 0B                  CINE    
+1DE2 09 0015             JZ      $1DFA
+1DE5 00 0216             LINE    534        ;	    if p.pieces[p.onmove*i].figtype<>0 then TahFigurkou(p,p.onmove*i);
+1DE8 36 FA48             PUSHG   -1464
+1DEB 1C 016C             PUSH    364
+1DEE 22                  LOADM   
+1DEF 36 FA48             PUSHG   -1464
+1DF2 20                  LOADI   
+1DF3 33                  PUSHG   0
+1DF4 20                  LOADI   
+1DF5 29                  MULI    
+1DF6 1C 1967             PUSH    6503
+1DF9 05                  CALL    
+1DFA 07 FFBE             JMP     $1DBB
+1DFD 00 0218             LINE    536        ;	end proc;
+1E00 1C 05B0             PUSH    1456
+1E03 04                  RET     
+1E04 02                  ENTRY   
+1E05 1B 04               PUSH    4
+1E07 03                  LOCINI  
+1E08 00 021F             LINE    543        ;	  gp:=p;
+1E0B 19                  PUSH    0
+1E0C 36 FA48             PUSHG   -1464
+1E0F 1C 016C             PUSH    364
+1E12 22                  LOADM   
+1E13 1C 016C             PUSH    364
+1E16 1F                  STORM   
+1E17 00 0220             LINE    544        ;	  DrawBitmap("chessbrd",0,0);
+1E1A 1B 0F               PUSH    15
+1E1C 19                  PUSH    0
+1E1D 19                  PUSH    0
+1E1E 23 02582AB0         PUSH    39332528
+1E23 06                  SYS     
+1E24 00 0221             LINE    545        ;	  for l:=1 to 8 do
+1E27 33                  PUSHG   0
+1E28 1A                  PUSH    1
+1E29 1D                  STORI   
+1E2A 07 0006             JMP     $1E33
+1E2D 33                  PUSHG   0
+1E2E 33                  PUSHG   0
+1E2F 20                  LOADI   
+1E30 1A                  PUSH    1
+1E31 25                  ADDI    
+1E32 1D                  STORI   
+1E33 33                  PUSHG   0
+1E34 20                  LOADI   
+1E35 1B 08               PUSH    8
+1E37 0E                  CIG     
+1E38 08 00B5             JNZ     $1EF0
+1E3B 00 0222             LINE    546        ;	    for c:=1 to 8 do
+1E3E 35 04               PUSHG   4
+1E40 1A                  PUSH    1
+1E41 1D                  STORI   
+1E42 07 0008             JMP     $1E4D
+1E45 35 04               PUSHG   4
+1E47 35 04               PUSHG   4
+1E49 20                  LOADI   
+1E4A 1A                  PUSH    1
+1E4B 25                  ADDI    
+1E4C 1D                  STORI   
+1E4D 35 04               PUSHG   4
+1E4F 20                  LOADI   
+1E50 1B 08               PUSH    8
+1E52 0E                  CIG     
+1E53 08 0097             JNZ     $1EED
+1E56 00 0223             LINE    547        ;	      if p.board[l][c] <> 0 then do
+1E59 36 FA48             PUSHG   -1464
+1E5C 33                  PUSHG   0
+1E5D 20                  LOADI   
+1E5E 16 02567208         ARRACC  39219720
+1E63 35 04               PUSHG   4
+1E65 20                  LOADI   
+1E66 16 025671E8         ARRACC  39219688
+1E6B 1B 14               PUSH    20
+1E6D 25                  ADDI    
+1E6E 20                  LOADI   
+1E6F 19                  PUSH    0
+1E70 0B                  CINE    
+1E71 09 0076             JZ      $1EEA
+1E74 00 0223             LINE    547        ;	      if p.board[l][c] <> 0 then do
+1E77 00 0224             LINE    548        ;	        DrawBitmap(color_name[sgn(p.board[l][c])]+piece_name[p.pieces[p.board[l][c]].figtype],c*40-34,l*40-35);
+1E7A 1C 05C8             PUSH    1480
+1E7D 1A                  PUSH    1
+1E7E 03                  LOCINI  
+1E7F 36 FA48             PUSHG   -1464
+1E82 33                  PUSHG   0
+1E83 20                  LOADI   
+1E84 16 02567208         ARRACC  39219720
+1E89 35 04               PUSHG   4
+1E8B 20                  LOADI   
+1E8C 16 025671E8         ARRACC  39219688
+1E91 1B 14               PUSH    20
+1E93 25                  ADDI    
+1E94 20                  LOADI   
+1E95 23 02582C30         PUSH    39332912
+1E9A 06                  SYS     
+1E9B 16 02567288         ARRACC  39219848
+1EA0 20                  LOADI   
+1EA1 1C 05B0             PUSH    1456
+1EA4 36 FA48             PUSHG   -1464
+1EA7 36 FA48             PUSHG   -1464
+1EAA 33                  PUSHG   0
+1EAB 20                  LOADI   
+1EAC 16 02567208         ARRACC  39219720
+1EB1 35 04               PUSHG   4
+1EB3 20                  LOADI   
+1EB4 16 025671E8         ARRACC  39219688
+1EB9 1B 14               PUSH    20
+1EBB 25                  ADDI    
+1EBC 20                  LOADI   
+1EBD 16 02567228         ARRACC  39219752
+1EC2 1C 0214             PUSH    532
+1EC5 25                  ADDI    
+1EC6 20                  LOADI   
+1EC7 16 02567268         ARRACC  39219816
+1ECC 20                  LOADI   
+1ECD 23 025825D0         PUSH    39331280
+1ED2 06                  SYS     
+1ED3 35 04               PUSHG   4
+1ED5 20                  LOADI   
+1ED6 1B 28               PUSH    40
+1ED8 29                  MULI    
+1ED9 1B 22               PUSH    34
+1EDB 27                  SUBI    
+1EDC 33                  PUSHG   0
+1EDD 20                  LOADI   
+1EDE 1B 28               PUSH    40
+1EE0 29                  MULI    
+1EE1 1B 23               PUSH    35
+1EE3 27                  SUBI    
+1EE4 23 02582AB0         PUSH    39332528
+1EE9 06                  SYS     
+1EEA 07 FF58             JMP     $1E45
+1EED 07 FF3D             JMP     $1E2D
+1EF0 00 023D             LINE    573        ;	end proc;
+1EF3 1C 05B0             PUSH    1456
+1EF6 04                  RET     
+1EF7 02                  ENTRY   
+1EF8 1B 02               PUSH    2
+1EFA 03                  LOCINI  
+1EFB 00 0242             LINE    578        ;	  h:=round((x-6)/40)+1;
+1EFE 33                  PUSHG   0
+1EFF 1A                  PUSH    1
+1F00 03                  LOCINI  
+1F01 35 F0               PUSHG   -16
+1F03 20                  LOADI   
+1F04 1B 06               PUSH    6
+1F06 27                  SUBI    
+1F07 1B 28               PUSH    40
+1F09 2B                  DIVI    
+1F0A 18                  CNVF    
+1F0B 23 025829F0         PUSH    39332336
+1F10 06                  SYS     
+1F11 1A                  PUSH    1
+1F12 25                  ADDI    
+1F13 1D                  STORI   
+1F14 00 0243             LINE    579        ;	  v:=round((y-6)/40)+1;
+1F17 35 04               PUSHG   4
+1F19 1A                  PUSH    1
+1F1A 03                  LOCINI  
+1F1B 35 F4               PUSHG   -12
+1F1D 20                  LOADI   
+1F1E 1B 06               PUSH    6
+1F20 27                  SUBI    
+1F21 1B 28               PUSH    40
+1F23 2B                  DIVI    
+1F24 18                  CNVF    
+1F25 23 025829F0         PUSH    39332336
+1F2A 06                  SYS     
+1F2B 1A                  PUSH    1
+1F2C 25                  ADDI    
+1F2D 1D                  STORI   
+1F2E 00 0244             LINE    580        ;	  if (Part<>2) then do
+1F31 1C 080C             PUSH    2060
+1F34 20                  LOADI   
+1F35 1B 02               PUSH    2
+1F37 0B                  CINE    
+1F38 09 00F0             JZ      $202B
+1F3B 00 0244             LINE    580        ;	  if (Part<>2) then do
+1F3E 00 0245             LINE    581        ;	    if (sgn(p.board[v][h])=p.onmove) then do
+1F41 1A                  PUSH    1
+1F42 03                  LOCINI  
+1F43 36 FA40             PUSHG   -1472
+1F46 35 04               PUSHG   4
+1F48 20                  LOADI   
+1F49 16 02567208         ARRACC  39219720
+1F4E 33                  PUSHG   0
+1F4F 20                  LOADI   
+1F50 16 025671E8         ARRACC  39219688
+1F55 1B 14               PUSH    20
+1F57 25                  ADDI    
+1F58 20                  LOADI   
+1F59 23 02582C30         PUSH    39332912
+1F5E 06                  SYS     
+1F5F 36 FA40             PUSHG   -1472
+1F62 20                  LOADI   
+1F63 0A                  CIE     
+1F64 09 00C1             JZ      $2028
+1F67 00 0245             LINE    581        ;	    if (sgn(p.board[v][h])=p.onmove) then do
+1F6A 00 0246             LINE    582        ;	      Part:=2;
+1F6D 1C 080C             PUSH    2060
+1F70 1B 02               PUSH    2
+1F72 1D                  STORI   
+1F73 00 0247             LINE    583        ;	      FirstPart:=piece_name[p.pieces[p.board[v][h]].figtype]+" "+SubStr("ABCDEFGH",h,1)+IntToStr(9-v);
+1F76 1C 0810             PUSH    2064
+1F79 1C 05B0             PUSH    1456
+1F7C 36 FA40             PUSHG   -1472
+1F7F 36 FA40             PUSHG   -1472
+1F82 35 04               PUSHG   4
+1F84 20                  LOADI   
+1F85 16 02567208         ARRACC  39219720
+1F8A 33                  PUSHG   0
+1F8B 20                  LOADI   
+1F8C 16 025671E8         ARRACC  39219688
+1F91 1B 14               PUSH    20
+1F93 25                  ADDI    
+1F94 20                  LOADI   
+1F95 16 02567228         ARRACC  39219752
+1F9A 1C 0214             PUSH    532
+1F9D 25                  ADDI    
+1F9E 20                  LOADI   
+1F9F 16 02567268         ARRACC  39219816
+1FA4 20                  LOADI   
+1FA5 1B 10               PUSH    16
+1FA7 23 025825D0         PUSH    39331280
+1FAC 06                  SYS     
+1FAD 1A                  PUSH    1
+1FAE 03                  LOCINI  
+1FAF 1B 11               PUSH    17
+1FB1 33                  PUSHG   0
+1FB2 20                  LOADI   
+1FB3 1A                  PUSH    1
+1FB4 23 02582840         PUSH    39331904
+1FB9 06                  SYS     
+1FBA 23 025825D0         PUSH    39331280
+1FBF 06                  SYS     
+1FC0 1A                  PUSH    1
+1FC1 03                  LOCINI  
+1FC2 1B 09               PUSH    9
+1FC4 35 04               PUSHG   4
+1FC6 20                  LOADI   
+1FC7 27                  SUBI    
+1FC8 23 02582990         PUSH    39332240
+1FCD 06                  SYS     
+1FCE 23 025825D0         PUSH    39331280
+1FD3 06                  SYS     
+1FD4 1A                  PUSH    1
+1FD5 1F                  STORM   
+1FD6 00 0248             LINE    584        ;	      DrawBitmap("frame",h*40-34,v*40-35);
+1FD9 1B 12               PUSH    18
+1FDB 33                  PUSHG   0
+1FDC 20                  LOADI   
+1FDD 1B 28               PUSH    40
+1FDF 29                  MULI    
+1FE0 1B 22               PUSH    34
+1FE2 27                  SUBI    
+1FE3 35 04               PUSHG   4
+1FE5 20                  LOADI   
+1FE6 1B 28               PUSH    40
+1FE8 29                  MULI    
+1FE9 1B 23               PUSH    35
+1FEB 27                  SUBI    
+1FEC 23 02582AB0         PUSH    39332528
+1FF1 06                  SYS     
+1FF2 00 0249             LINE    585        ;	              drawMoves:=true;
+1FF5 1C 0814             PUSH    2068
+1FF8 1A                  PUSH    1
+1FF9 1A                  PUSH    1
+1FFA 1F                  STORM   
+1FFB 00 024A             LINE    586        ;	      TahFigurkou(p,p.board[v][h]);
+1FFE 36 FA40             PUSHG   -1472
+2001 1C 016C             PUSH    364
+2004 22                  LOADM   
+2005 36 FA40             PUSHG   -1472
+2008 35 04               PUSHG   4
+200A 20                  LOADI   
+200B 16 02567208         ARRACC  39219720
+2010 33                  PUSHG   0
+2011 20                  LOADI   
+2012 16 025671E8         ARRACC  39219688
+2017 1B 14               PUSH    20
+2019 25                  ADDI    
+201A 20                  LOADI   
+201B 1C 1967             PUSH    6503
+201E 05                  CALL    
+201F 00 024B             LINE    587        ;	              drawMoves:=false;
+2022 1C 0814             PUSH    2068
+2025 19                  PUSH    0
+2026 1A                  PUSH    1
+2027 1F                  STORM   
+2028 07 0054             JMP     $207F
+202B 00 024D             LINE    589        ;	  end else do
+202E 00 024E             LINE    590        ;	    Part:=1;
+2031 1C 080C             PUSH    2060
+2034 1A                  PUSH    1
+2035 1D                  STORI   
+2036 00 024F             LINE    591        ;	    Result:=FirstPart+":"+SubStr("ABCDEFGH",h,1)+IntToStr(9-v);
+2039 36 FA3C             PUSHG   -1476
+203C 1C 0810             PUSH    2064
+203F 20                  LOADI   
+2040 1B 13               PUSH    19
+2042 23 025825D0         PUSH    39331280
+2047 06                  SYS     
+2048 1A                  PUSH    1
+2049 03                  LOCINI  
+204A 1B 14               PUSH    20
+204C 33                  PUSHG   0
+204D 20                  LOADI   
+204E 1A                  PUSH    1
+204F 23 02582840         PUSH    39331904
+2054 06                  SYS     
+2055 23 025825D0         PUSH    39331280
+205A 06                  SYS     
+205B 1A                  PUSH    1
+205C 03                  LOCINI  
+205D 1B 09               PUSH    9
+205F 35 04               PUSHG   4
+2061 20                  LOADI   
+2062 27                  SUBI    
+2063 23 02582990         PUSH    39332240
+2068 06                  SYS     
+2069 23 025825D0         PUSH    39331280
+206E 06                  SYS     
+206F 1A                  PUSH    1
+2070 1F                  STORM   
+2071 00 0250             LINE    592        ;	    DisplayPosition(p);
+2074 36 FA40             PUSHG   -1472
+2077 1C 016C             PUSH    364
+207A 22                  LOADM   
+207B 1C 1E04             PUSH    7684
+207E 05                  CALL    
+207F 00 0252             LINE    594        ;	end func;
+2082 1C 05B8             PUSH    1464
+2085 04                  RET     
+2086 02                  ENTRY   
+2087 00 0255             LINE    597        ;	  Result:=Abs(i*(-i));
+208A 35 F0               PUSHG   -16
+208C 1A                  PUSH    1
+208D 03                  LOCINI  
+208E 35 F4               PUSHG   -12
+2090 20                  LOADI   
+2091 35 F4               PUSHG   -12
+2093 20                  LOADI   
+2094 2D                  NEGI    
+2095 29                  MULI    
+2096 23 02582C90         PUSH    39333008
+209B 06                  SYS     
+209C 1D                  STORI   
+209D 00 0256             LINE    598        ;	end func;
+20A0 1B 04               PUSH    4
+20A2 04                  RET     
+20A3 01                  QUIT    

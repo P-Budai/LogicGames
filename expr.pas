@@ -172,7 +172,7 @@ begin
         NewLabel(lblEvalSecTerm);
         NewLabel(lblSkipSecTerm);
         Code.GenInstrJmp(JNZ,lblEvalSecTerm);
-        Code.GenInstr(PUSHZ);
+        Code.GenInstr(PUSH0);
         Code.GenInstrJmp(JMP,lblSkipSecTerm);
         Code.AssignLbl(lblEvalSecTerm,Code.GetCurAddr);
         CmpPrimary(rtype,cf);
@@ -224,7 +224,7 @@ begin
         NewLabel(lblEvalSecTerm);
         NewLabel(lblSkipSecTerm);
         Code.GenInstrJmp(JZ,lblEvalSecTerm);
-        Code.GenInstr(PUSHO);
+        Code.GenInstr(PUSH1);
         Code.GenInstrJmp(JMP,lblSkipSecTerm);
         Code.AssignLbl(lblEvalSecTerm,Code.GetCurAddr);
         CmpTerm(rtype,cf);
@@ -276,20 +276,26 @@ end;
 //this basically computes address of an variable and store it at top of stack
 //variable can be an item of an array, an item of a record, and combination of these
 //if it is local variable, it then converts variable local address to "global address"
+
 procedure CmpVarAddr(var t:TType;var Code:TCodeFragment);
-var was_array,loc,away:boolean;
+var loc,away:boolean;
     str:string;
     p:TPrgItem;
     st:TType;
     ofs:longint;
+
 begin
-  was_array:=false;
   if not EatIdentifier(str,'a identifier of variable') then
   else if not FindItem(str,p,loc,'a identifier of variable') then
   else if not (p is TVariable) then raise SyntaxError.Create('a identifier of variable expected, but "'+str+'" is a '+p.GetItemClass)
   else begin
     t:=(p as TVariable).VarType;
     ofs:=(p as TVariable).Addr;
+
+    if Code=nil then Code:=TCodeFragment.Create;
+    if loc then Code.GenInstrPushLocalToGlobalAddr(ofs) else Code.GenInstrPushI(ofs);
+    ofs:=0;
+
     repeat
       away:=true;
       if (t is TArray) and TestAndEatTokenSymbol('[') then begin
@@ -297,7 +303,7 @@ begin
         if not EqualTypes(st,DefInt) then raise SyntaxError.Create('array index must be integer');
         Code.GenInstr(ARRACC);
         GenArrayInfoAddr(t as TArray,Code);
-        if was_array then Code.GenInstr(ADDI) else was_array:=true;
+        //Code.GenInstr(ADDI);
         EatTokenSymbol(']');
         t:=(t as TArray).ItemType;
         away:=false;
@@ -314,11 +320,15 @@ begin
         end;
       end;
     until away;
-    if Code=nil then Code:=TCodeFragment.Create;
-    if loc then Code.GenInstrPushLocalToGlobalAddr(ofs) else Code.GenInstrPushI(ofs);
-    if was_array then Code.GenInstr(ADDI);
+    if ofs<>0 then begin
+        Code.GenInstrPushI(ofs);
+        Code.GenInstr(ADDI);
+    end;
   end;
 end;
+
+
+{$IF defined(oldversion)}
 
 procedure CmpBoolExpr(var Code:TCodeFragment;LblTrue,LblFalse:longint);
 var rtype:TType;
@@ -331,6 +341,19 @@ begin
   end;
 end;
 
+{$ELSE}
+
+procedure CmpBoolExpr(var Code:TCodeFragment;LblTrue,LblFalse:longint);
+var rtype:TType;
+begin
+  CmpExpression(rtype,Code);
+  if rtype.Size <> 4 then SyntaxError.Create('operand length must be 4 bytes') else
+  begin
+    Code.GenInstrJmp(JZ,LblFalse);
+  end;
+end;
+
+{$ENDIF}
 
 (*
 

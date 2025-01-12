@@ -21,7 +21,7 @@ type TInstruction=( {$i instr.inc}  INSTR_COUNT );
        procedure GenInt(l:longint);
        procedure GenFloat(f:double);
        procedure AddCodeFragment(CodeFrag:TCodeFragment);
-       procedure DebugDisplay(fname:string;Src:Pchar);
+       procedure PrintPseudoCode(fname:string;Src:Pchar);
        procedure AssignLbl(lbl,addr:longint);
        procedure AssignLblToLbl(lblfrom,lblto:longint);
        function GetCurAddr:longint;
@@ -41,7 +41,7 @@ var Code:TCodeFragment;
 
 implementation
 
-uses sysutils,lex,sntx,dbgwin,expr,utils;
+uses sysutils,utils,lex,expr,dbgwin;
 
 var LastLine:longint;
     InstrTab:array[0..ord(INSTR_COUNT)] of record
@@ -122,10 +122,10 @@ end;
 
 procedure TCodeFragment.GenInstrPushI(l:longint);
 begin
-  if l = 0 then GenInstr(PUSHZ)
-  else if l = 1 then GenInstr(PUSHO)
-  else if IIR(l,-128,127) then begin GenInstr(PUSH1); Code.Write(l,1); end
-  else if IIR(l,-32768,32767) then begin GenInstr(PUSH2); Code.Write(l,2); end
+  if l = 0 then GenInstr(PUSH0)
+  else if l = 1 then GenInstr(PUSH1)
+  else if IIR(l,-128,127) then begin GenInstr(PUSHB); Code.Write(l,1); end
+  else if IIR(l,-32768,32767) then begin GenInstr(PUSHW); Code.Write(l,2); end
   else begin GenInstr(PUSHI); GenInt(l); end
 end;
 
@@ -133,10 +133,10 @@ end;
 //generate code that pushes this address adjusted to global address space
 procedure TCodeFragment.GenInstrPushLocalToGlobalAddr(l:longint);
 begin
-  if l = 0 then GenInstr(PUSHGZ)
-  else if l = 1 then GenInstr(PUSHGO)
-  else if IIR(l,-128,127) then begin GenInstr(PUSHG1); Code.Write(l,1); end
-  else if IIR(l,-32768,32767) then begin GenInstr(PUSHG2); Code.Write(l,2); end
+  if l = 0 then GenInstr(PUSHG0)
+  else if l = 1 then GenInstr(PUSHG1)
+  else if IIR(l,-128,127) then begin GenInstr(PUSHGB); Code.Write(l,1); end
+  else if IIR(l,-32768,32767) then begin GenInstr(PUSHGW); Code.Write(l,2); end
   else begin GenInstr(PUSHGI); GenInt(l); end
 end;
 
@@ -190,7 +190,7 @@ begin
   Close(f);
 end;
 
-procedure TCodeFragment.DebugDisplay(fname:string;Src:Pchar);
+procedure TCodeFragment.PrintPseudoCode(fname:string;Src:Pchar);
 var f:text;
     inst:longint;
     i1:shortint;
@@ -212,6 +212,18 @@ begin
         inst:=inst-ord(INSTR_COUNT)+ord(JMP);   //tohle nechápu
       hex:=hex+IntToHex(i1)+' ';
       txt:=copy(InstrTab[inst].name+'          ',1,8);
+      case inst of
+        ord(PUSH0): txt:='PUSH    0';
+        ord(PUSH1): txt:='PUSH    1';
+        ord(PUSHB): txt:='PUSH    ';
+        ord(PUSHW): txt:='PUSH    ';
+        ord(PUSHI): txt:='PUSH    ';
+        ord(PUSHG0): txt:='PUSHG   0';
+        ord(PUSHG1): txt:='PUSHG   1';
+        ord(PUSHGB): txt:='PUSHG   ';
+        ord(PUSHGW): txt:='PUSHG   ';
+        ord(PUSHGI): txt:='PUSHG   ';
+      end;
       case InstrTab[inst].op[1] of
         'b': begin Code.Read(i1,1); hex:=hex+IntToHex(i1); txt:=txt+IntToStr(i1); end;
         'w': begin
@@ -219,7 +231,7 @@ begin
                hex:=hex+IntToHex(i2);
                if (inst>=ord(JMP)) and (inst<=ord(JZ)) then begin
                  i2:=i2+Code.Position;    //convert relative jump address to absolute
-                 txt:=txt+IntToHex(i2);   //output as hexa
+                 txt:=txt+'$'+IntToHex(i2);   //output as hexa
                end else begin
                  txt:=txt+IntToStr(i2);
                end;
@@ -227,8 +239,8 @@ begin
         'i': begin Code.Read(i4,4); hex:=hex+IntToHex(i4); txt:=txt+IntToStr(i4); end;
         'f': begin Code.Read(fl,sizeof(fl)); hex:=hex+IntToHex(UInt64(pointer(@fl)^)); txt:=txt+Format('%f',[fl]); end;
       end;
+      if inst=ord(LINE) then txt:=txt+'        ;'+GetLineByNr(Src,i2);
       writeln(f,copy(hex+'                     ',1,25)+txt);
-      if inst=ord(LINE) then writeln(f,'              ',GetLineByNr(Src,i2));
       //flush(f);
     end;
     except

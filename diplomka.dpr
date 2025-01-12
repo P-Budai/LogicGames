@@ -7,7 +7,7 @@ uses
   compiler in 'compiler.pas',
   sntx in 'sntx.pas',
   gener in 'gener.pas',
-  debug in 'debug.pas',
+  virtualMachine in 'virtualMachine.pas',
   expr in 'expr.pas',
   watchdlg in 'watchdlg.pas' {DlgWatchProp},
   lib in 'lib.pas',
@@ -19,7 +19,7 @@ uses
   ResltWin in 'ResltWin.pas' {ResultWin},
   navig in 'navig.pas' {Navigator},
   utils in 'utils.pas',
-  sorting in 'sorting.pas';
+  sorting in 'sorting.pas' {$R *.RES};
 
 {$R *.RES}
 

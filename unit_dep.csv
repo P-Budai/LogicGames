@@ -13,8 +13,8 @@ utils
 crc
 about
 RulesWin;navig
-diplomka;dbgwin;lex;compiler;sntx;gener;debug;expr;watchdlg;lib;plrdlg;crc;RulesWin;about;optdlg;ResltWin;navig;utils
-compiler;utils;lex;sntx;gener;debug;dbgwin;expr;navig;lib
-debug;gener;compiler;utils
+diplomka;dbgwin;lex;compiler;sntx;gener;virtualMachine;expr;watchdlg;lib;plrdlg;crc;RulesWin;about;optdlg;ResltWin;navig;utils
+compiler;utils;lex;sntx;gener;virtualMachine;dbgwin;expr;navig;lib
+virtualMachine;gener;compiler;utils
 lib;compiler;gamewin;navig;crc
 watchdlg
